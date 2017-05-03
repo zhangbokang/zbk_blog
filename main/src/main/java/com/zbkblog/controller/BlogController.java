@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class BlogController {
-    @RequestMapping
+    @RequestMapping("index")
     public String index(){
         return "index";
     }
 
-    @RequestMapping
+    @RequestMapping("abc")
     @ResponseBody
     public String abc(){
-        return "哈哈";
+        return "哈哈abc";
     }
 }

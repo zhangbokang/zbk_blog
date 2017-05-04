@@ -15,6 +15,7 @@
         </a>
         <ul class="nav nav-pills pull-right">
             <li><a href="/index">主页</a></li>
+            <li><a href="/editblog">发布文章</a></li>
             <%--<li><a href="#">关于</a></li>--%>
             <li><a href="#">联系方式</a></li>
         </ul>

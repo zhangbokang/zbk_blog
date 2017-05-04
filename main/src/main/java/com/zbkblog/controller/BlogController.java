@@ -1,5 +1,6 @@
 package com.zbkblog.controller;
 
+import com.zbkblog.medo.BlogDoc;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,11 +33,37 @@ public class BlogController {
 
     @RequestMapping("save")
     public String save(HttpServletRequest request){
-        String mddoc = request.getParameter("editormd-markdown-doc");
-        String htmldoc = request.getParameter("editormd-html-code");
+        String blogMd = request.getParameter("editormd-markdown-doc");
+        String blogHtml = request.getParameter("editormd-html-code");
+        String  blogTitle = request.getParameter("blogTitle");
+        String blogClass = request.getParameter("blogClass");
+        String blogTag = request.getParameter("blogTag");
 
-        request.setAttribute("htmldoc",htmldoc);
-        System.out.println(mddoc);
-        return "editblog";
+        //封装成对象
+        BlogDoc blogDoc = new BlogDoc();
+        blogDoc.setBlogTitle(blogTitle);
+        blogDoc.setBlogTag(blogTag);
+        blogDoc.setBlogMd(blogMd);
+        blogDoc.setBlogClass(blogClass);
+        blogDoc.setBlogHtml(blogHtml);
+
+        if (blogTitle == null || blogTitle == ""){
+            request.setAttribute("blogDoc",blogDoc);
+            return "editblog";
+        }
+        if (blogTag == null || blogTag == ""){
+            request.setAttribute("blogDoc",blogDoc);
+            return "editblog";
+        }
+        if (blogClass == null || blogClass == ""){
+            request.setAttribute("blogDoc",blogDoc);
+            return "editblog";
+        }
+        if (blogMd == null || blogMd == ""){
+            request.setAttribute("blogDoc",blogDoc);
+            return "editblog";
+        }
+
+        return "blog";
     }
 }

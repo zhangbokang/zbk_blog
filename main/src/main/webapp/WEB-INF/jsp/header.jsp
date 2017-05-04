@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- 头部 -->
+<meta charset="utf-8">
 <header>
     <div class="masthead">
         <a href="index.html" id="logo">

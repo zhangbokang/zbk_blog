@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Gradle : zbk_blog : main-1.0-SNAPSHOT.war">
+    <output-path>$PROJECT_DIR$/main/build/libs</output-path>
+    <properties id="gradle-properties">
+      <options external-project-path="$PROJECT_DIR$/main" />
+    </properties>
+    <root id="archive" name="main-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Gradle : zbk_blog : main-1.0-SNAPSHOT.war (exploded)" />
+    </root>
+  </artifact>
+</component>

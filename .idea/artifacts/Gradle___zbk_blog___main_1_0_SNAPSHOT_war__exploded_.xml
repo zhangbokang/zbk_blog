@@ -1,15 +1,10 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Gradle : zbk_blog : main-1.0-SNAPSHOT.war (exploded)">
-    <output-path>$PROJECT_DIR$/main/build/libs/exploded/main-1.0-SNAPSHOT.war</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/main/exploded/main-1.0-SNAPSHOT.war</output-path>
     <properties id="gradle-properties">
-      <options external-project-path="$PROJECT_DIR$/main">
-        <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
-      </options>
+      <options external-project-path="$PROJECT_DIR$/main" />
     </properties>
     <root id="root">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/main/build/libs/exploded/main-1.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
-      </element>
       <element id="javaee-facet-resources" facet="main_main/web/Web Gradle : main-1.0-SNAPSHOT.war" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -22,10 +17,14 @@
           <element id="library" level="project" name="Gradle: org.springframework:spring-context:4.3.8.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-webmvc:4.3.8.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-web:4.3.8.RELEASE" />
+          <element id="library" level="project" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Gradle: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-aop:4.3.8.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework:spring-expression:4.3.8.RELEASE" />
         </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/main/exploded/main-1.0-SNAPSHOT.war/META-INF/MANIFEST.MF" />
       </element>
     </root>
   </artifact>

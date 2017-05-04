@@ -10,7 +10,7 @@
 <header>
     <div class="masthead">
         <a href="index.html" id="logo">
-            <img src="/static/img/logo.jpg" alt="MyBlog">
+            <img src="http://zhishi01.nos-eastchina1.126.net/logo.jpg" alt="MyBlog">
         </a>
         <ul class="nav nav-pills pull-right">
             <li><a href="/index">主页</a></li>

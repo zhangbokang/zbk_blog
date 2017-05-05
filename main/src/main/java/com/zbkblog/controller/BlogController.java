@@ -46,6 +46,7 @@ public class BlogController {
         blogDoc.setBlogMd(blogMd);
         blogDoc.setBlogClass(blogClass);
         blogDoc.setBlogHtml(blogHtml);
+        request.setAttribute("blogHtml",blogHtml);
 
         if (blogTitle == null || blogTitle == ""){
             request.setAttribute("blogDoc",blogDoc);
@@ -64,6 +65,7 @@ public class BlogController {
             return "editblog";
         }
 
-        return "blog";
+        request.setAttribute("blogDoc",blogDoc);
+        return "blogpage";
     }
 }

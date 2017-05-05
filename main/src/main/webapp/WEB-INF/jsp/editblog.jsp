@@ -8,11 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>文章编辑</title>
     <link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
     <%--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/editblog.css">
+    <style rel="stylesheet">
+        .addborder{
+            border: 1px solid #000000;
+        }
+    </style>
     <meta charset="utf-8">
 </head>
 <body>
@@ -55,9 +60,14 @@
 
     </form>
 
-    <%--<div>--%>
-        <%--<h1>回显区域</h1>--%>
-        <%--<div>${htmldoc}</div>--%>
+    <%--<br />--%>
+    <%--<br />--%>
+    <%--<h1>回显区域</h1>--%>
+    <%--<div class="row addborder">--%>
+        <%--<div class="col-lg-3 addborder" id="toc">--%>
+
+        <%--</div>--%>
+        <%--<div class="col-lg-9 addborder" id="blogdoc">${blogHtml}</div>--%>
     <%--</div>--%>
 
     <%--<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>--%>
@@ -86,15 +96,17 @@
                     //markdown : md,  //要加载的md信息/文件，通常和ajax请求配合获取数据
                     codeFold : true,
                     //syncScrolling : false,
-                    saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
+                    //saveHTMLToTextarea : true,    // 保存 HTML 到 Textarea
                     searchReplace : true,
                     //watch : false,                // 关闭实时预览
-                    htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
+                    //htmlDecode : "style,script,iframe|on*",            // 开启 HTML 标签解析，为了安全性，默认不开启
                     //toolbar  : false,             //关闭工具栏
                     //previewCodeHighlight : false, // 关闭预览 HTML 的代码块高亮，默认开启
                     emoji : true,
                     taskList : true,
-                    tocm            : true,         // Using [TOCM]
+                    //tocm            : true,         // Using [TOCM] 下拉菜单目录
+                    //tocDropdown   : false,
+                    //tocContainer : "",             //自定义ToC容器，和CSS选择器一样选择容器
                     tex : true,                   // 开启科学公式TeX语言支持，默认关闭
                     flowChart : true,             // 开启流程图支持，默认关闭
                     sequenceDiagram : true,       // 开启时序/序列图支持，默认关闭,
@@ -106,8 +118,8 @@
                     //imageUpload : true,
                     //imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
                     //imageUploadURL : "./php/upload.php",
-                    onload : function() {
-                        console.log('onload', this);
+                    /*onload : function() {  //onload后执行的函数
+                        //console.log('onload', this);
                         //this.fullscreen();
                         //this.unwatch();
                         //this.watch().fullscreen();
@@ -116,7 +128,7 @@
                         //this.width("100%");
                         //this.height(480);
                         //this.resize("100%", 640);
-                    }
+                    }*/
                 //});
             });
 
@@ -175,7 +187,6 @@
 //                testEditor.config("tocDropdown", false);
 //            });
         });
-
 
 
     </script>

@@ -29,3 +29,18 @@ dependencies {
 
 
 }
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+war{
+    archiveName = "${project.name}.war"
+}

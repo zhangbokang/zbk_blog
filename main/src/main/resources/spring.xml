@@ -7,17 +7,33 @@
 
     <context:component-scan base-package="com.zbkblog" />
 
-    <!-- 解决使用@ResposenBody返回中文乱码问题 -->
+    <!-- 解决使用@ResposenBody返回中文乱码和返回Map错误问题 -->
+    <!-- DefaultAnnotationHandlerMapping 和 AnnotationMethodHandlerAdapter 的使用已经过时！
+        spring 3.1 开始应该用
+        RequestMappingHandlerMapping 来替换 DefaultAnnotationHandlerMapping，
+        RequestMappingHandlerAdapter 来替换 AnnotationMethodHandlerAdapter。 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
         <property name="messageConverters">
             <list>
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>text/html;charset=UTF-8</value>
-                        </list>
-                    </property>
-                </bean>
+                <ref bean="stringHttpMessageConverter"/>
+                <ref bean="mappingJacksonHttpMessageConverter"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="stringHttpMessageConverter"
+          class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+    <!-- rest json related... start -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
             </list>
         </property>
     </bean>
@@ -32,6 +48,7 @@
     <!--<mvc:resources mapping="/js/**" location="/js/" />-->
     <!--<mvc:resources mapping="/css/**" location="/css/" />-->
     <mvc:resources mapping="/static/**" location="/static/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 指定前缀，所在目录，起点/为webroot -->

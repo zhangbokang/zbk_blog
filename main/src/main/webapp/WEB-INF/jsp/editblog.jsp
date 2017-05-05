@@ -73,7 +73,7 @@
     <%--<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>--%>
     <script src="/static/js/jquery-3.2.0.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/static/editormd/editormd.min.js"></script>
+    <script src="/static/editormd/editormd.js"></script>
     <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
     <script type="text/javascript">
         //点击保存按钮提交数据
@@ -115,9 +115,10 @@
                     //dialogDraggable : false,    // 设置弹出层对话框不可拖动，全局通用，默认为true
                     //dialogMaskOpacity : 0.4,    // 设置透明遮罩层的透明度，全局通用，默认值为0.1
                     //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
-                    //imageUpload : true,
-                    //imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                    //imageUploadURL : "./php/upload.php",
+                    imageUpload : true,
+                    imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+//                    imageUploadURL : "./php/upload.php",
+                    imageUploadURL : "/upImage",
                     /*onload : function() {  //onload后执行的函数
                         //console.log('onload', this);
                         //this.fullscreen();

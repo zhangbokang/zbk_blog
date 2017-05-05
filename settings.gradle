@@ -1,0 +1,2 @@
+rootProject.name = 'zbk_blog'
+include 'main'

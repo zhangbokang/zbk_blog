@@ -26,7 +26,7 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label for="blogTitle" class="control-label">标题：</label>
-                    <input type="text" name="blogTitle" id="blogTitle" class="form-control" placeholder="请输入标题">
+                    <input type="text" name="blogTitle" value="${blogDoc.blogTitle}" id="blogTitle" class="form-control" placeholder="请输入标题">
                 </div>
             </div>
             <div class="col-lg-3">
@@ -42,18 +42,18 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label for="blogTag" class="control-label">标签：</label>
-                    <input type="text" name="blogTag" id="blogTag" class="form-control" placeholder="请输入标签 多个使用逗号分隔">
+                    <input type="text" name="blogTag" value="${blogDoc.blogTag}" id="blogTag" class="form-control" placeholder="请输入标签 多个使用逗号分隔">
                 </div>
             </div>
             <div class="col-lg-1 center-block">
                 <%--<button class="btn btn-default" type="button" onclick="save(this)">保存</button>--%>
-                    <button class="btn btn-default" type="submit">保存</button>
+                    <button class="btn btn-default" type="button" onclick="submitForm('#blogForm')">保存</button>
             </div>
         </div>
         <div class="row" id="editArea">
             <div class="col-lg-12">
                 <div id="editormd">
-                    <textarea style="display:none;">${mddoc}</textarea>
+                    <textarea style="display:none;">${blogDoc.blogMd}</textarea>
                 </div>
             </div>
         </div>
@@ -74,8 +74,30 @@
     <script src="/static/js/jquery-3.2.0.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="/static/editormd/editormd.js"></script>
-    <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
+    <script src="/static/js/jquery.serializejson.js"></script>
     <script type="text/javascript">
+        //点击保存按钮提交表单
+        function submitForm(formId) {
+            var formData = $(formId).serializeJSON();
+            $.post({
+                url:"/save",
+                data:formData,
+                type:"json",
+                callback:function (data) {
+                    //根据返回的URL打开文章
+                    window.location = data.url;
+                }
+            });
+            $(formId).submit(function () {
+                $(formId).find("input[type='text']").each(function () {
+                    if ($(this).val()==null || $(this).val()==""){
+                        alert("请将信息输入完整！");
+                        $(this).focus();
+                        return false;
+                    }
+                });
+            });
+        }
         //点击保存按钮提交数据
 //        function save(obj) {
 //            var data = $("#blogForm").serializeJSON();

@@ -85,7 +85,7 @@
                 type:"json",
                 callback:function (data) {
                     //根据返回的URL打开文章
-                    window.location = data.url;
+                    window.location = "http://localhost:8089/blogpage/"+data.blogId;
                 }
             });
             $(formId).submit(function () {

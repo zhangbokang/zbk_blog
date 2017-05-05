@@ -1,0 +1,13 @@
+body{
+    padding: 20px 50px;
+    background-color: #808080;
+}
+.btn.btn-default{
+    height: 70%;
+}
+#editArea{
+    height: 85%;
+}
+#blogTitleArea{
+    height: 12%;
+}

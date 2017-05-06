@@ -1,6 +1,8 @@
 package com.zbkblog.controller;
 
 import com.zbkblog.medo.BlogDoc;
+import com.zbkblog.medo.Page;
+import com.zbkblog.utils.RequestToBean;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -17,7 +19,9 @@ import java.util.*;
 @Controller
 public class BlogController {
     @RequestMapping("index")
-    public String index(){
+    public String index(HttpServletRequest request){
+        Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);
+        //查询逻辑
         return "index";
     }
 

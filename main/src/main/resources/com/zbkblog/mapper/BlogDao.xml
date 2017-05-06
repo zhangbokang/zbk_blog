@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="com.zbkblog.dao.BlogDao">
+    <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
+    <select id="findEmps" parameterType="map"
+            resultType="com.xdl.entity.Emp">
+        <!-- 可以定义一个map传进来，然后下面使用map的key来取得value -->
+        select * from emp
+        <where>
+            <if test="name!=null"><!-- name是map中的key -->
+                ename like #{name} <!-- name是map中的key --><!-- 如：%a%，查询带a的 -->
+            </if>
+            <if test="hire!=null">
+                and hiredate=#{hire}
+                <!-- 使用java.sql.Data.valueOf("1981-01-11") 把一个字符串转成日期类型穿进map -->
+            </if>
+            <if test="dept!=null">
+                or deptno=#{dept}
+            </if>
+        </where>
+    </select>
+
+    <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
+    <select id="findEmps" parameterType="map"
+            resultType="com.xdl.entity.Emp">
+        <!-- 可以定义一个map传进来，然后下面使用map的key来取得value -->
+        select * from emp
+        <where>
+            <if test="name!=null"><!-- name是map中的key -->
+                ename like #{name} <!-- name是map中的key --><!-- 如：%a%，查询带a的 -->
+            </if>
+            <if test="hire!=null">
+                and hiredate=#{hire}
+                <!-- 使用java.sql.Data.valueOf("1981-01-11") 把一个字符串转成日期类型穿进map -->
+            </if>
+            <if test="dept!=null">
+                or deptno=#{dept}
+            </if>
+        </where>
+    </select>
+            <!-- 动态更新 ：传入参数的属性值为null就不参与update-->
+    <update id="updateEmp" parameterType="com.xdl.entity.Emp">
+    update emp
+    <set>
+        <if test="ename!=null">
+            ename=#{ename},
+        </if>
+        <if test="hiredate!=null">
+            hiredate=#{hiredate},
+        </if>
+        <choose>
+            <when test="sal!=null">sal=#{sal},</when>
+            <otherwise>sal=1800</otherwise>
+        </choose>
+        <if test="comm!=null">
+            comm=#{comm},
+        </if>
+        <if test="deptno!=null">
+            deptno=#{deptno}
+        </if>
+    </set>
+    where empno=#{empno}
+    </update>
+</mapper>

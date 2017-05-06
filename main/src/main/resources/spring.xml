@@ -58,4 +58,35 @@
         <property name="suffix" value=".jsp">
         </property>
     </bean>
+
+    <!-- 1定义dbcp数据库连接池 -->
+    <bean id="dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+        <property name="driverClassName"
+                  value="com.mysql.jdbc.Driver"></property>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/myblog?user=root&amp;password=root&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;failOverReadOnly=false"></property>
+    </bean>
+    <!-- 2创建SqlSessionFactory -->
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dbcp">
+        </property>
+        <!-- 加载mapper目录下所有的SQL定义文件 -->
+        <property name="mapperLocations"
+                  value="classpath:com/zbkblog/mapper/*.xml">
+        </property>
+    </bean>
+    <!-- 3定义MapperScannerConfigurer，将mapper(Dao)接口生成实现对象
+        使用接口名首字母小写做对象的id，所以要使用就直接使用接口名首字母小写就行 -->
+    <bean id="mapperScanner"
+          class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 3.1注入SqlSessionFactory -->
+        <property name="sqlSessionFactory" ref="ssf">
+        </property>
+        <!-- 3.2注入mapper接口所在位置,将dao包下所有接口生成实现对象(和SQL定义文件对应的Dao接口) -->
+        <property name="basePackage" value="com.zbkblog.dao">
+        </property>
+    </bean>
+
 </beans>

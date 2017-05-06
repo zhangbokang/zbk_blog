@@ -10,26 +10,22 @@
 <head>
     <title>文章编辑</title>
     <link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
-    <%--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">--%>
     <link rel="stylesheet" href="/static/css/editblog.css">
-    <style rel="stylesheet">
-        .addborder{
-            border: 1px solid #000000;
-        }
-    </style>
     <meta charset="utf-8">
 </head>
 <body>
     <form action="/save" method="post" id="blogForm">
+        <input type="hidden" name="blogId" id="blogId" value="${blogDoc.blogId}">
         <div class="row" id="blogTitleArea">
-            <div class="col-lg-4">
+            <div class="col-sm-4">
                 <div class="form-group">
                     <label for="blogTitle" class="control-label">标题：</label>
                     <input type="text" name="blogTitle" value="${blogDoc.blogTitle}" id="blogTitle" class="form-control" placeholder="请输入标题">
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="blogClass" class="control-label">分类：</label>
                     <select id="blogClass" name="blogClass" class="form-control">
@@ -39,70 +35,93 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-sm-4">
                 <div class="form-group">
                     <label for="blogTag" class="control-label">标签：</label>
                     <input type="text" name="blogTag" value="${blogDoc.blogTag}" id="blogTag" class="form-control" placeholder="请输入标签 多个使用逗号分隔">
                 </div>
             </div>
-            <div class="col-lg-1 center-block">
+            <div class="col-sm-1 center-block">
                 <%--<button class="btn btn-default" type="button" onclick="save(this)">保存</button>--%>
                     <button class="btn btn-default" type="button" onclick="submitForm('#blogForm')">保存</button>
             </div>
         </div>
         <div class="row" id="editArea">
-            <div class="col-lg-12">
+            <div class="col-sm-12">
                 <div id="editormd">
-                    <textarea style="display:none;">${blogDoc.blogMd}</textarea>
+                    <textarea style="display:none;" name="blogMd">${blogDoc.blogMd}</textarea>
                 </div>
             </div>
         </div>
 
     </form>
+    <div id="msg"></div>
 
-    <%--<br />--%>
-    <%--<br />--%>
-    <%--<h1>回显区域</h1>--%>
-    <%--<div class="row addborder">--%>
-        <%--<div class="col-lg-3 addborder" id="toc">--%>
-
-        <%--</div>--%>
-        <%--<div class="col-lg-9 addborder" id="blogdoc">${blogHtml}</div>--%>
-    <%--</div>--%>
-
-    <%--<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>--%>
-    <script src="/static/js/jquery-3.2.0.js"></script>
+    <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+    <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/static/editormd/editormd.js"></script>
-    <script src="/static/js/jquery.serializejson.js"></script>
+    <script src="/static/editormd/editormd.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+    <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
     <script type="text/javascript">
         //点击保存按钮提交表单
         function submitForm(formId) {
             var formData = $(formId).serializeJSON();
-            $.post({
+            //$(formId).find("div[class='form-group']")
+            if (formData.blogTitle == null || formData.blogTitle == ""){
+                var blogTitle = $(formId).find("#blogTitle");
+                //$(blogTitle).parent().addClass("has-error");
+                $(blogTitle).focus();
+                return ;
+            }
+            if (formData.blogClass == "请选择分类"){
+                $(formId).find("#blogClass").focus();
+                return ;
+            }
+            if (formData.blogTag == null || formData.blogTag == ""){
+                $(formId).find("#blogTag").focus();
+                return ;
+            }
+            if (formData.blogMd == null || formData.blogMd == ""){
+                $("#msg").show();
+                $("#msg").text("文章内容为空");
+                $("#msg").css("color","red");
+                setTimeout(function () {
+                    $("#msg").hide();
+                },2000);
+                return ;
+            }
+            $.ajax({
                 url:"/save",
+                type:"POST",
                 data:formData,
-                type:"json",
-                callback:function (data) {
+                dataType:"json",
+                error:function () {
+                    $("#msg").show();
+                    $("#msg").text("保存请求失败，请稍后再试");
+                    $("#msg").css("color","red");
+                    setTimeout(function () {
+                        $("#msg").hide();
+                    },2000);
+                },
+                success:function (data) {
                     //根据返回的URL打开文章
-                    window.location = "http://localhost:8089/blogpage/"+data.blogId;
-                }
-            });
-            $(formId).submit(function () {
-                $(formId).find("input[type='text']").each(function () {
-                    if ($(this).val()==null || $(this).val()==""){
-                        alert("请将信息输入完整！");
-                        $(this).focus();
-                        return false;
+                    //window.location = "/blogpage/"+data.blogId;
+                    $("#msg").show();
+                    $("#msg").text(data.msg);
+                    if (data.success == 1){
+                        $("#msg").css("color","#0F0");
+                    }else{
+                        $("#msg").css("color","red");
                     }
-                });
+                    setTimeout(function () {
+                        $("#msg").hide();
+                        $("#msg").removeClass("success");
+                    },1000);
+                }
+
             });
         }
-        //点击保存按钮提交数据
-//        function save(obj) {
-//            var data = $("#blogForm").serializeJSON();
-//            console.log(data);
-//        }
 
         //初始化编辑器
         var testEditor;

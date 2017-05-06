@@ -22,15 +22,15 @@
 <div id="main">
     <div class="row">
         <!-- 分类列表、标签列表等列表 -->
-        <div class="col-lg-2">
+        <div class="col-sm-2">
             <jsp:include page="classAndTagPanel.jsp"/>
         </div>
         <!-- 主体显示部分 -->
-        <div class="col-lg-7">
+        <div class="col-sm-7">
             <jsp:include page="bloglist.jsp"/>
         </div>
         <!-- 标签地图和排行列表 -->
-        <div class="col-lg-3">
+        <div class="col-sm-3">
             <jsp:include page="tagcloudAndOrderPanel.jsp"/>
         </div>
     </div>

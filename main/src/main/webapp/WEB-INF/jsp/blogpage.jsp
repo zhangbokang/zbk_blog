@@ -31,7 +31,7 @@
     <div class="col-lg-12">
         <div class="h2">${blogDoc.blogTitle}</div>
         <div class="row">
-            <div class="col-sm-6"><strong>最后更新&nbsp;2017-10-20 20:05</strong></div>
+            <div class="col-sm-6"><strong>最后更新&nbsp;${blogDoc.updataTimeStr}</strong></div>
             <div class="col-sm-4 col-sm-offset-2">
                 <span class="badge glyphicon glyphicon-eye-open">&nbsp;2500</span>
                 <a href="#">

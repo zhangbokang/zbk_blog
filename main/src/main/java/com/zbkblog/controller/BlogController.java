@@ -31,46 +31,63 @@ public class BlogController {
     }
 
     @RequestMapping("editblog")
-    public String editblog(){
+    public String editblog(HttpServletRequest request){
+        //编辑文章的ID
+        String blogId = request.getParameter("blogId");
+
         return "editblog";
     }
 
     @RequestMapping("save")
-    public String save(HttpServletRequest request){
-        String blogMd = request.getParameter("editormd-markdown-doc");
-        //String blogHtml = request.getParameter("editormd-html-code");
+    @ResponseBody
+    public Map<String,Object> save(HttpServletRequest request){
+        String blogId = request.getParameter("blogId");
+        String blogMd = request.getParameter("blogMd");
         String  blogTitle = request.getParameter("blogTitle");
         String blogClass = request.getParameter("blogClass");
         String blogTag = request.getParameter("blogTag");
 
+
+
+        //返回信息Map
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        //验证信息
+        if (blogTitle == null || blogTitle == ""){
+            map.put("success",0);
+            map.put("msg","保存失败，标题为空。");
+            return map;
+        }
+        if (blogTag == null || blogTag == ""){
+            map.put("success",0);
+            map.put("msg","保存失败，标签为空。");
+            return map;
+        }
+        if (blogClass == null || blogClass == ""){
+            map.put("success",0);
+            map.put("msg","保存失败，分类为空。");
+            return map;
+        }
+        if (blogMd == null || blogMd == ""){
+            map.put("success",0);
+            map.put("msg","保存失败，文章内容为空。");
+            return map;
+        }
+
         //封装成对象
         BlogDoc blogDoc = new BlogDoc();
+        blogDoc.setBlogId(blogId);
         blogDoc.setBlogTitle(blogTitle);
         blogDoc.setBlogTag(blogTag);
         blogDoc.setBlogMd(blogMd);
         blogDoc.setBlogClass(blogClass);
-        //blogDoc.setBlogHtml(blogHtml);
-        //request.setAttribute("blogHtml",blogHtml);
+        blogDoc.setUpdataTime(new Date().getTime());
 
-        if (blogTitle == null || blogTitle == ""){
-            request.setAttribute("blogDoc",blogDoc);
-            return "editblog";
-        }
-        if (blogTag == null || blogTag == ""){
-            request.setAttribute("blogDoc",blogDoc);
-            return "editblog";
-        }
-        if (blogClass == null || blogClass == ""){
-            request.setAttribute("blogDoc",blogDoc);
-            return "editblog";
-        }
-        if (blogMd == null || blogMd == ""){
-            request.setAttribute("blogDoc",blogDoc);
-            return "editblog";
-        }
+        //保存的逻辑
 
-        request.setAttribute("blogDoc",blogDoc);
-        return "blogpage";
+        map.put("success",1);
+        map.put("msg","保存成功");
+        return map;
     }
 
     @RequestMapping(value = "/upImage",method= RequestMethod.POST)
@@ -105,7 +122,7 @@ public class BlogController {
                 item.write(file);
                 map.put("success",1);
                 map.put("message","图片上传成功");
-                map.put("url","http://localhost:8089/images/"+fileName);
+                map.put("url","/images/"+fileName);
             }
         }catch (Exception e){
             map.put("success",0);

@@ -4,23 +4,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zbkblog.dao.BlogDao">
     <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
-    <!--<select id="findEmps" parameterType="map"-->
-            <!--resultType="com.xdl.entity.Emp">-->
-        <!--&lt;!&ndash; 可以定义一个map传进来，然后下面使用map的key来取得value &ndash;&gt;-->
-        <!--select * from emp-->
-        <!--<where>-->
-            <!--<if test="name!=null">&lt;!&ndash; name是map中的key &ndash;&gt;-->
-                <!--ename like #{name} &lt;!&ndash; name是map中的key &ndash;&gt;&lt;!&ndash; 如：%a%，查询带a的 &ndash;&gt;-->
-            <!--</if>-->
-            <!--<if test="hire!=null">-->
-                <!--and hiredate=#{hire}-->
-                <!--&lt;!&ndash; 使用java.sql.Data.valueOf("1981-01-11") 把一个字符串转成日期类型穿进map &ndash;&gt;-->
-            <!--</if>-->
-            <!--<if test="dept!=null">-->
-                <!--or deptno=#{dept}-->
-            <!--</if>-->
-        <!--</where>-->
-    <!--</select>-->
+    <select id="findBlogDoc" resultType="com.zbkblog.medo.BlogDoc">
+    <!-- parameterType="blogDoc" parameterMap=""-->
+
+         <!--可以定义一个map传进来，然后下面使用map的key来取得value -->
+        select * from blogdoc
+        <where>
+            <if test="name!=null"><!-- name是map中的key -->
+                ename like #{name} <!-- name是map中的key --><!-- 如：%a%，查询带a的 -->
+            </if>
+            <if test="hire!=null">
+                and hiredate=#{hire}
+                <!-- 使用java.sql.Data.valueOf("1981-01-11") 把一个字符串转成日期类型穿进map -->
+            </if>
+            <if test="dept!=null">
+                or deptno=#{dept}
+            </if>
+        </where>
+    </select>
+
+    <insert id="save">
+        insert into blogdoc (blogId,blogTitle,blogClass,blogTag,blogMd,updataTime,updataTimeStr)
+        values (#{blogId},#{blogTitle},#{blogClass},#{blogTag},#{blogMd},#{updataTime},#{updataTimeStr})
+    </insert>
 
     <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
     <!--<select id="findEmps" parameterType="map"-->

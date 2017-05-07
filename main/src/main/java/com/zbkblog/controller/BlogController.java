@@ -2,10 +2,12 @@ package com.zbkblog.controller;
 
 import com.zbkblog.medo.BlogDoc;
 import com.zbkblog.medo.Page;
+import com.zbkblog.service.BlogService;
 import com.zbkblog.utils.RequestToBean;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,9 @@ import java.util.*;
  */
 @Controller
 public class BlogController {
+    @Autowired
+    private BlogService blogService;
+
     @RequestMapping("index")
     public String index(HttpServletRequest request){
         Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);
@@ -80,7 +85,7 @@ public class BlogController {
 
         //封装成对象
         BlogDoc blogDoc = new BlogDoc();
-        blogDoc.setBlogId(blogId);
+        if (blogId != null && blogId != ""){blogDoc.setBlogId(Long.parseLong(blogId));}
         blogDoc.setBlogTitle(blogTitle);
         blogDoc.setBlogTag(blogTag);
         blogDoc.setBlogMd(blogMd);
@@ -88,9 +93,11 @@ public class BlogController {
         blogDoc.setUpdataTime(new Date().getTime());
 
         //保存的逻辑
+        blogService.save(blogDoc);
 
         map.put("success",1);
         map.put("msg","保存成功");
+        map.put("blogId",blogDoc.getBlogId());
         return map;
     }
 

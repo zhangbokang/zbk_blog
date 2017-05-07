@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by zhangbokang on 2017/5/4.
  */
 public class BlogDoc implements Serializable {
-    private String blogId;
+    private Long blogId;
     private String blogTitle; //博客文章标题
     private String blogClass; //博客文章分类
     private String blogTag; //博客文章标签
@@ -21,7 +21,7 @@ public class BlogDoc implements Serializable {
     public BlogDoc() {
     }
 
-    public BlogDoc(String blogId, String blogTitle, String blogClass, String blogTag, String blogMd, Long updataTime, String updataTimeStr, Integer openNumber, Integer supportNumber) {
+    public BlogDoc(Long blogId, String blogTitle, String blogClass, String blogTag, String blogMd, Long updataTime, String updataTimeStr, Integer openNumber, Integer supportNumber) {
         this.blogId = blogId;
         this.blogTitle = blogTitle;
         this.blogClass = blogClass;
@@ -33,11 +33,11 @@ public class BlogDoc implements Serializable {
         this.supportNumber = supportNumber;
     }
 
-    public String getBlogId() {
+    public Long getBlogId() {
         return blogId;
     }
 
-    public void setBlogId(String blogId) {
+    public void setBlogId(Long blogId) {
         this.blogId = blogId;
     }
 

@@ -1,3 +1,5 @@
+CREATE DATABASE `myblog` /*!40100 COLLATE 'utf8_general_ci' */
+
 CREATE TABLE `myblog`.`blogdoc`(
   `blogid` BIGINT(20) NOT NULL COMMENT '博客文章ID',
   `blogtitle` VARCHAR(100) NOT NULL COMMENT '博客标题',

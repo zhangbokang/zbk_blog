@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:component-scan base-package="com.zbkblog" />
 
@@ -59,14 +59,24 @@
         </property>
     </bean>
 
+    <!-- 注入数据库配置资源文件 -->
+    <util:properties id="dbCfg" location="classpath:db.properties"></util:properties>
+    <!-- 加载资源文件  其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载-->
+    <!--<context:property-placeholder location="classpath:db.properties" />-->
     <!-- 1定义dbcp数据库连接池 -->
     <bean id="dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="username" value="root"></property>
-        <property name="password" value="root"></property>
+        <!--<property name="username" value="${jdbc.username}"></property>-->
+        <!--<property name="password" value="${jdbc.password}"></property>-->
+        <!--<property name="driverClassName"-->
+                  <!--value="${jdbc.driverClassName}"></property>-->
+        <!--<property name="url"-->
+                  <!--value="${jdbc.url}"></property>-->
+        <property name="username" value="#{dbCfg.username}"></property>
+        <property name="password" value="#{dbCfg.password}"></property>
         <property name="driverClassName"
-                  value="com.mysql.jdbc.Driver"></property>
+                  value="#{dbCfg.driverClassName}"></property>
         <property name="url"
-                  value="jdbc:mysql://localhost:3306/myblog?user=root&amp;password=root&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;failOverReadOnly=false"></property>
+                  value="#{dbCfg.url}"></property>
     </bean>
     <!-- 2创建SqlSessionFactory -->
     <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">

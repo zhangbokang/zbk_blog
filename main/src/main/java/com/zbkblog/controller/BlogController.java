@@ -93,7 +93,7 @@ public class BlogController {
         blogDoc.setUpdataTime(new Date().getTime());
 
         //保存的逻辑
-        blogService.save(blogDoc);
+        blogDoc = blogService.save(blogDoc);
 
         map.put("success",1);
         map.put("msg","保存成功");

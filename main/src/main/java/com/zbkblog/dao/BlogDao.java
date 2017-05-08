@@ -25,14 +25,14 @@ public interface BlogDao {
      * @param blogDoc
      * @return
      */
-    BlogDoc save(BlogDoc blogDoc);
+    Integer save(BlogDoc blogDoc);
 
     /**
      * 更新博客
      * @param blogDoc
      * @return
      */
-    BlogDoc updata(BlogDoc blogDoc);
+    Integer updata(BlogDoc blogDoc);
 
     /**
      * 根据关键字link标题和文章

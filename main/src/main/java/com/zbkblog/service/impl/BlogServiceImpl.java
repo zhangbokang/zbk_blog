@@ -19,13 +19,17 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public BlogDoc save(BlogDoc blogDoc) {
+        Integer integer=null;
         if (blogDoc.getBlogId()!=null){
-            blogDoc = blogDao.updata(blogDoc);
+            integer = blogDao.updata(blogDoc);
         }else {
             blogDoc.setBlogId(100L);
-            blogDoc = blogDao.save(blogDoc);
+            integer = blogDao.save(blogDoc);
         }
-        return blogDoc;
+        if (integer==1){
+            return blogDoc;
+        }
+        return null;
     }
 
     @Override

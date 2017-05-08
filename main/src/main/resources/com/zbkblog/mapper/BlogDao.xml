@@ -6,27 +6,43 @@
     <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
     <select id="findBlogDoc" resultType="com.zbkblog.medo.BlogDoc">
     <!-- parameterType="blogDoc" parameterMap=""-->
-
-         <!--可以定义一个map传进来，然后下面使用map的key来取得value -->
-        select * from blogdoc
+        select blogId,blogTitle,blogClass,blogTag,blogMd,updataTime,updataTimeStr from blogdoc
         <where>
-            <if test="name!=null"><!-- name是map中的key -->
-                ename like #{name} <!-- name是map中的key --><!-- 如：%a%，查询带a的 -->
+            <if test="blogId!=null">
+                blogId=#{blogId}
             </if>
-            <if test="hire!=null">
-                and hiredate=#{hire}
-                <!-- 使用java.sql.Data.valueOf("1981-01-11") 把一个字符串转成日期类型穿进map -->
+            <if test="blogTitle!=null">
+                and blogTitle=#{blogTitle}
             </if>
-            <if test="dept!=null">
-                or deptno=#{dept}
+            <if test="blogClass!=null">
+                and blogClass=#{blogClass}
+            </if>
+            <if test="blogTag!=null">
+                and blogTag LIKE '%'#{blogTag}'%'
             </if>
         </where>
+    </select>
+
+    <select id="findBlogDocByBlogId" resultType="com.zbkblog.medo.BlogDoc">
+        <!-- parameterType="blogDoc" parameterMap=""-->
+        select * from blogdoc where blogId=#{blogId}
     </select>
 
     <insert id="save">
         insert into blogdoc (blogId,blogTitle,blogClass,blogTag,blogMd,updataTime,updataTimeStr)
         values (#{blogId},#{blogTitle},#{blogClass},#{blogTag},#{blogMd},#{updataTime},#{updataTimeStr})
     </insert>
+
+    <update id="updata">
+        update blogdoc set
+        blogTitle = #{blogTitle},
+        blogClass = #{blogClass},
+        blogTag = #{blogTag},
+        blogMd = #{blogMd},
+        updataTime = #{updataTime},
+        updataTimeStr = #{updataTimeStr}
+        where blogId = #{blogId}
+    </update>
 
     <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
     <!--<select id="findEmps" parameterType="map"-->

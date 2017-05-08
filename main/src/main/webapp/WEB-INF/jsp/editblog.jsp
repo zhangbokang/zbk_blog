@@ -10,12 +10,18 @@
 <head>
     <title>文章编辑</title>
     <link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">--%>
+    <%--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/editblog.css">
     <meta charset="utf-8">
 </head>
 <body>
+<div class="row">
+    <div class="col-sm-4">
+        <a href="/index"><b>返回主页</b></a>
+    </div>
+    <div class="col-sm-8" id="msg"></div>
+</div>
     <form action="/save" method="post" id="blogForm">
         <input type="hidden" name="blogId" id="blogId" value="${blogDoc.blogId}">
         <div class="row" id="blogTitleArea">
@@ -55,7 +61,8 @@
         </div>
 
     </form>
-    <div id="msg"></div>
+
+
 
     <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
     <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
@@ -67,19 +74,20 @@
         //点击保存按钮提交表单
         function submitForm(formId) {
             var formData = $(formId).serializeJSON();
-            //$(formId).find("div[class='form-group']")
             if (formData.blogTitle == null || formData.blogTitle == ""){
                 var blogTitle = $(formId).find("#blogTitle");
-                //$(blogTitle).parent().addClass("has-error");
                 $(blogTitle).focus();
+                alert("请填写标题");
                 return ;
             }
             if (formData.blogClass == "请选择分类"){
                 $(formId).find("#blogClass").focus();
+                alert("请选择分类");
                 return ;
             }
             if (formData.blogTag == null || formData.blogTag == ""){
                 $(formId).find("#blogTag").focus();
+                alert("请填写标签");
                 return ;
             }
             if (formData.blogMd == null || formData.blogMd == ""){
@@ -88,7 +96,7 @@
                 $("#msg").css("color","red");
                 setTimeout(function () {
                     $("#msg").hide();
-                },2000);
+                },4500);
                 return ;
             }
             $.ajax({
@@ -102,14 +110,13 @@
                     $("#msg").css("color","red");
                     setTimeout(function () {
                         $("#msg").hide();
-                    },2000);
+                    },4500);
                 },
                 success:function (data) {
-                    //根据返回的URL打开文章
-                    //window.location = "/blogpage/"+data.blogId;
                     $("#msg").show();
                     $("#msg").text(data.msg);
                     if (data.success == 1){
+                        $("#blogId").val(data.blogId);
                         $("#msg").css("color","#0F0");
                     }else{
                         $("#msg").css("color","red");
@@ -117,7 +124,7 @@
                     setTimeout(function () {
                         $("#msg").hide();
                         $("#msg").removeClass("success");
-                    },1000);
+                    },4500);
                 }
 
             });

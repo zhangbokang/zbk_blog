@@ -25,6 +25,12 @@ public interface BlogService {
     List<BlogDoc> findAllBlogDoc(BlogDoc blogDoc, Page page);
 
     /**
+     * 根据ID查询文章
+     * @param blogId
+     * @return
+     */
+    BlogDoc findBlogDocByBlogId(Long blogId);
+    /**
      * 根据关键字link标题和文章
      * 如果Page不为空则分页查询，否则返回所有
      * @param keyword

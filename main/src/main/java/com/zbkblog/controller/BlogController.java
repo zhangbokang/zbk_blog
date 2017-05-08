@@ -43,7 +43,12 @@ public class BlogController {
     public String editblog(HttpServletRequest request){
         //编辑文章的ID
         String blogId = request.getParameter("blogId");
-
+        if (blogId == null){
+            return "editblog";
+        }
+        //调用service查询
+        BlogDoc blogDoc = blogService.findBlogDocByBlogId(Long.parseLong(blogId));
+        request.setAttribute("blogDoc",blogDoc);
         return "editblog";
     }
 
@@ -59,7 +64,7 @@ public class BlogController {
 
 
         //返回信息Map
-        Map<String,Object> map = new HashMap<String,Object>();
+        Map<String,Object> map = new HashMap();
 
         //验证信息
         if (blogTitle == null || blogTitle == ""){

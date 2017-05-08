@@ -7,6 +7,7 @@ import com.zbkblog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class BlogServiceImpl implements BlogService {
         if (blogDoc.getBlogId()!=null){
             integer = blogDao.updata(blogDoc);
         }else {
-            blogDoc.setBlogId(100L);
+            blogDoc.setBlogId(new Date().getTime());
             integer = blogDao.save(blogDoc);
         }
         if (integer==1){
@@ -34,7 +35,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<BlogDoc> findAllBlogDoc(BlogDoc blogDoc, Page page) {
+        //List<BlogDoc> list = blogDao.findBlogDoc(blogDoc);
         return null;
+    }
+
+    @Override
+    public BlogDoc findBlogDocByBlogId(Long blogId) {
+        return blogDao.findBlogDocByBlogId(blogId);
     }
 
     @Override

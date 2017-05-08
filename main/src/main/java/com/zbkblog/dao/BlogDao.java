@@ -21,6 +21,13 @@ public interface BlogDao {
     List<BlogDoc> findBlogDoc(BlogDoc blogDoc,Page page);
 
     /**
+     * 根据文章ID查询文章
+     * @param blogId
+     * @return
+     */
+    BlogDoc findBlogDocByBlogId(Long blogId);
+
+    /**
      * 保存博客
      * @param blogDoc
      * @return

@@ -5,12 +5,20 @@ import com.zbkblog.medo.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
  */
 @Repository
 public interface BlogDao {
+
+    /**
+     * 分页查询所有
+     * @param blogDoc
+     * @return
+     */
+    List<BlogDoc> findAllBlogDocPaging(BlogDoc blogDoc);
 
     /**
      * 根据传入的对象的非空属性查询，如果Page非空，则分页，否则查询全部
@@ -55,12 +63,7 @@ public interface BlogDao {
      */
     //List<BlogDoc> findAll();
 
-    /**
-     * 分页查询所有
-     * @param page
-     * @return
-     */
-    //List<BlogDoc> findAllPaging(Page page);
+
 
     /**
      * 根据文章ID查询单个文章

@@ -3,10 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zbkblog.dao.BlogDao">
+    <!--BlogDoc对应的映射-->
+    <resultMap id="ResultBlogDoc" type="com.zbkblog.medo.BlogDoc" >
+        <id column="blogId" property="blogId" jdbcType="INTEGER" />
+        <result column="blogTitle" property="blogTitle" jdbcType="VARCHAR" />
+        <result column="blogClass" property="blogClass" jdbcType="VARCHAR" />
+        <result column="blogTag" property="blogTag" jdbcType="VARCHAR" />
+        <result column="blogMd" property="blogMd" jdbcType="VARCHAR" />
+        <result column="updataTime" property="updataTime" jdbcType="INTEGER" />
+        <result column="updataTimeStr" property="updataTimeStr" jdbcType="VARCHAR" />
+        <result column="openNumber" property="openNumber" jdbcType="INTEGER" />
+        <result column="supportNumber" property="supportNumber" jdbcType="INTEGER" />
+    </resultMap>
+
     <!-- 组合查询(where标签用在SQL中的where条件判断处) -->
     <select id="findBlogDoc" resultType="com.zbkblog.medo.BlogDoc">
-    <!-- parameterType="blogDoc" parameterMap=""-->
-        select blogId,blogTitle,blogClass,blogTag,blogMd,updataTime,updataTimeStr from blogdoc
+        <!-- parameterType="blogDoc" parameterMap=""-->
+        select * from blogdoc
         <where>
             <if test="blogId!=null">
                 blogId=#{blogId}
@@ -21,6 +34,20 @@
                 and blogTag LIKE '%'#{blogTag}'%'
             </if>
         </where>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="findAllBlogDocPaging" parameterType="com.zbkblog.medo.BlogDoc" resultMap="ResultBlogDoc">
+        SELECT *
+        FROM blogdoc
+        WHERE 1 = 1
+        <if test="blogClass!=null">
+            AND blogClass=#{blogClass}
+        </if>
+        <if test="blogTag!=null">
+            AND blogTag=#{blogTag}
+        </if>
+        ORDER BY updataTime
     </select>
 
     <select id="findBlogDocByBlogId" resultType="com.zbkblog.medo.BlogDoc">

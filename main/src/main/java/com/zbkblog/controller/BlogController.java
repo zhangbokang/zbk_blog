@@ -1,5 +1,6 @@
 package com.zbkblog.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zbkblog.medo.BlogDoc;
 import com.zbkblog.medo.Page;
 import com.zbkblog.service.BlogService;
@@ -25,8 +26,10 @@ public class BlogController {
 
     @RequestMapping("index")
     public String index(HttpServletRequest request){
-        Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);
+        //Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);
         //查询逻辑
+        PageInfo<BlogDoc> pageInfo =blogService.findAllBlogDocPaging(null,1,3);
+        request.setAttribute("pageInfo",pageInfo);
         return "index";
     }
 

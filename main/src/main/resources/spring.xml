@@ -80,12 +80,41 @@
     </bean>
     <!-- 2创建SqlSessionFactory -->
     <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dbcp">
-        </property>
+        <property name="dataSource" ref="dbcp" />
         <!-- 加载mapper目录下所有的SQL定义文件 -->
         <property name="mapperLocations"
                   value="classpath:com/zbkblog/mapper/*.xml">
         </property>
+        <!-- 分页插件相关 -->
+        <!--可能是实体类<property name="typeAliasesPackage" value="com.isea533.mybatis.model"/>-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            <!--数据库使用什么数据库-->
+                            helperDialect=mysql
+                            <!-- 默认false,将 RowBounds 中的 offset 参数当成 pageNum 使用
+                            可以用页码和页面大小两个参数进行分页。-->
+                            offsetAsPageNum=true
+                            <!--默认值为false，该参数对使用 RowBounds 作为分页参数时有效。
+                            当该参数设置为true时，使用 RowBounds 分页会进行 count 查询-->
+                            rowBoundsWithCount=true
+                            <!--分页合理化参数，默认值为false。当该参数设置为 true 时，
+                            pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），
+                            会查询最后一页。默认false 时，直接根据参数进行查询-->
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+        <!-- 分页插件相关 end -->
+
     </bean>
     <!-- 3定义MapperScannerConfigurer，将mapper(Dao)接口生成实现对象
         使用接口名首字母小写做对象的id，所以要使用就直接使用接口名首字母小写就行 -->

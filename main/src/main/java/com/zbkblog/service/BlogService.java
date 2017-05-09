@@ -1,9 +1,11 @@
 package com.zbkblog.service;
 
+import com.github.pagehelper.PageInfo;
 import com.zbkblog.medo.BlogDoc;
 import com.zbkblog.medo.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
@@ -16,13 +18,14 @@ public interface BlogService {
     BlogDoc save(BlogDoc blogDoc);
 
     /**
-     * 查询文章，传入一个BlogDoc对象，根据非空属性匹配
-     * 如果传入Page不为空则分页查询，否则查询全部
+     * 分页查询文章，传入一个BlogDoc对象，根据非空属性匹配
+     * 传入一个页码和页大小实现分页
      * @param blogDoc
-     * @param page
+     * @param pageNo
+     * @param pageSize
      * @return
      */
-    List<BlogDoc> findAllBlogDoc(BlogDoc blogDoc, Page page);
+    PageInfo<BlogDoc> findAllBlogDocPaging(BlogDoc blogDoc, Integer pageNo, Integer pageSize);
 
     /**
      * 根据ID查询文章

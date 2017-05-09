@@ -1,11 +1,9 @@
 package com.zbkblog.dao;
 
 import com.zbkblog.medo.BlogDoc;
-import com.zbkblog.medo.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
@@ -19,14 +17,6 @@ public interface BlogDao {
      * @return
      */
     List<BlogDoc> findAllBlogDocPaging(BlogDoc blogDoc);
-
-    /**
-     * 根据传入的对象的非空属性查询，如果Page非空，则分页，否则查询全部
-     * @param blogDoc
-     * @param page
-     * @return
-     */
-    List<BlogDoc> findBlogDoc(BlogDoc blogDoc,Page page);
 
     /**
      * 根据文章ID查询文章
@@ -55,7 +45,7 @@ public interface BlogDao {
      * @param keyword
      * @return
      */
-    List<BlogDoc> findBlogDocByKeyword(String keyword,Page page);
+    //List<BlogDoc> findBlogDocByKeyword(String keyword,Page page);
 
     /**
      * 查找所有文章

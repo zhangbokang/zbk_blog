@@ -2,10 +2,8 @@ package com.zbkblog.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zbkblog.medo.BlogDoc;
-import com.zbkblog.medo.Page;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
@@ -39,5 +37,5 @@ public interface BlogService {
      * @param keyword
      * @return
      */
-    List<BlogDoc> findBlogDocByKeyword(String keyword,Page page);
+    List<BlogDoc> findBlogDocByKeyword(String keyword,Integer pageNo, Integer pageSize);
 }

@@ -4,14 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zbkblog.dao.BlogDao;
 import com.zbkblog.medo.BlogDoc;
-import com.zbkblog.medo.Page;
 import com.zbkblog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
@@ -42,7 +40,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogDoc> findBlogDocByKeyword(String keyword, Page page) {
+    public List<BlogDoc> findBlogDocByKeyword(String keyword, Integer pageNo, Integer pageSize) {
         return null;
     }
 

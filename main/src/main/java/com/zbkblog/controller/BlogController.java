@@ -39,6 +39,19 @@ public class BlogController {
         return sb;
     }
 
+    @RequestMapping("blogpage")
+    public String blogpage(HttpServletRequest request){
+        //编辑文章的ID
+        String blogId = request.getParameter("blogId");
+//        if (blogId == null){
+//            return "index";
+//        }
+        //调用service查询
+        BlogDoc blogDoc = blogService.findBlogDocByBlogId(Long.parseLong(blogId));
+        request.setAttribute("blogDoc",blogDoc);
+        return "blogpage";
+    }
+
     @RequestMapping("editblog")
     public String editblog(HttpServletRequest request){
         //编辑文章的ID

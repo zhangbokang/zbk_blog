@@ -139,7 +139,7 @@
                     //height: 550,
                     path : '/static/editormd/lib/',
                     theme : "dark",
-                    previewTheme : "dark",
+                    //previewTheme : "dark",
                     editorTheme : "pastel-on-dark",
                     //markdown : md,  //要加载的md信息/文件，通常和ajax请求配合获取数据
                     codeFold : true,

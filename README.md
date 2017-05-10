@@ -12,3 +12,7 @@
 
 ##前端
 前端使用Bootstrap、jQuery、Bootstrap-table等
+
+jsp中截取字符串
+    http://blog.csdn.net/jaybill/article/details/52157308
+    http://blog.csdn.net/u013456370/article/details/52815544

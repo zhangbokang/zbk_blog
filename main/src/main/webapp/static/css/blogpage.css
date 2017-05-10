@@ -9,7 +9,7 @@ body{
     position:relative;
 }
 #portamento_container #blogToc{
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     float:none;
     position:absolute;
 }

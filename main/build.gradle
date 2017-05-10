@@ -74,6 +74,10 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser
     compile group: 'com.github.jsqlparser', name: 'jsqlparser', version: '1.0'
 
+    //JSTL支持
+    // https://mvnrepository.com/artifact/javax.servlet/jstl
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+
 }
 
 sourceSets {

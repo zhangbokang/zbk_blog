@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="jqueryui/jquery-ui.css" />
+</head>
+<body>
+<span class="caption">国籍：</span>
+<input type="text" class="btn w260" autocomplete="off" placeholder="按拼音首字母搜索" id="nationality" name="nationality">
+
+<script src="jquery-3.2.0.js"></script>
+<script src="jqueryui/jquery-ui.js"></script>
+<script>
+
+    /*
+     自动完成国籍搜索
+      */
+    //用来根据输入筛选结果集
+    function serchNationality(callBack,key) {
+        function isBigEnough(element, index, array) {
+            var re = new RegExp(key);
+            //返回true则保留轮询到的数组元素，返回false则不保留
+            if (re.test(array[index].spell) || re.test(array[index].label)){
+                return true;
+            }
+            return false;
+        }
+        callBack(NATIONALITY.filter(isBigEnough));//使用数组的filter来过滤
+    }
+    //搜索国籍的主要方法
+    function autoCompleteNationality(domId) {
+            $(domId).autocomplete({
+                minLength:0,
+                //用source加载列表数据
+                source: function (request, response) {
+                    var key = request.term.trim().toUpperCase();
+                    if (typeof(key) == "undefined" || key == "" || key == null){ //如果什么都没有输入，则加载列表的全部
+                        response(NATIONALITY)
+                    }
+                    //否则调用过滤方法加载过滤后的数据
+                    serchNationality(function (data) {
+                        response(data);
+                    },key);
+                },
+                create: function () { //创建的下拉列表
+                    $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        return $("<li>")
+                            .append($("<div>")).text(item.label)
+                            .appendTo(ul); //return的就是列表的HTML
+                    };
+                },
+                select: function (event, ui) { //选择一个选项后的操作
+                    var item = ui.item;
+                    $(this).val(ui.item.value);
+                    for (var i in item) {
+                        $(this).attr(i, item[i]);
+                    }
+                    event.preventDefault(); //阻止元素的默认行为
+                    $(this).blur(); //让当前元素失去焦点
+                }
+            }).focus(function (){
+                $(this).autocomplete("search");
+            });
+    }
+
+    //数据源
+    var NATIONALITY = [{"number":"0",label:"中国","spell":"ZG"},
+        {"number":"1",label:"美国","spell":"MG"},
+        {"number":"2",label:"英国","spell":"YG"},
+        {"number":"3",label:"法国","spell":"FG"},
+        {"number":"4",label:"德国","spell":"DG"},
+        {"number":"5",label:"俄罗斯","spell":"ELS"},
+        {"number":"6",label:"澳大利亚","spell":"ADLY"},
+        {"number":"7",label:"意大利","spell":"YDL"},
+        {"number":"8",label:"希腊","spell":"XL"},
+        {"number":"9",label:"埃及","spell":"AJ"},
+        {"number":"10",label:"日本","spell":"RB"},
+        {"number":"11",label:"韩国","spell":"HG"},
+        {"number":"12",label:"朝鲜","spell":"CX"},
+        {"number":"13",label:"印度","spell":"YD"},
+        {"number":"14",label:"老挝","spell":"LW"},
+        {"number":"15",label:"柬埔寨","spell":"JPZ"},
+        {"number":"16",label:"缅甸","spell":"MD"},
+        {"number":"17",label:"泰国","spell":"TG"}];
+    //自动完成国籍搜索
+    autoCompleteNationality('#nationality');
+
+</script>
+</body>
+</html>

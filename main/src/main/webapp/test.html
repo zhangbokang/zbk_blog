@@ -9,35 +9,50 @@
 <span class="caption">国籍：</span>
 <input type="text" class="btn w260" autocomplete="off" placeholder="按拼音首字母搜索" id="nationality" name="nationality">
 
-<div><button onclick="addSpell(NATIONALITY)">添加拼音</button></div>
+<div><button onclick="test()">添加拼音</button></div>
 <div id="abc"></div>
 <div id="def"></div>
 
 <script src="static/js/jquery-3.2.0.js"></script>
 <script src="static/jqueryui/jquery-ui.js"></script>
 <script src="static/spell/py.js"></script><!--汉字转拼音的js -->
+<script src="static/jSing/jSing.js"></script><!--json操作的工具集-->
 <script>
 
-    //给数据添加拼音
+    /**
+     * 给数据添加拼音
+     *
+     * 传入两个参数，
+     *  data：一个json数组
+     *  label：中文所在元素的key
+     *
+     * 返回
+     *  在原json数组的每个元素中添加两个字段
+     *      spell：大写的首字母
+     *      fullSpelling：大写的全拼
+     *
+    */
     function addSpell(data,label) {
-        var x = "";
-        var result = [{}];
+        var json = new Json();
         $.each(data,function (n,value) {
-            var temp = {};
-            temp.label = value.label;
-            temp.spell = pinyin.getCamelChars(value.label);
-            result.concat(temp);
-            x = x +","+ temp.label + ","+temp.spell;
-        })
-        $("#abc").text(x);
-
+            json.create(value,"spell",pinyin.getCamelChars(json.get(value,label)));
+            json.create(value,"fullSpelling",pinyin.getFullChars(json.get(value,label)).toUpperCase())
+        });
+        return data;
+    }
+    /*
+     * NATIONALITY_A：json数组，没有拼音信息
+     * 'label'：中文在元素中的key
+     */
+    function test() {
         var y = "";
-        $.each(result,function (n,value) {
-            y = y +","+ temp.label + ","+temp.spell;
+        $.each(addSpell(NATIONALITY_A,'label'),function (n,value) {
+            y = y +","+ value.label + ","+value.spell+","+value.fullSpelling;
         })
         $("#def").text(y);
-
     }
+
+
 
     /*
      自动完成国籍搜索
@@ -47,12 +62,12 @@
         function isBigEnough(element, index, array) {
             var re = new RegExp(key);
             //返回true则保留轮询到的数组元素，返回false则不保留
-            if (re.test(array[index].spell) || re.test(array[index].label)){
+            if (re.test(array[index].spell) || re.test(array[index].label) || re.test(array[index].fullSpelling)){
                 return true;
             }
             return false;
         }
-        callBack(NATIONALITY.filter(isBigEnough));//使用数组的filter来过滤
+        callBack(addSpell(NATIONALITY_A,'label').filter(isBigEnough));//使用数组的filter来过滤
     }
     //搜索国籍的主要方法
     function autoCompleteNationality(domId) {
@@ -62,7 +77,7 @@
                 source: function (request, response) {
                     var key = request.term.trim().toUpperCase();
                     if (typeof(key) == "undefined" || key == "" || key == null){ //如果什么都没有输入，则加载列表的全部
-                        response(NATIONALITY)
+                        response(addSpell(NATIONALITY_A,'label'))
                     }
                     //否则调用过滤方法加载过滤后的数据
                     serchNationality(function (data) {
@@ -92,24 +107,43 @@
 
 
     //数据源
-    var NATIONALITY = [{"number":"0",label:"中国","spell":"ZG"},
-        {"number":"1",label:"美国","spell":"MG"},
-        {"number":"2",label:"英国","spell":"YG"},
-        {"number":"3",label:"法国","spell":"FG"},
-        {"number":"4",label:"德国","spell":"DG"},
-        {"number":"5",label:"俄罗斯","spell":"ELS"},
-        {"number":"6",label:"澳大利亚","spell":"ADLY"},
-        {"number":"7",label:"意大利","spell":"YDL"},
-        {"number":"8",label:"希腊","spell":"XL"},
-        {"number":"9",label:"埃及","spell":"AJ"},
-        {"number":"10",label:"日本","spell":"RB"},
-        {"number":"11",label:"韩国","spell":"HG"},
-        {"number":"12",label:"朝鲜","spell":"CX"},
-        {"number":"13",label:"印度","spell":"YD"},
-        {"number":"14",label:"老挝","spell":"LW"},
-        {"number":"15",label:"柬埔寨","spell":"JPZ"},
-        {"number":"16",label:"缅甸","spell":"MD"},
-        {"number":"17",label:"泰国","spell":"TG"}];
+//    var NATIONALITY = [{"number":"0",label:"中国","spell":"ZG"},
+//        {"number":"1",label:"美国","spell":"MG"},
+//        {"number":"2",label:"英国","spell":"YG"},
+//        {"number":"3",label:"法国","spell":"FG"},
+//        {"number":"4",label:"德国","spell":"DG"},
+//        {"number":"5",label:"俄罗斯","spell":"ELS"},
+//        {"number":"6",label:"澳大利亚","spell":"ADLY"},
+//        {"number":"7",label:"意大利","spell":"YDL"},
+//        {"number":"8",label:"希腊","spell":"XL"},
+//        {"number":"9",label:"埃及","spell":"AJ"},
+//        {"number":"10",label:"日本","spell":"RB"},
+//        {"number":"11",label:"韩国","spell":"HG"},
+//        {"number":"12",label:"朝鲜","spell":"CX"},
+//        {"number":"13",label:"印度","spell":"YD"},
+//        {"number":"14",label:"老挝","spell":"LW"},
+//        {"number":"15",label:"柬埔寨","spell":"JPZ"},
+//        {"number":"16",label:"缅甸","spell":"MD"},
+//        {"number":"17",label:"泰国","spell":"TG"}];
+    var NATIONALITY_A =
+            [{label:"中国"},
+            {label:"美国"},
+            {label:"英国"},
+            {label:"法国"},
+            {label:"德国"},
+            {label:"俄罗斯"},
+            {label:"澳大利亚"},
+            {label:"意大利"},
+            {label:"希腊"},
+            {label:"埃及"},
+            {label:"日本"},
+            {label:"韩国"},
+            {label:"朝鲜"},
+            {label:"印度"},
+            {label:"老挝"},
+            {label:"柬埔寨"},
+            {label:"缅甸"},
+            {label:"泰国"}];
     //自动完成国籍搜索
     autoCompleteNationality('#nationality');
 

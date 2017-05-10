@@ -41,12 +41,12 @@
         return data;
     }
     /*
-     * NATIONALITY_A：json数组，没有拼音信息
+     * NATIONALITY：json数组，没有拼音信息
      * 'label'：中文在元素中的key
      */
     function test() {
         var y = "";
-        $.each(addSpell(NATIONALITY_A,'label'),function (n,value) {
+        $.each(addSpell(NATIONALITY,'label'),function (n,value) {
             y = y +","+ value.label + ","+value.spell+","+value.fullSpelling;
         })
         $("#def").text(y);
@@ -67,7 +67,7 @@
             }
             return false;
         }
-        callBack(addSpell(NATIONALITY_A,'label').filter(isBigEnough));//使用数组的filter来过滤
+        callBack(NATIONALITY_X.filter(isBigEnough));//使用数组的filter来过滤
     }
     //搜索国籍的主要方法
     function autoCompleteNationality(domId) {
@@ -77,7 +77,7 @@
                 source: function (request, response) {
                     var key = request.term.trim().toUpperCase();
                     if (typeof(key) == "undefined" || key == "" || key == null){ //如果什么都没有输入，则加载列表的全部
-                        response(addSpell(NATIONALITY_A,'label'))
+                        response(NATIONALITY_X)
                     }
                     //否则调用过滤方法加载过滤后的数据
                     serchNationality(function (data) {
@@ -125,7 +125,7 @@
 //        {"number":"15",label:"柬埔寨","spell":"JPZ"},
 //        {"number":"16",label:"缅甸","spell":"MD"},
 //        {"number":"17",label:"泰国","spell":"TG"}];
-    var NATIONALITY_A =
+    var NATIONALITY =
             [{label:"中国"},
             {label:"美国"},
             {label:"英国"},
@@ -144,6 +144,7 @@
             {label:"柬埔寨"},
             {label:"缅甸"},
             {label:"泰国"}];
+    var NATIONALITY_X=addSpell(NATIONALITY,'label');
     //自动完成国籍搜索
     autoCompleteNationality('#nationality');
 

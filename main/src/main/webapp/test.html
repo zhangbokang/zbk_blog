@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="jqueryui/jquery-ui.css" />
+    <link rel="stylesheet" href="static/jqueryui/jquery-ui.css" />
 </head>
 <body>
 <span class="caption">国籍：</span>
 <input type="text" class="btn w260" autocomplete="off" placeholder="按拼音首字母搜索" id="nationality" name="nationality">
 
-<script src="jquery-3.2.0.js"></script>
-<script src="jqueryui/jquery-ui.js"></script>
+<div><button onclick="addSpell(NATIONALITY)">添加拼音</button></div>
+<div id="abc"></div>
+
+<script src="static/js/jquery-3.2.0.js"></script>
+<script src="static/jqueryui/jquery-ui.js"></script>
+<script src="static/spell/py.js"></script><!--汉字转拼音的js -->
 <script>
+
+    //给数据添加拼音
+    function addSpell(data,label) {
+        var x = "";
+        $.each(data,function (n,value) {
+            x = x +","+ value.label + ","+pinyin.getCamelChars(value.label);
+        })
+        $("#abc").text(x);
+    }
 
     /*
      自动完成国籍搜索
@@ -63,6 +76,7 @@
                 $(this).autocomplete("search");
             });
     }
+
 
     //数据源
     var NATIONALITY = [{"number":"0",label:"中国","spell":"ZG"},

@@ -11,6 +11,7 @@
 
 <div><button onclick="addSpell(NATIONALITY)">添加拼音</button></div>
 <div id="abc"></div>
+<div id="def"></div>
 
 <script src="static/js/jquery-3.2.0.js"></script>
 <script src="static/jqueryui/jquery-ui.js"></script>
@@ -20,10 +21,22 @@
     //给数据添加拼音
     function addSpell(data,label) {
         var x = "";
+        var result = [{}];
         $.each(data,function (n,value) {
-            x = x +","+ value.label + ","+pinyin.getCamelChars(value.label);
+            var temp = {};
+            temp.label = value.label;
+            temp.spell = pinyin.getCamelChars(value.label);
+            result.concat(temp);
+            x = x +","+ temp.label + ","+temp.spell;
         })
         $("#abc").text(x);
+
+        var y = "";
+        $.each(result,function (n,value) {
+            y = y +","+ temp.label + ","+temp.spell;
+        })
+        $("#def").text(y);
+
     }
 
     /*

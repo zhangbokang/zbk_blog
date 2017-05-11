@@ -31,13 +31,20 @@ public class BlogController {
         return "index";
     }
 
-    @RequestMapping("test.md")
+    @RequestMapping("test")
     @ResponseBody
     public Object test(){
-//        return "#这是个文件";
-        StringBuilder sb = new StringBuilder();
-        sb.append("#hahaha哈哈哈哈");
-        return sb;
+        //PageInfo<BlogDoc> pageInfo =blogService.findAllBlogDocPaging(null,1,3);
+        //return pageInfo.getList();
+        
+        List list = new ArrayList();
+        for(int i=0;i<10;i++){
+            Map map = new HashMap();
+            map.put("label","用户"+i);
+            list.add(map);
+        }
+        return list;
+
     }
 
     @RequestMapping("blogpage")

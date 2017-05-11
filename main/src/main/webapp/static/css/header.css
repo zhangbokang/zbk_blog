@@ -1,0 +1,29 @@
+header{
+    padding-bottom: 1px;
+}
+header{
+    background: #ffffff;
+}
+header .nav-pills > li{
+    border: 1px solid #DDD;
+    padding: 0 20px 0 0;
+    border-radius: 25px;
+    margin-left: 10px;
+}
+header .nav-pills > li > a {
+    color: #444;
+    padding: 11px 0 11px 20px;
+    line-height: 14px;
+}
+
+header .nav-pills > li > a:hover,
+header .nav-pills > li > a:focus {
+    color: red;
+    background: transparent;
+}
+header .masthead{
+    padding: 70px 20px;
+}
+header #logo>img{
+    height: 60px;
+}

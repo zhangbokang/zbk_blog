@@ -16,3 +16,6 @@
 jsp中截取字符串
     http://blog.csdn.net/jaybill/article/details/52157308
     http://blog.csdn.net/u013456370/article/details/52815544
+
+mybatis惯用jdbcType数据类型
+    [http://www.baba.io/article/64199.html](http://www.baba.io/article/64199.html "mybatis惯用jdbcType数据类型")

@@ -1,56 +1,14 @@
-body{
-    padding: 50px 100px;
-    background: url("http://zhishi01.nos-eastchina1.126.net/bgc.jpg") no-repeat #dddddd fixed;
-    background-size: cover;
-}
+
 div{
     /*border: 1px red solid;*/
     /*background: #ffffff;*/
 }
-.list-group-item>a:hover,
-.list-group-item>a:focus{
+#main .list-group-item>a:hover,
+#main .list-group-item>a:focus{
     text-decoration: none;
 }
-.masthead{
-    padding: 70px 20px;
-}
-header,#main,footer{
-    background: #ffffff;
-}
-header{
-    padding-bottom: 1px;
-}
-#main{
-    padding: 10px;
-}
-.nav-pills > li{
-    border: 1px solid #DDD;
-    padding: 0 20px 0 0;
-    border-radius: 25px;
-    margin-left: 10px;
-}
-.nav-pills > li > a {
-    color: #444;
-    padding: 11px 0 11px 20px;
-    line-height: 14px;
-}
 
-.nav-pills > li > a:hover,
-.nav-pills > li > a:focus {
-    color: red;
-    background: transparent;
-}
-footer {
-    background-color: #333;
-    color: #eee;
-}
-.copyright{
-    color: #7b8690;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    text-align: center;
-    background-color: #232323;
-}
-#logo>img{
-    height: 60px;
+#main{
+    background: #ffffff;
+    padding: 10px;
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
@@ -18,6 +19,16 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService {
     @Autowired
     private BlogDao blogDao;
+
+    @Override
+    public List<String> findClass() {
+        return blogDao.findClass();
+    }
+
+    @Override
+    public List<String> findTag() {
+        return blogDao.findTag();
+    }
 
     @Override
     public BlogDoc save(BlogDoc blogDoc) {

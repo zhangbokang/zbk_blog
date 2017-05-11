@@ -14,9 +14,10 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">--%>
     <link rel="stylesheet" href="/static/css/blogpage.css">
+    <link rel="stylesheet" href="/static/css/common.css">
 </head>
 <body>
-
+<jsp:include page="header.jsp" />
 <div class="row">
     <div class="col-md-4" id="col4">
         <div id="portamento_container">
@@ -55,6 +56,7 @@
         </div>
     </div>
 </div>
+<jsp:include page="footer.jsp" />
 
 <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
 <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>

@@ -4,12 +4,25 @@ import com.zbkblog.medo.BlogDoc;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
  */
 @Repository
 public interface BlogDao {
+
+    /**
+     * 查询所有类
+     * @return
+     */
+    List<String> findClass();
+
+    /**
+     * 查询所有标签
+     * @return
+     */
+    List<String> findTag();
 
     /**
      * 分页查询所有

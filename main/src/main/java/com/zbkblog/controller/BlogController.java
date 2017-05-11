@@ -26,7 +26,7 @@ public class BlogController {
     public String index(HttpServletRequest request){
         //Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);
         //查询逻辑
-        PageInfo<BlogDoc> pageInfo =blogService.findAllBlogDocPaging(null,1,3);
+        PageInfo<BlogDoc> pageInfo =blogService.findAllBlogDocPaging(null,1,10);
         request.setAttribute("pageInfo",pageInfo);
         return "index";
     }
@@ -125,6 +125,18 @@ public class BlogController {
         map.put("msg","保存成功");
         map.put("blogId",blogDoc.getBlogId());
         return map;
+    }
+
+    @RequestMapping("/findblogClass")
+    @ResponseBody
+    public List findblogClass(){
+        return blogService.findClass();
+    }
+
+    @RequestMapping("/findblogTag")
+    @ResponseBody
+    public List findblogTag(){
+        return blogService.findTag();
     }
 
     @RequestMapping(value = "/upImage",method= RequestMethod.POST)

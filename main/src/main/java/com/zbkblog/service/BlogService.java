@@ -4,11 +4,25 @@ import com.github.pagehelper.PageInfo;
 import com.zbkblog.medo.BlogDoc;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/7.
  */
 public interface BlogService {
+
+    /**
+     * 查询所有类
+     * @return
+     */
+    List<String> findClass();
+
+    /**
+     * 查询所有标签
+     * @return
+     */
+    List<String> findTag();
+
     /**
      * 保存和更新博客文章
      * @return

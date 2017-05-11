@@ -10,8 +10,10 @@ import java.util.Date;
 public class BlogDoc implements Serializable {
     private Long blogId;
     private String blogTitle; //博客文章标题
-    private String blogClass; //博客文章分类
-    private String blogTag; //博客文章标签
+    private Integer blogClassId; //博客文章分类id
+    private String blogClassName; //博客文章分类名称
+    private Integer blogTagId; //博客文章标签id
+    private String blogTagName; //博客文章标签名称
     private String blogMd; //博客文章md内容
     private Long updataTime; //最后更新时间
     private String updataTimeStr; //最后更新时间字符串
@@ -21,11 +23,13 @@ public class BlogDoc implements Serializable {
     public BlogDoc() {
     }
 
-    public BlogDoc(Long blogId, String blogTitle, String blogClass, String blogTag, String blogMd, Long updataTime, String updataTimeStr, Integer openNumber, Integer supportNumber) {
+    public BlogDoc(Long blogId, String blogTitle, Integer blogClassId, String blogClassName, Integer blogTagId, String blogTagName, String blogMd, Long updataTime, String updataTimeStr, Integer openNumber, Integer supportNumber) {
         this.blogId = blogId;
         this.blogTitle = blogTitle;
-        this.blogClass = blogClass;
-        this.blogTag = blogTag;
+        this.blogClassId = blogClassId;
+        this.blogClassName = blogClassName;
+        this.blogTagId = blogTagId;
+        this.blogTagName = blogTagName;
         this.blogMd = blogMd;
         this.updataTime = updataTime;
         this.updataTimeStr = updataTimeStr;
@@ -49,20 +53,36 @@ public class BlogDoc implements Serializable {
         this.blogTitle = blogTitle;
     }
 
-    public String getBlogClass() {
-        return blogClass;
+    public Integer getBlogClassId() {
+        return blogClassId;
     }
 
-    public void setBlogClass(String blogClass) {
-        this.blogClass = blogClass;
+    public void setBlogClassId(Integer blogClassId) {
+        this.blogClassId = blogClassId;
     }
 
-    public String getBlogTag() {
-        return blogTag;
+    public String getBlogClassName() {
+        return blogClassName;
     }
 
-    public void setBlogTag(String blogTag) {
-        this.blogTag = blogTag;
+    public void setBlogClassName(String blogClassName) {
+        this.blogClassName = blogClassName;
+    }
+
+    public Integer getBlogTagId() {
+        return blogTagId;
+    }
+
+    public void setBlogTagId(Integer blogTagId) {
+        this.blogTagId = blogTagId;
+    }
+
+    public String getBlogTagName() {
+        return blogTagName;
+    }
+
+    public void setBlogTagName(String blogTagName) {
+        this.blogTagName = blogTagName;
     }
 
     public String getBlogMd() {

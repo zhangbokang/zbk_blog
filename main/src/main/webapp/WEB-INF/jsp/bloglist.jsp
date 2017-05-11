@@ -16,7 +16,8 @@
             <li class="list-group-item">
                 <a class="" href="blogpage?blogId=${blogDoc.blogId}">
                     <span class="h3">${blogDoc.blogTitle}</span>
-                    <p>${fn:substring(blogDoc.blogMd,0,60)} ...</p>
+                    <c:set var="blogMdStr" value="${fn:substring(blogDoc.blogMd,0,60)}" />
+                    <p> ...</p>
                 </a>
                 <div class="row">
                     <div class="col-sm-5">分类：${blogDoc.blogClass}</div>

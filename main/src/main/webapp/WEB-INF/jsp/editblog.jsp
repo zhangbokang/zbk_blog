@@ -34,11 +34,12 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="blogClass" class="control-label">分类：</label>
-                    <select id="blogClass" name="blogClass" class="form-control">
-                        <option checked>请选择分类</option>
-                        <option value="aa">AA</option>
-                        <option value="bb">BB</option>
-                    </select>
+                    <input type="text" id="blogClass" name="blogClass" autocomplete="off">
+                    <%--<select id="blogClass" name="blogClass" class="form-control">--%>
+                        <%--<option checked>请选择分类</option>--%>
+                        <%--<option value="aa">AA</option>--%>
+                        <%--<option value="bb">BB</option>--%>
+                    <%--</select>--%>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -70,6 +71,7 @@
     <script src="/static/editormd/editormd.min.js"></script>
     <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
     <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
+    <script src="/static/js/editblog.js"></script>
     <script type="text/javascript">
         //点击保存按钮提交表单
         function submitForm(formId) {

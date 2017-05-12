@@ -47,21 +47,33 @@
 
     <!-- 分页查询 -->
     <select id="findAllBlogDocPaging" parameterType="com.zbkblog.medo.BlogDoc" resultMap="ResultBlogDoc">
-        SELECT bd.blogId AS blogId,bd.blogTitle AS blogTitle,bd.blogClassId AS blogClassId,
-        bc.blogClassName AS blogClassName,bd.blogTagId AS blogTagId,bt.blogTagName AS blogTagName,
-        bd.blogMd AS blogMd,bd.updataTime AS updataTime,bd.updataTimeStr AS updataTimeStr,
-        bd.openNumber AS openNumber,bd.supportNumber AS supportNumber
-        FROM blogdoc AS bd LEFT JOIN blogclass AS bc ON bd.blogClassId=bc.blogClassId
-        LEFT JOIN blogtag AS bt ON bd.blogTagId=bt.blogTagId
+        SELECT *
+        FROM blogdoc
         WHERE 1 = 1
-        <if test="blogClassId!=null">
-            AND blogClassId=#{blogClassId}
+        <if test="blogClass!=null">
+            AND blogClass=#{blogClass}
         </if>
-        <if test="blogTagId!=null">
-            AND blogTagId=#{blogTagId}
+        <if test="blogTag!=null">
+            AND blogTag=#{blogTag}
         </if>
         ORDER BY updataTime
     </select>
+    <!--<select id="findAllBlogDocPaging" parameterType="com.zbkblog.medo.BlogDoc" resultMap="com.zbkblog.medo.BlogDoc">-->
+        <!--SELECT bd.blogId AS blogId,bd.blogTitle AS blogTitle,bd.blogClassId AS blogClassId,-->
+        <!--bc.blogClassName AS blogClassName,bd.blogTagId AS blogTagId,bt.blogTagName AS blogTagName,-->
+        <!--bd.blogMd AS blogMd,bd.updataTime AS updataTime,bd.updataTimeStr AS updataTimeStr,-->
+        <!--bd.openNumber AS openNumber,bd.supportNumber AS supportNumber-->
+        <!--FROM blogdoc AS bd LEFT JOIN blogclass AS bc ON bd.blogClassId=bc.blogClassId-->
+        <!--LEFT JOIN blogtag AS bt ON bd.blogTagId=bt.blogTagId-->
+        <!--WHERE 1 = 1-->
+        <!--<if test="blogClassId!=null">-->
+            <!--AND blogClassId=#{blogClassId}-->
+        <!--</if>-->
+        <!--<if test="blogTagId!=null">-->
+            <!--AND blogTagId=#{blogTagId}-->
+        <!--</if>-->
+        <!--ORDER BY updataTime-->
+    <!--</select>-->
 
     <insert id="save" parameterType="com.zbkblog.medo.BlogDoc">
         begin

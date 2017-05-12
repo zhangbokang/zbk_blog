@@ -79,8 +79,8 @@ public class BlogController {
         String blogId = request.getParameter("blogId");
         String blogMd = request.getParameter("blogMd");
         String  blogTitle = request.getParameter("blogTitle");
-        String blogClass = request.getParameter("blogClass");
-        String blogTag = request.getParameter("blogTag");
+//        String blogClass = request.getParameter("blogClass");
+//        String blogTag = request.getParameter("blogTag");
 
 
 
@@ -93,16 +93,16 @@ public class BlogController {
             map.put("msg","保存失败，标题为空。");
             return map;
         }
-        if (blogTag == null || blogTag == ""){
-            map.put("success",0);
-            map.put("msg","保存失败，标签为空。");
-            return map;
-        }
-        if (blogClass == null || blogClass == ""){
-            map.put("success",0);
-            map.put("msg","保存失败，分类为空。");
-            return map;
-        }
+//        if (blogTag == null || blogTag == ""){
+//            map.put("success",0);
+//            map.put("msg","保存失败，标签为空。");
+//            return map;
+//        }
+//        if (blogClass == null || blogClass == ""){
+//            map.put("success",0);
+//            map.put("msg","保存失败，分类为空。");
+//            return map;
+//        }
         if (blogMd == null || blogMd == ""){
             map.put("success",0);
             map.put("msg","保存失败，文章内容为空。");
@@ -113,9 +113,9 @@ public class BlogController {
         BlogDoc blogDoc = new BlogDoc();
         if (blogId != null && blogId != ""){blogDoc.setBlogId(Long.parseLong(blogId));}
         blogDoc.setBlogTitle(blogTitle);
-        blogDoc.setBlogTag(blogTag);
+//        blogDoc.setBlogTag(blogTag);
         blogDoc.setBlogMd(blogMd);
-        blogDoc.setBlogClass(blogClass);
+//        blogDoc.setBlogClass(blogClass);
         blogDoc.setUpdataTime(new Date().getTime());
 
         //保存的逻辑

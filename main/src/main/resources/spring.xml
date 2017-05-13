@@ -84,8 +84,7 @@
         </property>
          -->
         <!-- 指定数据库参数 -->
-        <property name="dataSource" ref="dataSource">
-        </property>
+        <property name="dataSource" ref="dataSource"></property>
         <!-- 指定hibernate参数 -->
         <property name="hibernateProperties">
             <props>
@@ -109,8 +108,8 @@
     </bean>
 
     <!-- 配置事务异常封装 -->
-    <bean id="persistenceExceptionTranslationPostProcessor"
-          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+    <!--<bean id="persistenceExceptionTranslationPostProcessor"-->
+          <!--class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
 
 
     <!--  声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
@@ -124,7 +123,8 @@
         </tx:attributes>
     </tx:advice>
 
-    <aop:config expose-proxy="true">
+    <!--<aop:config expose-proxy="true">-->
+    <aop:config>
         <!-- 只对业务逻辑层实施事务 -->
         <aop:pointcut id="txPointcut" expression="execution(* com.zbkblog.service..*.*(..))" />
         <!-- aop:pointcut id="txPointcut" expression="execution(* cn.himto.module.web..service..*.*(..)) OR (execution (* cn.himto.module.XXX.service..*.*(..)))" /-->

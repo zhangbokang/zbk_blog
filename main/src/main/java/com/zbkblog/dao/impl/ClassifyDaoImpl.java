@@ -3,7 +3,7 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.ClassifyDao;
 import com.zbkblog.entity.Classify;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,33 +15,35 @@ import java.util.List;
  */
 @Repository("classifyDao")
 @Transactional
-public class ClassifyDaoImpl implements ClassifyDao {
+public class ClassifyDaoImpl extends HibernateDaoSupport implements ClassifyDao {
     @Resource
-    private SessionFactory sessionFactory;
+    public void setSessionFacotry(SessionFactory sessionFacotry){
+        super.setSessionFactory(sessionFacotry);
+    }
 
     @Override
     public List<Classify> findAll() {
         String hql = "from classify";
-        return sessionFactory.getCurrentSession().createQuery(hql).list();
+        return (List)getHibernateTemplate().find(hql,Classify.class);
     }
 
     @Override
     public Classify findById(Long id) {
-        return sessionFactory.getCurrentSession().load(Classify.class,id);
+        return getHibernateTemplate().load(Classify.class,id);
     }
 
     @Override
     public void deleteById(Long id) {
-        sessionFactory.getCurrentSession().delete("id",id);
+        getHibernateTemplate().delete("id",id);
     }
 
     @Override
     public void save(Classify classify) {
-        sessionFactory.getCurrentSession().save(classify);
+        getHibernateTemplate().save(classify);
     }
 
     @Override
     public void update(Classify classify) {
-        sessionFactory.getCurrentSession().update(classify);
+        getHibernateTemplate().update(classify);
     }
 }

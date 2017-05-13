@@ -4,12 +4,13 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by zhangbokang on 2017/5/13.
  */
 @Entity
-public class Comment {
+public class Comment implements Serializable {
     private long id;
     private Long docId;
     private String content;

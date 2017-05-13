@@ -62,33 +62,33 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
-    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
+//    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.1.1'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
-    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2'
+//    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.4.2'
 
     //hibernate
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.10.Final'
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
-    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.1.Final'
+//    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.4.1.Final'
     // https://mvnrepository.com/artifact/org.springframework/spring-hibernate
     compile group: 'org.springframework', name: 'spring-hibernate', version: '1.2.9'
     // https://mvnrepository.com/artifact/net.sf.hibernate/hibernate
-    compile group: 'net.sf.hibernate', name: 'hibernate', version: '2.1.8'
+//    compile group: 'net.sf.hibernate', name: 'hibernate', version: '2.1.8'
     // https://mvnrepository.com/artifact/net.sf.ehcache/ehcache
-    compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.4'
+//    compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.4'
     // https://mvnrepository.com/artifact/net.sf.ehcache/ehcache-core
-    compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.6.11'
+//    compile group: 'net.sf.ehcache', name: 'ehcache-core', version: '2.6.11'
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
-    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.10.Final'
+//    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.2.10.Final'
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
 //    compile group: 'org.hibernate', name: 'hibernate-annotations', version: '3.5.6-Final'
-// https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.0-api
-    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api', version: '1.0.1.Final'
-// https://mvnrepository.com/artifact/org.hibernate/hibernate-ehcache
-    compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.2.10.Final'
+    // https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.0-api
+//    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api', version: '1.0.1.Final'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-ehcache
+//    compile group: 'org.hibernate', name: 'hibernate-ehcache', version: '5.2.10.Final'
     // https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations
-    compile group: 'org.hibernate.common', name: 'hibernate-commons-annotations', version: '5.0.1.Final'
+//    compile group: 'org.hibernate.common', name: 'hibernate-commons-annotations', version: '5.0.1.Final'
 
     // https://mvnrepository.com/artifact/com.mchange/c3p0
     compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.2'

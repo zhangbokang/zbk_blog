@@ -20,7 +20,7 @@ public class DocServiceImpl implements DocService {
 
     @Override
     public Doc save(Doc doc) {
-        if (doc.getId() == 0){
+        if (doc.getId() == null){
             doc.setId(new Date().getTime());
         }
         docDao.save(doc);

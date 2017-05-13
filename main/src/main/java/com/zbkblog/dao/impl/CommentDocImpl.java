@@ -3,7 +3,6 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.CommentDao;
 import com.zbkblog.entity.Comment;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,37 +22,37 @@ public class CommentDocImpl implements CommentDao {
     @Override
     public List<Comment> findAll() {
         String hql = "from comment";
-        return sessionFactory.getCurrentSession().createQuery(hql).list();
+        return sessionFactory.openSession().createQuery(hql).list();
     }
 
     @Override
     public Comment findById(Long id) {
-        return sessionFactory.getCurrentSession().load(Comment.class,id);
+        return sessionFactory.openSession().load(Comment.class,id);
     }
 
     @Override
     public List<Comment> findByDocId(Long docId) {
         String hql = "from comment where doc_id=:docId";
-        return sessionFactory.getCurrentSession().createQuery(hql).setParameter("docId",docId).list();
+        return sessionFactory.openSession().createQuery(hql).setParameter("docId",docId).list();
     }
 
     @Override
     public void deleteByDocId(Long docId) {
-        sessionFactory.getCurrentSession().delete("docId",docId);
+        sessionFactory.openSession().delete("docId",docId);
     }
 
     @Override
     public void save(Comment comment) {
-        sessionFactory.getCurrentSession().save(comment);
+        sessionFactory.openSession().save(comment);
     }
 
     @Override
     public void update(Comment comment) {
-        sessionFactory.getCurrentSession().update(comment);
+        sessionFactory.openSession().update(comment);
     }
 
     @Override
     public void deleteById(Long id) {
-        sessionFactory.getCurrentSession().delete("id",id);
+        sessionFactory.openSession().delete("id",id);
     }
 }

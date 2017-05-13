@@ -4,13 +4,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by zhangbokang on 2017/5/13.
  */
 @Entity
-public class Doc {
-    private long id;
+public class Doc implements Serializable{
+    private Long id;
     private String title;
     private String docMd;
     private Long classifyId;
@@ -21,11 +22,11 @@ public class Doc {
 
     @Id
     @Column(name = "id")
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

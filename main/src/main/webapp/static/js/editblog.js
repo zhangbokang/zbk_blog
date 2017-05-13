@@ -79,5 +79,5 @@ var Myfn={
 }
 
 //页面加载时调用一次自动完成来初始化
-Myfn.autoComplete("blogClass");
-Myfn.autoComplete("blogTag");
+Myfn.autoComplete("classify");
+Myfn.autoComplete("tag");

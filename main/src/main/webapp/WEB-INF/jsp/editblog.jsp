@@ -22,19 +22,19 @@
     </div>
     <div class="col-sm-8" id="msg"></div>
 </div>
-    <form action="/save" method="post" id="blogForm">
-        <input type="hidden" name="blogId" id="blogId" value="${blogDoc.blogId}">
+    <form action="/save" method="post" id="docForm">
+        <input type="hidden" name="docId" id="docId" value="${doc.id}">
         <div class="row" id="blogTitleArea">
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="blogTitle" class="control-label">标题：</label>
-                    <input type="text" name="blogTitle" value="${blogDoc.blogTitle}" id="blogTitle" class="form-control" placeholder="请输入标题">
+                    <label for="title" class="control-label">标题：</label>
+                    <input type="text" name="title" value="${doc.title}" id="title" class="form-control" placeholder="请输入标题">
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="blogClass" class="control-label">分类：</label>
-                    <input type="text" id="blogClass" name="blogClass" autocomplete="off">
+                    <label for="classify" class="control-label">分类：</label>
+                    <input type="text" class="form-control" id="classify" autocomplete="off" placeholder="请输入分类">
                     <%--<select id="blogClass" name="blogClass" class="form-control">--%>
                         <%--<option checked>请选择分类</option>--%>
                         <%--<option value="aa">AA</option>--%>
@@ -44,19 +44,19 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="blogTag" class="control-label">标签：</label>
-                    <input type="text" name="blogTag" value="${blogDoc.blogTag}" id="blogTag" class="form-control" placeholder="请输入标签 多个使用逗号分隔">
+                    <label for="tag" class="control-label">标签：</label>
+                    <input type="text" value="${doc.tagId}" id="tag" class="form-control" placeholder="请输入标签 多个使用逗号分隔">
                 </div>
             </div>
             <div class="col-sm-1 center-block">
                 <%--<button class="btn btn-default" type="button" onclick="save(this)">保存</button>--%>
-                    <button class="btn btn-default" type="button" onclick="submitForm('#blogForm')">保存</button>
+                    <button class="btn btn-default" type="button" onclick="submitForm('#docForm')">保存</button>
             </div>
         </div>
         <div class="row" id="editArea">
             <div class="col-sm-12">
                 <div id="editormd">
-                    <textarea style="display:none;" name="blogMd">${blogDoc.blogMd}</textarea>
+                    <textarea style="display:none;" name="docMd">${doc.docMd}</textarea>
                 </div>
             </div>
         </div>
@@ -76,23 +76,24 @@
         //点击保存按钮提交表单
         function submitForm(formId) {
             var formData = $(formId).serializeJSON();
-            if (formData.blogTitle == null || formData.blogTitle == ""){
-                var blogTitle = $(formId).find("#blogTitle");
-                $(blogTitle).focus();
+            if (formData.title == null || formData.title == ""){
+                $($(formId).find("#title")).focus();
                 alert("请填写标题");
                 return ;
             }
-            if (formData.blogClass == "请选择分类"){
-                $(formId).find("#blogClass").focus();
-                alert("请选择分类");
-                return ;
-            }
-            if (formData.blogTag == null || formData.blogTag == ""){
-                $(formId).find("#blogTag").focus();
-                alert("请填写标签");
-                return ;
-            }
-            if (formData.blogMd == null || formData.blogMd == ""){
+//            formData.classifyId = $(formId).find("#classify").attr("classifyId");
+//            if (formData.classifyId == null || formData.classifyId == ""){
+//                $(formId).find("#classify").focus();
+//                alert("请填写分类");
+//                return ;
+//            }
+//            formData.tagId = $(formId).find("#tag").attr("tagId");
+//            if (formData.tagId == null || formData.tagId == ""){
+//                $(formId).find("#tag").focus();
+//                alert("请填写标签");
+//                return ;
+//            }
+            if (formData.docMd == null || formData.docMd == ""){
                 $("#msg").show();
                 $("#msg").text("文章内容为空");
                 $("#msg").css("color","red");
@@ -118,14 +119,14 @@
                     $("#msg").show();
                     $("#msg").text(data.msg);
                     if (data.success == 1){
-                        $("#blogId").val(data.blogId);
+                        $("#docId").val(data.docId);
                         $("#msg").css("color","#0F0");
                     }else{
                         $("#msg").css("color","red");
                     }
                     setTimeout(function () {
                         $("#msg").hide();
-                        $("#msg").removeClass("success");
+//                        $("#msg").removeClass("success");
                     },4500);
                 }
 

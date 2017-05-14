@@ -1,32 +1,21 @@
 package com.zbkblog.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
-
 /**
- * Created by zhangbokang on 2017/5/13.
+ * Created by zhangbokang on 2017/5/14.
  */
-@Entity
-public class Tag implements Serializable {
-    private long id;
+public class Tag {
+    private long tagId;
     private String name;
     private Long createTime;
 
-    @Id
-    @Column(name = "id")
-    public long getId() {
-        return id;
+    public long getTagId() {
+        return tagId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setTagId(long tagId) {
+        this.tagId = tagId;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -35,8 +24,6 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "create_time")
     public Long getCreateTime() {
         return createTime;
     }
@@ -52,7 +39,7 @@ public class Tag implements Serializable {
 
         Tag tag = (Tag) o;
 
-        if (id != tag.id) return false;
+        if (tagId != tag.tagId) return false;
         if (name != null ? !name.equals(tag.name) : tag.name != null) return false;
         if (createTime != null ? !createTime.equals(tag.createTime) : tag.createTime != null) return false;
 
@@ -61,7 +48,7 @@ public class Tag implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (int) (tagId ^ (tagId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         return result;

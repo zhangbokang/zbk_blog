@@ -64,7 +64,7 @@ public class DocController {
 
         //封装成对象
         Doc doc = new Doc();
-        if (id != null && id != ""){doc.setId(Long.parseLong(id));}
+        if (id != null && id != ""){doc.setDocId(Long.parseLong(id));}
         doc.setTitle(title);
         doc.setDocMd(docMd);
         //doc.setClassifyId(Long.valueOf(classifyId));
@@ -75,7 +75,7 @@ public class DocController {
 
         map.put("success",1);
         map.put("msg","保存成功");
-        map.put("docId",doc.getId());
+        map.put("docId",doc.getDocId());
         return map;
     }
 

@@ -1,32 +1,21 @@
 package com.zbkblog.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.io.Serializable;
-
 /**
- * Created by zhangbokang on 2017/5/13.
+ * Created by zhangbokang on 2017/5/14.
  */
-@Entity
-public class Classify implements Serializable {
-    private long id;
+public class Classify {
+    private long classifyId;
     private String name;
     private Long createTime;
 
-    @Id
-    @Column(name = "id")
-    public long getId() {
-        return id;
+    public long getClassifyId() {
+        return classifyId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setClassifyId(long classifyId) {
+        this.classifyId = classifyId;
     }
 
-    @Basic
-    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -35,8 +24,6 @@ public class Classify implements Serializable {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "create_time")
     public Long getCreateTime() {
         return createTime;
     }
@@ -52,7 +39,7 @@ public class Classify implements Serializable {
 
         Classify classify = (Classify) o;
 
-        if (id != classify.id) return false;
+        if (classifyId != classify.classifyId) return false;
         if (name != null ? !name.equals(classify.name) : classify.name != null) return false;
         if (createTime != null ? !createTime.equals(classify.createTime) : classify.createTime != null) return false;
 
@@ -61,7 +48,7 @@ public class Classify implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
+        int result = (int) (classifyId ^ (classifyId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         return result;

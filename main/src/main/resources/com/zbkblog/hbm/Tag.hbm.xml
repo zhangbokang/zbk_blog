@@ -5,7 +5,10 @@
 <hibernate-mapping>
 
     <class name="com.zbkblog.entity.Tag" table="tag" schema="zbk_blog">
-        <id name="id" column="id"/>
+        <id name="tagId" column="tag_id">
+            <generator class="com.zbkblog.utils.GeneratorNumberId">
+            </generator>
+        </id>
         <property name="name" column="name"/>
         <property name="createTime" column="create_time"/>
     </class>

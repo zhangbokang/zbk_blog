@@ -12,6 +12,6 @@ import java.io.Serializable;
 public class GeneratorNumberId implements IdentifierGenerator {
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        return System.currentTimeMillis();
+        return System.currentTimeMillis()/1000;
     }
 }

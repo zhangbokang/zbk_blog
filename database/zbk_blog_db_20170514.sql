@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/5/13 6:40:19                            */
+/* Created on:     2017/5/14 23:22:38                           */
 /*==============================================================*/
 
 
@@ -17,13 +17,13 @@ drop table if exists tag;
 /*==============================================================*/
 create table classify
 (
-   classify_id          bigint(10) not null comment '·ÖÀàid',
-   name                 varchar(20) binary comment '·ÖÀàÃû³Æ',
-   create_time          bigint(10) comment '·ÖÀà´´½¨Ê±¼äµÄÊ±¼ä´Á',
+   classify_id          bigint(10) not null comment 'åˆ†ç±»id',
+   name                 varchar(20) binary comment 'åˆ†ç±»åç§°',
+   create_time          bigint(10) comment 'åˆ†ç±»åˆ›å»ºæ—¶é—´çš„æ—¶é—´æˆ³',
    primary key (classify_id)
 );
 
-alter table classify comment 'ÎÄÕÂ·ÖÀà±í';
+alter table classify comment 'æ–‡ç« åˆ†ç±»è¡¨';
 
 /*==============================================================*/
 /* Table: comment                                               */
@@ -31,46 +31,46 @@ alter table classify comment 'ÎÄÕÂ·ÖÀà±í';
 create table comment
 (
    comment_id           bigint(10) not null,
-   doc_id               bigint(10) comment 'ÆÀÂÛid',
-   content              varchar(500) binary comment 'ÆÀÂÛÄÚÈİ',
-   create_time          bigint(10) comment 'ÆÀÂÛ·¢±íÊ±¼äµÄÊ±¼ä´Á',
-   favor_number         bigint(8) comment 'ÆÀÂÛµãÔŞÊıÁ¿',
-   oppose_number        bigint(8) comment 'ÆÀÂÛ·´¶ÔÊıÁ¿',
+   doc_id               bigint(10) comment 'è¯„è®ºid',
+   content              varchar(500) binary comment 'è¯„è®ºå†…å®¹',
+   create_time          bigint(10) comment 'è¯„è®ºå‘è¡¨æ—¶é—´çš„æ—¶é—´æˆ³',
+   favor_number         bigint(8) comment 'è¯„è®ºç‚¹èµæ•°é‡',
+   oppose_number        bigint(8) comment 'è¯„è®ºåå¯¹æ•°é‡',
    primary key (comment_id)
 );
 
-alter table comment comment 'ÎÄÕÂÆÀÂÛ±í';
+alter table comment comment 'æ–‡ç« è¯„è®ºè¡¨';
 
 /*==============================================================*/
 /* Table: doc                                                   */
 /*==============================================================*/
 create table doc
 (
-   doc_id               bigint(10) not null comment 'ÎÄÕÂid',
-   title                varchar(50) binary comment 'ÎÄÕÂ±êÌâ',
-   doc_md               text comment 'ÎÄÕÂµÄmkĞÎÊ½£¬makedownÓïÑÔĞ´µÄ',
-   classify_id          bigint(5) comment 'ÎÄÕÂ·ÖÀàid',
-   tag_id               bigint(5) comment 'ÎÄÕÂ±êÇ©id',
-   update_time          bigint(10) comment '×îºó¸üĞÂÊ±¼äµÄÊ±¼ä´Á',
-   favor_number         bigint(8) comment 'ÔŞ³ÉÊıÁ¿£¬µãÔŞµÄÊıÁ¿',
-   open_number          bigint(8) comment '´ò¿ª´ÎÊı',
+   doc_id               bigint(10) not null comment 'æ–‡ç« id',
+   title                varchar(50) binary comment 'æ–‡ç« æ ‡é¢˜',
+   doc_md               text comment 'æ–‡ç« çš„mkå½¢å¼ï¼Œmakedownè¯­è¨€å†™çš„',
+   classify_id          bigint(5) comment 'æ–‡ç« åˆ†ç±»id',
+   tag_id               bigint(5) comment 'æ–‡ç« æ ‡ç­¾id',
+   update_time          bigint(10) comment 'æœ€åæ›´æ–°æ—¶é—´çš„æ—¶é—´æˆ³',
+   favor_number         bigint(8) comment 'èµæˆæ•°é‡ï¼Œç‚¹èµçš„æ•°é‡',
+   open_number          bigint(8) comment 'æ‰“å¼€æ¬¡æ•°',
    primary key (doc_id)
 );
 
-alter table doc comment '±£´æÎÄÕÂÖ÷ÌâĞÅÏ¢';
+alter table doc comment 'ä¿å­˜æ–‡ç« ä¸»é¢˜ä¿¡æ¯';
 
 /*==============================================================*/
 /* Table: tag                                                   */
 /*==============================================================*/
 create table tag
 (
-   tag_id               bigint(10) not null comment '±êÇ©id',
-   name                 varchar(20) binary comment '±êÇ©Ãû³Æ',
-   create_time          bigint(10) comment '±êÇ©´´½¨Ê±¼äµÄÊ±¼ä´Á',
+   tag_id               bigint(10) not null comment 'æ ‡ç­¾id',
+   name                 varchar(20) binary comment 'æ ‡ç­¾åç§°',
+   create_time          bigint(10) comment 'æ ‡ç­¾åˆ›å»ºæ—¶é—´çš„æ—¶é—´æˆ³',
    primary key (tag_id)
 );
 
-alter table tag comment 'ÎÄÕÂ±êÇ©±í';
+alter table tag comment 'æ–‡ç« æ ‡ç­¾è¡¨';
 
 alter table comment add constraint FK_comment_doc foreign key (doc_id)
       references doc (doc_id) on delete restrict on update restrict;

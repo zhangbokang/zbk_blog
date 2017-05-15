@@ -27,23 +27,10 @@ public interface CommentService {
     void deleteById(Long id);
 
     /**
-     * 根据文档ID删除
-     * @param docId
-     */
-    void deleteByDocId(Long docId);
-
-    /**
      * 查找所有
      * @return
      */
     List<Comment> findAll();
-
-    /**
-     * 根据文档id查找
-     * @param docId
-     * @return
-     */
-    List<Comment> findByDocId(Long docId);
 
     /**
      * 根据id查找

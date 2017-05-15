@@ -4,6 +4,7 @@ import com.zbkblog.dao.CommentDao;
 import com.zbkblog.entity.Comment;
 import com.zbkblog.service.CommentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * Created by zhangbokang on 2017/5/13.
  */
 @Service("commentService")
+@Transactional
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentDao commentDao;
@@ -32,18 +34,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteByDocId(Long docId) {
-        commentDao.deleteByDocId(docId);
-    }
-
-    @Override
     public List<Comment> findAll() {
         return commentDao.findAll();
-    }
-
-    @Override
-    public List<Comment> findByDocId(Long docId) {
-        return commentDao.findByDocId(docId);
     }
 
     @Override

@@ -38,7 +38,7 @@
     </bean>
     <!-- Spring整合Hibernate配置 -->
     <bean id="sessionFactory"
-          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <!--
         <property name="configLocation" value="classpath:hibernate.cfg.xml">
         </property>
@@ -48,7 +48,7 @@
         <!-- 指定hibernate参数 -->
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
             </props>
@@ -63,9 +63,11 @@
 
     <!-- 配置Hibernate事务管理器 -->
     <bean id="transactionManager"
-          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <!-- 配置事务异常封装 -->
     <!--<bean id="persistenceExceptionTranslationPostProcessor"-->
@@ -73,36 +75,36 @@
 
 
     <!--  声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
-            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
-            <tx:method name="query*" propagation="REQUIRED" read-only="true" />
-            <tx:method name="load*" propagation="REQUIRED" read-only="true" />
-            <tx:method name="*" propagation="REQUIRED" />
-        </tx:attributes>
-    </tx:advice>
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="get*" propagation="REQUIRED" read-only="true" />-->
+            <!--<tx:method name="find*" propagation="REQUIRED" read-only="true" />-->
+            <!--<tx:method name="query*" propagation="REQUIRED" read-only="true" />-->
+            <!--<tx:method name="load*" propagation="REQUIRED" read-only="true" />-->
+            <!--<tx:method name="*" propagation="REQUIRED" />-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
 
-    <!--<aop:config expose-proxy="true">-->
-    <aop:config>
-        <!-- 只对业务逻辑层实施事务 -->
-        <aop:pointcut id="txPointcut" expression="execution(* com.zbkblog.service..*.*(..))" />
-        <!-- aop:pointcut id="txPointcut" expression="execution(* cn.himto.module.web..service..*.*(..)) OR (execution (* cn.himto.module.XXX.service..*.*(..)))" /-->
-        <!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
-        <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
-    </aop:config>
+    <!--&lt;!&ndash;<aop:config expose-proxy="true">&ndash;&gt;-->
+    <!--<aop:config>-->
+        <!--&lt;!&ndash; 只对业务逻辑层实施事务 &ndash;&gt;-->
+        <!--<aop:pointcut id="txPointcut" expression="execution(* com.zbkblog.service..*.*(..))" />-->
+        <!--&lt;!&ndash; aop:pointcut id="txPointcut" expression="execution(* cn.himto.module.web..service..*.*(..)) OR (execution (* cn.himto.module.XXX.service..*.*(..)))" /&ndash;&gt;-->
+        <!--&lt;!&ndash; Advisor定义，切入点和通知分别为txPointcut、txAdvice &ndash;&gt;-->
+        <!--<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>-->
+    <!--</aop:config>-->
 
 
     <!-- 将Dao纳入Spring容器 -->
     <!--<context:component-scan base-package="com.zbkblog.dao"/>-->
     <!-- 定义HibernateTemplate给Dao注入用 -->
-    <!--<bean id="template" class="org.springframework.orm.hibernate5.HibernateTemplate">-->
+    <!--<bean id="template" class="org.springframework.orm.hibernate4.HibernateTemplate">-->
         <!--<property name="sessionFactory" ref="sessionFactory">-->
         <!--</property>-->
     <!--</bean>-->
     <!-- Spring声明式事务管理 -->
     <!--<bean id="txManager"-->
-          <!--class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
+          <!--class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
         <!--<property name="sessionFactory" ref="sessionFactory">-->
         <!--</property>-->
     <!--</bean>-->

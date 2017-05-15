@@ -68,7 +68,7 @@ public class DocController {
         doc.setTitle(title);
         doc.setDocMd(docMd);
         //doc.setClassifyId(Long.valueOf(classifyId));
-        doc.setUpdateTime(new Date().getTime());
+
 
         //保存的逻辑
         doc = docService.save(doc);

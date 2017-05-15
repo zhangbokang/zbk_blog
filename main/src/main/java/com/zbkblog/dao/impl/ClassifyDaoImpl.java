@@ -3,7 +3,7 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.ClassifyDao;
 import com.zbkblog.entity.Classify;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by zhangbokang on 2017/5/13.
  */
 @Repository("classifyDao")
-@Transactional
+//@Transactional
 public class ClassifyDaoImpl extends HibernateDaoSupport implements ClassifyDao {
     @Resource
     public void setSessionFacotry(SessionFactory sessionFacotry){
@@ -23,8 +23,8 @@ public class ClassifyDaoImpl extends HibernateDaoSupport implements ClassifyDao 
 
     @Override
     public List<Classify> findAll() {
-        String hql = "from classify";
-        return (List)getHibernateTemplate().find(hql,Classify.class);
+        String hql = "from Classify";
+        return (List)getHibernateTemplate().find(hql);
     }
 
     @Override

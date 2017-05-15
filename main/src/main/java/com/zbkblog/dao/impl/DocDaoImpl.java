@@ -3,11 +3,10 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.Page;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
-import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  * Created by zhangbokang on 2017/5/13.
  */
 @Repository("docDao")
-@Transactional
+//@Transactional
 public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
     @Resource
     public void setSessionFacotry(SessionFactory sessionFacotry){
@@ -25,15 +24,14 @@ public class DocDaoImpl extends HibernateDaoSupport implements DocDao {
 
     @Override
     public List<Doc> findAll() {
-        String hql = "from doc";
-        return (List)getHibernateTemplate().find(hql,Doc.class);
+        String hql = "from Doc ";
+        return (List)getHibernateTemplate().find(hql);
     }
 
     @Override
     public List<Doc> findAllByPage(final Page page) {
-        Query query = getSessionFactory().openSession().createQuery("from doc");
-        //设置参数
-        //query.setParameter(0, username);
+        String hql = "from Doc";
+        Query query = getSessionFactory().openSession().createQuery(hql);
         //设置每页显示多少个，设置多大结果。
         query.setMaxResults(page.getEveryPage());
         //设置起点

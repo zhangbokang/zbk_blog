@@ -21,17 +21,6 @@ public interface CommentDao {
      */
     Comment findById(Long id);
     /**
-     * 根据文章id查询评论
-     * @param docId
-     * @return
-     */
-    List<Comment> findByDocId(Long docId);
-    /**
-     * 根据文章id删除评论
-     * @param docId
-     */
-    void deleteByDocId(Long docId);
-    /**
      * 保存评论
      * @param comment
      */

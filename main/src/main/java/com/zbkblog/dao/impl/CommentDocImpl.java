@@ -3,6 +3,7 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.CommentDao;
 import com.zbkblog.entity.Comment;
 import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,46 +14,37 @@ import java.util.List;
  * Created by zhangbokang on 2017/5/13.
  */
 @Repository("commentDoc")
-@Transactional
-public class CommentDocImpl implements CommentDao {
+//@Transactional
+public class CommentDocImpl extends HibernateDaoSupport implements CommentDao {
 
     @Resource
-    private SessionFactory sessionFactory;
+    public void setSessionFacotry(SessionFactory sessionFacotry){
+        super.setSessionFactory(sessionFacotry);
+    }
 
     @Override
     public List<Comment> findAll() {
-        String hql = "from comment";
-        return sessionFactory.openSession().createQuery(hql).list();
+        String hql = "from Comment";
+        return (List)getHibernateTemplate().find(hql);
     }
 
     @Override
     public Comment findById(Long id) {
-        return sessionFactory.openSession().load(Comment.class,id);
-    }
-
-    @Override
-    public List<Comment> findByDocId(Long docId) {
-        String hql = "from comment where doc_id=:docId";
-        return sessionFactory.openSession().createQuery(hql).setParameter("docId",docId).list();
-    }
-
-    @Override
-    public void deleteByDocId(Long docId) {
-        sessionFactory.openSession().delete("docId",docId);
+        return getHibernateTemplate().load(Comment.class,id);
     }
 
     @Override
     public void save(Comment comment) {
-        sessionFactory.openSession().save(comment);
+        getHibernateTemplate().save(comment);
     }
 
     @Override
     public void update(Comment comment) {
-        sessionFactory.openSession().update(comment);
+        getHibernateTemplate().update(comment);
     }
 
     @Override
     public void deleteById(Long id) {
-        sessionFactory.openSession().delete("id",id);
+        getHibernateTemplate().delete("id",id);
     }
 }

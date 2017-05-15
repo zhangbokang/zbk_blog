@@ -1,11 +1,13 @@
 package com.zbkblog.test;
 
+import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
+import com.zbkblog.service.ClassifyService;
 import com.zbkblog.utils.HibernateSessionUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.hibernate.type.LongType;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -57,6 +59,22 @@ public class MyTest {
         doc.setTitle("jfkdalfjdsf");
         doc.setDocMd("#这里是md");
         //doc.
+
+    }
+
+    @Test
+    public void testclassifyService(){
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+        ClassifyService classifyService = context.getBean("classifyService", ClassifyService.class);
+        Classify classify = new Classify();
+        classify.setName("测试标题");
+        //classifyService.save(classify);
+        List<Classify> list = classifyService.findAll();
+        for (Classify c:list
+             ) {
+            System.out.println("className:"+c.getName());
+        }
 
     }
 

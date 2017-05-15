@@ -56,7 +56,7 @@ public class MyTest {
         Doc doc = new Doc();
         doc.setTitle("jfkdalfjdsf");
         doc.setDocMd("#这里是md");
-        doc.
+        //doc.
 
     }
 

@@ -21,14 +21,14 @@ import java.util.*;
  * Created by zhangbokang on 2017/5/13.
  */
 @Controller
-//@RequestMapping("/doc")
+@RequestMapping("/doc")
 public class DocController {
     @Resource
     private DocService docService;
 
-    @RequestMapping("save")
+    @RequestMapping("/saveDoc")
     @ResponseBody
-    public Map<String,Object> save(HttpServletRequest request){
+    public Map<String,Object> saveDoc(HttpServletRequest request){
         String id = request.getParameter("id");
         String title = request.getParameter("title");
         String  docMd = request.getParameter("docMd");
@@ -46,16 +46,16 @@ public class DocController {
             map.put("msg","保存失败，标题为空。");
             return map;
         }
-//        if (tagId == null || tagId == ""){
-//            map.put("success",0);
-//            map.put("msg","保存失败，标签为空。");
-//            return map;
-//        }
-//        if (classifyId == null || classifyId == ""){
-//            map.put("success",0);
-//            map.put("msg","保存失败，分类为空。");
-//            return map;
-//        }
+        if (tagId == null || tagId == ""){
+            map.put("success",0);
+            map.put("msg","保存失败，标签为空。");
+            return map;
+        }
+        if (classifyId == null || classifyId == ""){
+            map.put("success",0);
+            map.put("msg","保存失败，分类为空。");
+            return map;
+        }
         if (docMd == null || docMd == ""){
             map.put("success",0);
             map.put("msg","保存失败，文章内容为空。");
@@ -67,7 +67,7 @@ public class DocController {
         if (id != null && id != ""){doc.setDocId(Long.parseLong(id));}
         doc.setTitle(title);
         doc.setDocMd(docMd);
-        //doc.setClassifyId(Long.valueOf(classifyId));
+//        doc.setClassifyId(Long.valueOf(classifyId));
 
 
         //保存的逻辑
@@ -79,7 +79,7 @@ public class DocController {
         return map;
     }
 
-    @RequestMapping("blogpage")
+    @RequestMapping("/docPage")
     public String blogpage(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
@@ -92,7 +92,7 @@ public class DocController {
         return "blogpage";
     }
 
-    @RequestMapping("editblog")
+    @RequestMapping("/editDoc")
     public String editblog(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
@@ -108,7 +108,7 @@ public class DocController {
     @RequestMapping(value = "/upImage",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> upImage(HttpServletRequest request){//,@RequestParam MultipartFile editormdImageFile){
-        Map<String,Object> map = new HashMap<String, Object>();
+        Map<String,Object> map = new HashMap<>();
         //上传文件保存的路径WebRoot下的blogUpload
         String savePath = request.getSession().getServletContext().getRealPath("/images");
         DiskFileItemFactory factory = new DiskFileItemFactory();

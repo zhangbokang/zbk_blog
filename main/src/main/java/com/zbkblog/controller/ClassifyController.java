@@ -23,13 +23,25 @@ public class ClassifyController {
 
     /**
      * 查询所有分类信息
+     *  查询失败：{"code":1,"data":List<Classify>}
+     *  查询成功：{"code":0,"msg":"查询出现错误"}
      * @param request
+     *  无
      * @return
      */
     @RequestMapping("/findAllClassify")
     @ResponseBody
-    public List<Classify> findAllClassify(HttpServletRequest request){
-        return classifyService.findAll();
+    public Map<String ,Object> findAllClassify(HttpServletRequest request){
+        List<Classify> list = classifyService.findAll();
+        Map<String ,Object> map = new HashMap<>();
+        if (null == list){
+            map.put("code",0);
+            map.put("msg","查询出现错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",list);
+        return map;
     }
 
     /**
@@ -37,6 +49,7 @@ public class ClassifyController {
      *  添加成功：{"code":1,"data":classifyId}
      *  添加失败：{"code":0,"msg":"分类名称不能为空"}
      * @param request
+     *  分类名称：classifyName
      * @return
      */
     @RequestMapping("/addClassify")
@@ -59,9 +72,11 @@ public class ClassifyController {
 
     /**
      * 更新分类信息
-     * 更新失败{"code":0,"msg",失败信息提示信息}
-     * 更新成功{"code":1,data",更新后的classify}
+     *  更新失败：{"code":0,"msg",失败信息提示信息}
+     *  更新成功：{"code":1,data",更新后的classify}
      * @param request
+     *  分类ID：classifyId
+     *  分类名称：classifyName
      * @return
      */
     @RequestMapping("/updateClassify")
@@ -89,6 +104,14 @@ public class ClassifyController {
         return map;
     }
 
+    /**
+     *删除分类
+     *  删除成功：{"code":1,data",要删除的classify}
+     *  删除失败：{"code":0,"msg",错误信息}
+     * @param request
+     *  分类ID：classifyId
+     * @return
+     */
     @RequestMapping("/deleteClassify")
     @ResponseBody
     public Map<String,Object> deleteClassify(HttpServletRequest request){
@@ -101,9 +124,14 @@ public class ClassifyController {
         }
         Classify classify = new Classify();
         classify.setClassifyId(Long.parseLong(classifyId));
-        classifyService.delete(classify);
+        classify = classifyService.delete(classify);
+        if (null == classify){
+            map.put("code",0);
+            map.put("msg","删除失败，没有该分类");
+            return map;
+        }
         map.put("code",1);
-        map.put("data",classifyId);
+        map.put("data",classify);
         return map;
     }
 }

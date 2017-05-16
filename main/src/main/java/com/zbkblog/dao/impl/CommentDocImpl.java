@@ -33,7 +33,7 @@ public class CommentDocImpl extends MyDaoSupport implements CommentDao {
 
     @Override
     public Comment findById(Long id) {
-        return getHibernateTemplate().load(Comment.class,id);
+        return getHibernateTemplate().get(Comment.class,id);
     }
 
     @Override

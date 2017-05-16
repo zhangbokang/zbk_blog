@@ -19,9 +19,9 @@ public class TagServiceImpl implements TagService {
     private TagDao tagDao;
 
     @Override
-    public void save(Tag tag) {
+    public Long save(Tag tag) {
         tag.setCreateTime(System.currentTimeMillis()/1000);
-        tagDao.save(tag);
+        return tagDao.save(tag);
     }
 
     @Override
@@ -31,8 +31,13 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void delete(Tag tag) {
+    public Tag delete(Tag tag) {
+        tag = findById(tag.getTagId());
+        if (null == tag){
+            return null;
+        }
         tagDao.delete(tag);
+        return tag;
     }
 
     @Override

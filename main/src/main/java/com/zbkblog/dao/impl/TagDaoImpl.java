@@ -31,7 +31,7 @@ public class TagDaoImpl extends MyDaoSupport implements TagDao {
 
     @Override
     public Tag findById(Long id) {
-        return getHibernateTemplate().load(Tag.class,id);
+        return getHibernateTemplate().get(Tag.class,id);
     }
 
     @Override
@@ -48,16 +48,18 @@ public class TagDaoImpl extends MyDaoSupport implements TagDao {
     }
 
     @Override
-    public void save(Tag tag) {
+    public Long save(Tag tag) {
         Session session = getSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.save(tag);
+            Long tagId = new Long(session.save(tag).toString());
             transaction.commit();
+            return tagId;
         }catch (Exception e){
             transaction.rollback();
         }
         session.close();
+        return null;
     }
 
     @Override

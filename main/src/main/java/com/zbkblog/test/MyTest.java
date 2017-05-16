@@ -82,7 +82,18 @@ public class MyTest {
              ) {
             System.out.println("className:"+c.getName());
         }
+    }
 
+    @Test
+    public void testclassifyServiceDelete(){
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+        ClassifyService classifyService = context.getBean("classifyService", ClassifyService.class);
+        Classify classify = new Classify();
+        classify.setClassifyId(new Long(1494857755));
+        System.out.println(classify.getClassifyId() + ":" + classify.getName());
+        classify = classifyService.delete(classify);
+        System.out.println(classify.getClassifyId() + ":" + classify.getName());
     }
 
     @Test

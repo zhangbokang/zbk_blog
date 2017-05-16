@@ -44,7 +44,7 @@ public class DocDaoImpl extends MyDaoSupport implements DocDao {
 
     @Override
     public Doc findById(Long id) {
-        return getHibernateTemplate().load(Doc.class,id);
+        return getHibernateTemplate().get(Doc.class,id);
     }
 
     @Override

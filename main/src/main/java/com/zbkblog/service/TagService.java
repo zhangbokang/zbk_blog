@@ -12,7 +12,7 @@ public interface TagService {
      * 添加一个标签
      * @param tag
      */
-    void save(Tag tag);
+    Long save(Tag tag);
 
     /**
      * 修改标签
@@ -24,7 +24,7 @@ public interface TagService {
      * 根据ID删除标签
      * @param tag
      */
-    void delete(Tag tag);
+    Tag delete(Tag tag);
 
     /**
      * 查找所有标签

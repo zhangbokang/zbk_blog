@@ -24,7 +24,7 @@ public interface ClassifyService {
      * 根据ID删除标签
      * @param classify
      */
-    void delete(Classify classify);
+    Classify delete(Classify classify);
 
     /**
      * 查找所有标签

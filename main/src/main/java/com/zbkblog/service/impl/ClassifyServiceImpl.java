@@ -32,8 +32,13 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
-    public void delete(Classify classify) {
+    public Classify delete(Classify classify) {
+        classify = findById(classify.getClassifyId());
+        if (null == classify){
+            return null;
+        }
         classifyDao.delete(classify);
+        return classify;
     }
 
     @Override

@@ -27,12 +27,16 @@ public class ClassifyDaoImpl extends MyDaoSupport implements ClassifyDao {
     @Override
     public List<Classify> findAll() {
         String hql = "from Classify";
-        return (List)getHibernateTemplate().find(hql);
+        try {
+            return (List)getHibernateTemplate().find(hql);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
     public Classify findById(Long id) {
-        return getHibernateTemplate().load(Classify.class,id);
+        return getHibernateTemplate().get(Classify.class,id);
     }
 
     @Override

@@ -23,9 +23,9 @@ public interface TagDao {
 
     /**
      * 根据ID删除
-     * @param id
+     * @param tag
      */
-    void deleteById(Long id);
+    void delete(Tag tag);
 
     /**
      * 保存

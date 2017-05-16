@@ -2,7 +2,10 @@ package com.zbkblog.dao.impl;
 
 import com.zbkblog.dao.TagDao;
 import com.zbkblog.entity.Tag;
+import com.zbkblog.utils.MyDaoSupport;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +17,7 @@ import java.util.List;
  */
 @Repository("tagDao")
 //@Transactional
-public class TagDaoImpl extends HibernateDaoSupport implements TagDao {
+public class TagDaoImpl extends MyDaoSupport implements TagDao {
     @Resource
     public void setSessionFacotry(SessionFactory sessionFacotry){
         super.setSessionFactory(sessionFacotry);
@@ -32,17 +35,41 @@ public class TagDaoImpl extends HibernateDaoSupport implements TagDao {
     }
 
     @Override
-    public void deleteById(Long id) {
-        getHibernateTemplate().delete("id",id);
+    public void delete(Tag tag) {
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.delete(tag);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
     }
 
     @Override
     public void save(Tag tag) {
-        getHibernateTemplate().save(tag);
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.save(tag);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
     }
 
     @Override
     public void update(Tag tag) {
-        getHibernateTemplate().update(tag);
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.update(tag);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
     }
 }

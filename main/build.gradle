@@ -16,17 +16,25 @@ dependencies {
     //compile project(':his_ps')
     compile fileTree(dir: '../libs', includes: ['*.jar'])
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-core
     compile group: 'org.springframework', name: 'spring-core', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-beans
     compile group: 'org.springframework', name: 'spring-beans', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
     compile group: 'org.springframework', name: 'spring-context', version: '4.3.8.RELEASE'
-    compile 'org.springframework:spring-expression:4.2.8.RELEASE'
-    compile 'org.springframework:spring-jms:4.2.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
     compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-web
     compile group: 'org.springframework', name: 'spring-web', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-aop
     compile group: 'org.springframework', name: 'spring-aop', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
     compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-tx
     compile group: 'org.springframework', name: 'spring-tx', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-orm
     compile group: 'org.springframework', name: 'spring-orm', version: '4.3.8.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-context-support
     compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.8.RELEASE'
 
     compile 'org.hibernate:hibernate-core:4.3.7.Final'
@@ -62,10 +70,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.10'
 
-
-
     // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 
     //JSTL支持
     // https://mvnrepository.com/artifact/javax.servlet/jstl
@@ -73,8 +80,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/junit/junit
     compile group: 'junit', name: 'junit', version: '4.12'
-
-
 
 }
 

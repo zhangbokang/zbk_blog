@@ -19,20 +19,21 @@ public class ClassifyServiceImpl implements ClassifyService {
     private ClassifyDao classifyDao;
 
     @Override
-    public void save(Classify classify) {
+    public Long save(Classify classify) {
         classify.setCreateTime(System.currentTimeMillis()/1000);
-        classifyDao.save(classify);
+        return classifyDao.save(classify);
     }
 
     @Override
-    public void update(Classify classify) {
+    public Classify update(Classify classify) {
         classify.setCreateTime(System.currentTimeMillis()/1000);
         classifyDao.update(classify);
+        return classify;
     }
 
     @Override
-    public void deleteById(Long id) {
-        classifyDao.deleteById(id);
+    public void delete(Classify classify) {
+        classifyDao.delete(classify);
     }
 
     @Override

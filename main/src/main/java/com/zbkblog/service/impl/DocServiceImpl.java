@@ -40,8 +40,8 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        docDao.deleteById(id);
+    public void delete(Doc doc) {
+        docDao.delete(doc);
     }
 
     @Override

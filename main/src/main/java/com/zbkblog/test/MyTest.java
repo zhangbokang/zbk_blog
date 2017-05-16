@@ -3,6 +3,7 @@ package com.zbkblog.test;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.ClassifyService;
+import com.zbkblog.service.DocService;
 import com.zbkblog.utils.HibernateSessionUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -58,7 +59,13 @@ public class MyTest {
         Doc doc = new Doc();
         doc.setTitle("jfkdalfjdsf");
         doc.setDocMd("#这里是md");
-        //doc.
+        try {
+            session.save(doc);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
 
     }
 
@@ -76,6 +83,17 @@ public class MyTest {
             System.out.println("className:"+c.getName());
         }
 
+    }
+
+    @Test
+    public void testDocService(){
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+        DocService docService = context.getBean("docService", DocService.class);
+        Doc doc = new Doc();
+        doc.setTitle("a01-jfkdalfjdsf");
+        doc.setDocMd("#这里dafd是dmd");
+        docService.save(doc);
     }
 
 }

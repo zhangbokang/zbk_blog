@@ -29,9 +29,9 @@ public interface DocService {
 
     /**
      * 根据ID删除
-     * @param id
+     * @param doc
      */
-    void deleteById(Long id);
+    void delete(Doc doc);
 
     /**
      * 查找所有

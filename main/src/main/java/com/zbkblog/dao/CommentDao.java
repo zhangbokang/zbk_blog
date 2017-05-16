@@ -31,8 +31,8 @@ public interface CommentDao {
      */
     void update(Comment comment);
     /**
-     * 根据id删除评论
-     * @param id
+     * 删除评论
+     * @param comment
      */
-    void deleteById(Long id);
+    void delete(Comment comment);
 }

@@ -22,9 +22,9 @@ public interface TagService {
 
     /**
      * 根据ID删除标签
-     * @param id
+     * @param tag
      */
-    void deleteById(Long id);
+    void delete(Tag tag);
 
     /**
      * 查找所有标签

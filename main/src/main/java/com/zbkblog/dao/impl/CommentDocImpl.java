@@ -2,7 +2,10 @@ package com.zbkblog.dao.impl;
 
 import com.zbkblog.dao.CommentDao;
 import com.zbkblog.entity.Comment;
+import com.zbkblog.utils.MyDaoSupport;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +18,7 @@ import java.util.List;
  */
 @Repository("commentDoc")
 //@Transactional
-public class CommentDocImpl extends HibernateDaoSupport implements CommentDao {
+public class CommentDocImpl extends MyDaoSupport implements CommentDao {
 
     @Resource
     public void setSessionFacotry(SessionFactory sessionFacotry){
@@ -35,16 +38,40 @@ public class CommentDocImpl extends HibernateDaoSupport implements CommentDao {
 
     @Override
     public void save(Comment comment) {
-        getHibernateTemplate().save(comment);
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.save(comment);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
     }
 
     @Override
     public void update(Comment comment) {
-        getHibernateTemplate().update(comment);
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.update(comment);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
     }
 
     @Override
-    public void deleteById(Long id) {
-        getHibernateTemplate().delete("id",id);
+    public void delete(Comment comment) {
+        Session session = getSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.delete(comment);
+            transaction.commit();
+        }catch (Exception e){
+            transaction.rollback();
+        }
+        session.close();
     }
 }

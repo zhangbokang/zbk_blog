@@ -22,9 +22,9 @@ public interface CommentService {
 
     /**
      * 根据ID删除
-     * @param id
+     * @param comment
      */
-    void deleteById(Long id);
+    void delete(Comment comment);
 
     /**
      * 查找所有

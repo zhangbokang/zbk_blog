@@ -14,10 +14,10 @@
       <mapping class="com.zbkblog.entity.Doc"/>
       <mapping resource="com/zbkblog/hbm/Tag.hbm.xml"/>
       <mapping class="com.zbkblog.entity.Tag"/>
-      <mapping resource="com/zbkblog/entity/Classify.hbm.xml"/>
-      <mapping resource="com/zbkblog/entity/Comment.hbm.xml"/>
-      <mapping resource="com/zbkblog/entity/Doc.hbm.xml"/>
-      <mapping resource="com/zbkblog/entity/Tag.hbm.xml"/>
+      <mapping resource="com/zbkblog/hbm/Classify.hbm.xml"/>
+      <mapping resource="com/zbkblog/hbm/Comment.hbm.xml"/>
+      <mapping resource="com/zbkblog/hbm/Doc.hbm.xml"/>
+      <mapping resource="com/zbkblog/hbm/Tag.hbm.xml"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

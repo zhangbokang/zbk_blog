@@ -22,16 +22,16 @@ public interface ClassifyDao {
     Classify findById(Long id);
 
     /**
-     * 根据ID删除
-     * @param id
+     * 删除
+     * @param classify
      */
-    void deleteById(Long id);
+    void delete(Classify classify);
 
     /**
      * 保存
      * @param classify
      */
-    void save(Classify classify);
+    Long save(Classify classify);
 
     /**
      * 更新

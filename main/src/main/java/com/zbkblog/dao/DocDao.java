@@ -31,10 +31,10 @@ public interface DocDao {
     Doc findById(Long id);
 
     /**
-     * 根据ID删除
-     * @param id
+     * 删除
+     * @param doc
      */
-    void deleteById(Long id);
+    void delete(Doc doc);
 
     /**
      * 保存

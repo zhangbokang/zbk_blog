@@ -12,7 +12,7 @@ public class HibernateSessionUtil {
 
     static {
         ClassPathXmlApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("test.xml");
+                new ClassPathXmlApplicationContext("spring.xml");
         sessionFactory = applicationContext.getBean("sessionFactory",SessionFactory.class);
     }
 

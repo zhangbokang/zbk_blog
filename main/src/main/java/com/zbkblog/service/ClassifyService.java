@@ -12,19 +12,19 @@ public interface ClassifyService {
      * 添加一个标签
      * @param classify
      */
-    void save(Classify classify);
+    Long save(Classify classify);
 
     /**
      * 修改标签
      * @param classify
      */
-    void update(Classify classify);
+    Classify update(Classify classify);
 
     /**
      * 根据ID删除标签
-     * @param id
+     * @param classify
      */
-    void deleteById(Long id);
+    void delete(Classify classify);
 
     /**
      * 查找所有标签

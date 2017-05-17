@@ -4,7 +4,7 @@ package com.zbkblog.entity;
  * Created by zhangbokang on 2017/5/14.
  */
 public class Doc {
-    private long docId;
+    private Long docId;
     private String title;
     private String docMd;
     private Long updateTime;
@@ -29,11 +29,11 @@ public class Doc {
         this.classify = classify;
     }
 
-    public long getDocId() {
+    public Long getDocId() {
         return docId;
     }
 
-    public void setDocId(long docId) {
+    public void setDocId(Long docId) {
         this.docId = docId;
     }
 

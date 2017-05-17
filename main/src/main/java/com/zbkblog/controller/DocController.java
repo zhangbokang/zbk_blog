@@ -6,6 +6,7 @@ import com.zbkblog.entity.Tag;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
+import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.PageUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -34,9 +35,10 @@ public class DocController {
     private ClassifyService classifyService;
 
 
-    @RequestMapping("/addDoc")
+    @RequestMapping("/saveDoc")
     @ResponseBody
-    public Map<String,Object> addDoc(HttpServletRequest request){
+    public Map<String,Object> saveDoc(HttpServletRequest request){
+        String docId = request.getParameter("docId");
         String title = request.getParameter("title");
         String  docMd = request.getParameter("docMd");
         String classifyId = request.getParameter("classifyId");
@@ -84,8 +86,18 @@ public class DocController {
         doc.setTag(tag);
 
         //保存的逻辑
+        if (null != docId && docId.matches("[0-9]{10}")) {
+            Doc doc1 = docService.findById(Long.parseLong(docId));
+            if (doc1 != null){
+                //将doc中的非空属性值复制到doc1
+                MyBeanUtils.copyPropertiesIgnoreNull(doc,doc1);
+                doc = docService.update(doc1);
+                map.put("code",1);
+                map.put("data",doc);
+                return map;
+            }
+        }
         doc = docService.save(doc);
-
         map.put("code",1);
         map.put("data",doc);
         return map;

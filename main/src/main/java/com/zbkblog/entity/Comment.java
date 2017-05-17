@@ -4,17 +4,17 @@ package com.zbkblog.entity;
  * Created by zhangbokang on 2017/5/14.
  */
 public class Comment {
-    private long commentId;
+    private Long commentId;
     private String content;
     private Long createTime;
     private Long favorNumber;
     private Long opposeNumber;
 
-    public long getCommentId() {
+    public Long getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(long commentId) {
+    public void setCommentId(Long commentId) {
         this.commentId = commentId;
     }
 

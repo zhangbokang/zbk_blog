@@ -4,15 +4,15 @@ package com.zbkblog.entity;
  * Created by zhangbokang on 2017/5/14.
  */
 public class Classify {
-    private long classifyId;
+    private Long classifyId;
     private String name;
     private Long createTime;
 
-    public long getClassifyId() {
+    public Long getClassifyId() {
         return classifyId;
     }
 
-    public void setClassifyId(long classifyId) {
+    public void setClassifyId(Long classifyId) {
         this.classifyId = classifyId;
     }
 

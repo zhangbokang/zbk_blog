@@ -42,13 +42,13 @@ public class DocDaoImpl extends MyDaoSupport implements DocDao {
 
     @Override
     public Doc findById(Long id) {
-        return getHibernateTemplate().execute(new HibernateCallback<Doc>() {
-            @Override
-            public Doc doInHibernate(Session session) throws HibernateException {
-                return (Doc)session.load(Doc.class,id);
-            }
-        });
-//        return getHibernateTemplate().get(Doc.class,id);
+//        return getHibernateTemplate().execute(new HibernateCallback<Doc>() {
+//            @Override
+//            public Doc doInHibernate(Session session) throws HibernateException {
+//                return (Doc)session.load(Doc.class,id);
+//            }
+//        });
+        return getHibernateTemplate().get(Doc.class,id);
     }
 
     @Override

@@ -21,7 +21,10 @@ var common = {
         }
     },
     Data:{
-        cache:{}
+        cache:{
+            classify:[],
+            tag:[]
+        }
         // classifyCache:[],
         // tagCache:[]
     },
@@ -32,21 +35,19 @@ var common = {
          * @param callBack 回调函数，应为一个function，会有一个data传参，该传参就是过滤后的数据
          * @param data 要过滤的数组对象
          * @param key 用户的输入
-         * @param label 数组元素的自定义过滤字段名称，为空则不根据自定义字段过滤
+         * @param label 数组元素的自定义过滤字段名称，不写默认"name"
          */
-        searchData:function (callBack,data,key) {
+        searchData:function (callBack,data,key,label) {
             function isBigEnough(element, index, array) {
                 var re = new RegExp(key);
-                if (re.test(array[index].spell)){
+                if (re.test(element.spell) || re.test(element.fullSpelling)){
                     return true;
                 }
-                if (re.test(array[index].fullSpelling)){
-                    return true;
+                if (label == undefined){
+                    label ="name";
                 }
-                if (label != undefined){
-                    if (array[index].label && re.test(array[index].label)){
-                        return true;
-                    }
+                if (element[label] && re.test(element[label])){
+                    return true;
                 }
                 return false;
             }
@@ -54,19 +55,20 @@ var common = {
         },
         /**
          * 根据输入去服务器请求数据
-         * @param cache 存储数据的数组对象
          * @param url 请求数据的地址
          * @param param 请求数据的附加参数
-         * @returns {*} 返回请求得到的数据（也可以直接调用传入的对象直接拿数据）
+         * @param label 显示的字段
+         * @returns {*} 返回请求得到的数据
          */
-        queryData:function (cache,url,param,label) {
+        queryData:function (url,param,label) {
             if (param == undefined){
                 param ={}
             }
             if (label == undefined){
                 label = "name";
             }
-            if(cache == undefined) {
+            // if(cache == undefined) {
+            var cache;
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -95,7 +97,7 @@ var common = {
                     }
                 });
                 return cache;
-            }
+            // }
         },
         /**
          * 根据domId给输入框添加自动完成功能
@@ -104,11 +106,10 @@ var common = {
          */
         autoCompleteByDomId:function (domId,url) {
             var $dom = $("#"+domId);
-            var cache = common.Data.cache["cache"+$dom.attr("id")];
-            //var url = common.URL[docId][0];
 
             //如果数据没有则从服务器获取一下
-            common.Fn.queryData(cache,url);
+            common.Data.cache[domId] = common.Fn.queryData(url);
+            var cache = common.Data.cache[domId];
 
             $dom.autocomplete({
                 minLength:0,//输入多少字后显示列表，0表示不输入也显示
@@ -116,7 +117,8 @@ var common = {
                     var key = request.term.trim().toUpperCase();
                     //如果没有输入任何数据，则返回全部数据
                     if (key =="" || key == undefined || key == null){
-                        response(data);
+                        response(cache);
+                        return;
                     }
                     common.Fn.searchData(function (data) {
                         response(data);
@@ -163,6 +165,22 @@ var common = {
                 value['fullSpelling']=pinyin.getFullChars(value[label]).toUpperCase();
             });
             return data;
+        },
+        /**
+         * 根据传入的item元素，给ID是传入的domId的元素设置属性
+         *  属性名为item的key，属性值为item的value
+         * @param domId
+         * @param item
+         */
+        setAttr:function (domId,item) {
+            if (item === undefined || item.length == 0){
+                return;
+            }
+            var $dom = $("#"+domId);
+            for (var i in item){
+                $dom.val(item["label"]);
+                $dom.attr(i,item[i]);
+            }
         }
     }
 }

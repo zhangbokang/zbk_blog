@@ -5,6 +5,7 @@ import com.zbkblog.entity.Doc;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.HibernateSessionUtil;
+import com.zbkblog.utils.MyBeanUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -101,10 +102,31 @@ public class MyTest {
         ClassPathXmlApplicationContext context =
                 new ClassPathXmlApplicationContext("classpath:spring.xml");
         DocService docService = context.getBean("docService", DocService.class);
-        Doc doc = new Doc();
-        doc.setTitle("a01-jfkdalfjdsf");
-        doc.setDocMd("#这里dafd是dmd");
-        docService.save(doc);
+        //更新
+//        Doc doc = new Doc();
+//        doc.setDocId(new Long(1495030981));
+//        doc.setTitle("a01-jfkdalfjdsf");
+//        //doc.setDocMd("#这里dafd是dmd");
+//        Classify classify = new Classify();
+//        classify.setClassifyId(new Long(1494777612));
+//        doc.setClassify(classify);
+//        docService.update(doc);
+        //通过ID查找
+        Doc doc = docService.findById(new Long(1495033961));
+    }
+
+    @Test
+    public void testMyBeanUtils(){
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+//        MyBeanUtils myBeanUtils = context.getBean("myBeanUtils",MyBeanUtils.class);
+        Doc src = new Doc();
+        src.setTitle("abc");
+        Doc dis = new Doc();
+        dis.setTitle("xxx");
+        dis.setDocMd("ahfdsf");
+//        myBeanUtils
+        MyBeanUtils.copyPropertiesIgnoreNull(src,dis);
     }
 
 }

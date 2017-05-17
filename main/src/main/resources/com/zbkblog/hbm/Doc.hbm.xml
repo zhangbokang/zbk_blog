@@ -14,7 +14,8 @@
         <property name="updateTime" column="update_time"/>
         <property name="favorNumber" column="favor_number"/>
         <property name="openNumber" column="open_number"/>
-        <many-to-one name="classify" class="com.zbkblog.entity.Classify" column="classify_id" />
-        <many-to-one name="tag" class="com.zbkblog.entity.Tag" column="tag_id" />
+        <!--暂时取消懒加载-->
+        <many-to-one lazy="false" name="classify" class="com.zbkblog.entity.Classify" column="classify_id" />
+        <many-to-one lazy="false" name="tag" class="com.zbkblog.entity.Tag" column="tag_id" />
     </class>
 </hibernate-mapping>

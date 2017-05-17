@@ -21,7 +21,7 @@
     <div class="col-sm-4">
         <a href="/index"><b>返回主页</b></a>
     </div>
-    <div class="col-sm-8" id="msg"></div>
+    <div class="col-sm-8" id="msg">上一次保存结果：<span></span></div>
 </div>
     <form method="post" id="docForm">
         <input type="hidden" name="docId" id="docId" value="${doc.docId}">
@@ -72,69 +72,78 @@
     <script src="/static/editormd/editormd.min.js"></script>
     <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
     <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
-    <%--<script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>--%>
+    <script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <%--<script src="/static/js/editblog.js"></script>--%>
     <script src="/static/common/common.js"></script>
     <script type="text/javascript">
+        //设置分类和标签为自动完成按钮
         common.Fn.autoCompleteByDomId("classify",common.URL.classify.findAllClassify);
         common.Fn.autoCompleteByDomId("tag",common.URL.tag.findAllTag);
         //点击保存按钮提交表单
         function submitForm(formId) {
             var formData = $(formId).serializeJSON();
-            if (formData.title == null || formData.title == "" || formData.classifyId==undefined){
+            if (!$.trim(formData.title)){
                 $($(formId).find("#title")).focus();
                 alert("请填写标题");
                 return ;
             }
             formData.classifyId = $(formId).find("#classify").attr("classifyId");
-            if (formData.classifyId == null || formData.classifyId == "" || formData.classifyId==undefined){
+            if (!$.trim(formData.classifyId)){
                 $(formId).find("#classify").focus();
                 alert("请填写分类");
                 return ;
             }
             formData.tagId = $(formId).find("#tag").attr("tagId");
-            if (formData.tagId == null || formData.tagId == "" || formData.classifyId==undefined){
+            if (!$.trim(formData.tagId)){
                 $(formId).find("#tag").focus();
                 alert("请填写标签");
                 return ;
             }
-            if (formData.docMd == null || formData.docMd == "" || formData.classifyId==undefined){
-                $("#msg").show();
-                $("#msg").text("文章内容为空");
-                $("#msg").css("color","red");
-                setTimeout(function () {
-                    $("#msg").hide();
-                },4500);
+            if (!$.trim(formData.docMd)){
+                alert("文章内容为空");
                 return ;
             }
+            var $msg = $("#msg span");
+            $("#msg").show();
             $.ajax({
-                url:"/save",
+                url:"/doc/saveDoc",
                 type:"POST",
                 data:formData,
                 dataType:"json",
                 error:function () {
-                    $("#msg").show();
-                    $("#msg").text("保存请求失败，请稍后再试");
-                    $("#msg").css("color","red");
-                    setTimeout(function () {
-                        $("#msg").hide();
-                    },4500);
+                    $msg.text("保存请求失败，请稍后再试");
+                    $msg.css("color","red");
                 },
                 success:function (result) {
-                    $("#msg").show();
-                    setTimeout(function () {
-                        $("#msg").hide();
-                    },4500);
                     if (result.code == 1){
                         $("#docId").val(result.data.docId);
-                        $("#msg").text("保存成功");
-                        $("#msg").css("color","#0F0");
+                        $msg.text("保存成功，现在可以");
+                        var $a = $("<a>");//.text(查看)
+                        $a.attr('href','/doc/docPage?docId='+result.data.docId);
+                        $a.text("查看");
+                        $a.css("color","blue");
+                        $msg.css("color","#0F0");
+                        $msg.append($a);
                         return;
                     }
-                    $("#msg").text(result.msg);
-                    $("#msg").css("color","red");
+                    $msg.text(result.msg);
+                    $msg.css("color","red");
                 }
             });
+        }
+
+        //回显分类和标签
+        var currClassifyId = "${doc.classify.classifyId}";
+        var currTag = "${doc.tag.tagId}";
+        if ($.trim(currClassifyId)){
+            common.Fn.searchData(function (data) {
+                common.Fn.setAttr("classify",data[0])
+            },common.Data.cache["classify"],currClassifyId,"classifyId");
+        }
+        if ($.trim(currTag)){
+            common.Fn.searchData(function (data) {
+                common.Fn.setAttr("tag",data[0])
+            },common.Data.cache["tag"],currTag,"tagId");
         }
 
         //初始化编辑器

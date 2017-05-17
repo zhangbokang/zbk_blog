@@ -4,15 +4,15 @@ package com.zbkblog.entity;
  * Created by zhangbokang on 2017/5/14.
  */
 public class Tag {
-    private long tagId;
+    private Long tagId;
     private String name;
     private Long createTime;
 
-    public long getTagId() {
+    public Long getTagId() {
         return tagId;
     }
 
-    public void setTagId(long tagId) {
+    public void setTagId(Long tagId) {
         this.tagId = tagId;
     }
 

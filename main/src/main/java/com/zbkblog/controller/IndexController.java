@@ -27,7 +27,8 @@ public class IndexController {
         String totalCount = request.getParameter("totalCount");
         String currentPage = request.getParameter("currentPage");
 //        List<Doc> docList = docService.findAllByPage(PageUtil.createPage(Integer.parseInt(everyPage),Integer.parseInt(totalCount,0),Integer.parseInt(currentPage,0)));
-//        request.setAttribute("docList",docList);
+        List<Doc> docList = docService.findAll();
+        request.setAttribute("docList",docList);
         return "index";
     }
 }

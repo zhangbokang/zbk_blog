@@ -30,6 +30,7 @@ public class TagController {
      * @return
      */
     @RequestMapping("/findAllTag")
+    @ResponseBody
     public Map<String,Object> findAllTag(HttpServletRequest request){
         List<Tag> list = tagService.findAll();
         Map<String ,Object> map = new HashMap<>();

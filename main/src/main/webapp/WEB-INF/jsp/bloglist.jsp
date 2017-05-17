@@ -14,14 +14,14 @@
 
         <c:forEach items="${docList}" var="doc">
             <li class="list-group-item">
-                <a class="" href="docpage?docId=${doc.id}">
+                <a class="" href="docpage?docId=${doc.docId}">
                     <span class="h3">${doc.title}</span>
                     <c:set var="docMdStr" value="${fn:substring(doc.docMd,0,60)}" />
                     <p> ...</p>
                 </a>
                 <div class="row">
-                    <div class="col-sm-5">分类：${doc.classifyId}</div>
-                    <div class="col-sm-7">标签：${doc.tagId}</div>
+                    <div class="col-sm-5">分类：${doc.classify.classifyId}</div>
+                    <div class="col-sm-7">标签：${doc.tag.tagId}</div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6"><strong>最后更新&nbsp;${doc.updateTime}</strong></div>

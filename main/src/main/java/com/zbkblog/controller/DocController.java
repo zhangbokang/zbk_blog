@@ -1,13 +1,16 @@
 package com.zbkblog.controller;
 
+import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
+import com.zbkblog.entity.Tag;
+import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
+import com.zbkblog.service.TagService;
 import com.zbkblog.utils.PageUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,57 +28,66 @@ import java.util.*;
 public class DocController {
     @Resource
     private DocService docService;
+    @Resource
+    private TagService tagService;
+    @Resource
+    private ClassifyService classifyService;
 
-    @RequestMapping("/saveDoc")
+
+    @RequestMapping("/addDoc")
     @ResponseBody
-    public Map<String,Object> saveDoc(HttpServletRequest request){
-        String id = request.getParameter("id");
+    public Map<String,Object> addDoc(HttpServletRequest request){
         String title = request.getParameter("title");
         String  docMd = request.getParameter("docMd");
         String classifyId = request.getParameter("classifyId");
         String tagId = request.getParameter("tagId");
-
-
-
-        //返回信息Map
+        //返回信息的Map
         Map<String,Object> map = new HashMap();
-
         //验证信息
         if (title == null || title == ""){
-            map.put("success",0);
+            map.put("code",0);
             map.put("msg","保存失败，标题为空。");
             return map;
         }
-        if (tagId == null || tagId == ""){
-            map.put("success",0);
-            map.put("msg","保存失败，标签为空。");
-            return map;
-        }
-        if (classifyId == null || classifyId == ""){
-            map.put("success",0);
-            map.put("msg","保存失败，分类为空。");
-            return map;
-        }
         if (docMd == null || docMd == ""){
-            map.put("success",0);
+            map.put("code",0);
             map.put("msg","保存失败，文章内容为空。");
             return map;
         }
-
+        if (classifyId == null || classifyId == ""){
+            map.put("code",0);
+            map.put("msg","保存失败，分类为空");
+            return map;
+        }
+        Classify classify = classifyService.findById(Long.parseLong(classifyId));
+        if (null == classify){
+            map.put("code",0);
+            map.put("msg","保存失败，未查询到该分类");
+            return map;
+        }
+        if (tagId == null || tagId == ""){
+            map.put("code",0);
+            map.put("msg","保存失败，标签为空");
+            return map;
+        }
+        Tag tag = tagService.findById(Long.parseLong(tagId));
+        if (null ==tag){
+            map.put("code",0);
+            map.put("msg","保存失败，未查询到该标签");
+            return map;
+        }
         //封装成对象
         Doc doc = new Doc();
-        if (id != null && id != ""){doc.setDocId(Long.parseLong(id));}
         doc.setTitle(title);
         doc.setDocMd(docMd);
-//        doc.setClassifyId(Long.valueOf(classifyId));
-
+        doc.setClassify(classify);
+        doc.setTag(tag);
 
         //保存的逻辑
         doc = docService.save(doc);
 
-        map.put("success",1);
-        map.put("msg","保存成功");
-        map.put("docId",doc.getDocId());
+        map.put("code",1);
+        map.put("data",doc);
         return map;
     }
 
@@ -93,16 +105,16 @@ public class DocController {
     }
 
     @RequestMapping("/editDoc")
-    public String editblog(HttpServletRequest request){
+    public String editDoc(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
-        if (docId == null){
-            return "editblog";
+        if (null == docId || "" == docId){
+            return "editdoc";
         }
         //调用service查询
         Doc doc = docService.findById(Long.parseLong(docId));
-        request.setAttribute("doc",doc);
-        return "editblog";
+        request.setAttribute("doc",doc==null?new Doc():doc);
+        return "editdoc";
     }
 
     @RequestMapping(value = "/upImage",method= RequestMethod.POST)

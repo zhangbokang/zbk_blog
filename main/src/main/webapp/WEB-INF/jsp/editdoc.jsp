@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
     <%--<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.css">
     <link rel="stylesheet" href="/static/css/editblog.css">
     <meta charset="utf-8">
 </head>
@@ -22,8 +23,8 @@
     </div>
     <div class="col-sm-8" id="msg"></div>
 </div>
-    <form action="/save" method="post" id="docForm">
-        <input type="hidden" name="docId" id="docId" value="${doc.id}">
+    <form method="post" id="docForm">
+        <input type="hidden" name="docId" id="docId" value="${doc.docId}">
         <div class="row" id="blogTitleArea">
             <div class="col-sm-4">
                 <div class="form-group">
@@ -45,7 +46,7 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="tag" class="control-label">标签：</label>
-                    <input type="text" value="${doc.tagId}" id="tag" class="form-control" placeholder="请输入标签 多个使用逗号分隔">
+                    <input type="text" id="tag" autocomplete="off" class="form-control" placeholder="请输入标签">
                 </div>
             </div>
             <div class="col-sm-1 center-block">
@@ -71,29 +72,33 @@
     <script src="/static/editormd/editormd.min.js"></script>
     <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
     <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
-    <script src="/static/js/editblog.js"></script>
+    <%--<script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>--%>
+    <%--<script src="/static/js/editblog.js"></script>--%>
+    <script src="/static/common/common.js"></script>
     <script type="text/javascript">
+        common.Fn.autoCompleteByDomId("classify",common.URL.classify.findAllClassify);
+        common.Fn.autoCompleteByDomId("tag",common.URL.tag.findAllTag);
         //点击保存按钮提交表单
         function submitForm(formId) {
             var formData = $(formId).serializeJSON();
-            if (formData.title == null || formData.title == ""){
+            if (formData.title == null || formData.title == "" || formData.classifyId==undefined){
                 $($(formId).find("#title")).focus();
                 alert("请填写标题");
                 return ;
             }
-//            formData.classifyId = $(formId).find("#classify").attr("classifyId");
-//            if (formData.classifyId == null || formData.classifyId == ""){
-//                $(formId).find("#classify").focus();
-//                alert("请填写分类");
-//                return ;
-//            }
-//            formData.tagId = $(formId).find("#tag").attr("tagId");
-//            if (formData.tagId == null || formData.tagId == ""){
-//                $(formId).find("#tag").focus();
-//                alert("请填写标签");
-//                return ;
-//            }
-            if (formData.docMd == null || formData.docMd == ""){
+            formData.classifyId = $(formId).find("#classify").attr("classifyId");
+            if (formData.classifyId == null || formData.classifyId == "" || formData.classifyId==undefined){
+                $(formId).find("#classify").focus();
+                alert("请填写分类");
+                return ;
+            }
+            formData.tagId = $(formId).find("#tag").attr("tagId");
+            if (formData.tagId == null || formData.tagId == "" || formData.classifyId==undefined){
+                $(formId).find("#tag").focus();
+                alert("请填写标签");
+                return ;
+            }
+            if (formData.docMd == null || formData.docMd == "" || formData.classifyId==undefined){
                 $("#msg").show();
                 $("#msg").text("文章内容为空");
                 $("#msg").css("color","red");
@@ -115,21 +120,20 @@
                         $("#msg").hide();
                     },4500);
                 },
-                success:function (data) {
+                success:function (result) {
                     $("#msg").show();
-                    $("#msg").text(data.msg);
-                    if (data.success == 1){
-                        $("#docId").val(data.docId);
-                        $("#msg").css("color","#0F0");
-                    }else{
-                        $("#msg").css("color","red");
-                    }
                     setTimeout(function () {
                         $("#msg").hide();
-//                        $("#msg").removeClass("success");
                     },4500);
+                    if (result.code == 1){
+                        $("#docId").val(result.data.docId);
+                        $("#msg").text("保存成功");
+                        $("#msg").css("color","#0F0");
+                        return;
+                    }
+                    $("#msg").text(result.msg);
+                    $("#msg").css("color","red");
                 }
-
             });
         }
 

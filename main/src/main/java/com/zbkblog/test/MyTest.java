@@ -35,7 +35,7 @@ public class MyTest {
 
     @Test
     public void testGetSession(){
-        //System.out.println(System.currentTimeMillis()/1000);
+        //System.out.println(System.currentTimeMillis());
         //System.out.println(HibernateSessionUtil.getSession());
         Session session = HibernateSessionUtil.getSession();
         //Doc doc1 = session.load(Doc.class,Long.valueOf(1494777977));

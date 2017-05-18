@@ -22,7 +22,7 @@ public class DocServiceImpl implements DocService {
 
     @Override
     public Doc save(Doc doc) {
-        doc.setUpdateTime(System.currentTimeMillis()/1000);
+        doc.setUpdateTime(System.currentTimeMillis());
         docDao.save(doc);
         return doc;
     }
@@ -34,7 +34,7 @@ public class DocServiceImpl implements DocService {
 
     @Override
     public Doc update(Doc doc) {
-        doc.setUpdateTime(System.currentTimeMillis()/1000);
+        doc.setUpdateTime(System.currentTimeMillis());
         docDao.update(doc);
         return doc;
     }

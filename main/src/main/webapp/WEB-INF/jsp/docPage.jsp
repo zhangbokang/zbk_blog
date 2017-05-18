@@ -6,9 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>${blogDoc.blogTitle}</title>
+    <title>myblog - ${doc.title}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,7 +22,7 @@
 <div class="row">
     <div class="col-md-4" id="col4">
         <div id="portamento_container">
-            <div id="blogToc">
+            <div id="docToc">
                 <h2>目录</h2>
                 <div id="custom-toc-container"></div>
             </div>
@@ -30,21 +31,23 @@
     <div class="col-md-8">
         <div class="row">
             <div class="col-lg-12">
-                <div class="h1">${blogDoc.blogTitle}</div>
+                <div class="h1">${doc.title}</div>
                 <div class="row" id="classRow">
                     <div class="col-sm-4">
-                        分类：<a href="#">${blogDoc.blogClass}</a>
+                        分类：<a href="#">${doc.classify.name}</a>
                     </div>
                     <div class="col-sm-8">
-                        标签：<a href="#">${blogDoc.blogTag}</a>
+                        标签：<a href="#">${doc.tag.name}</a>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6"><strong>最后更新&nbsp;${blogDoc.updataTimeStr}</strong></div>
+                    <jsp:useBean id="dataValue" class="java.util.Date" />
+                    <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}" />
+                    <div class="col-sm-6"><strong>最后更新&nbsp;<fmt:formatDate value="${dataValue}" type="both" /></strong></div>
                     <div class="col-sm-4 col-sm-offset-2">
-                        <span class="badge glyphicon glyphicon-eye-open">&nbsp;${blogDoc.openNumber == null?0:blogDoc.openNumber}</span>
+                        <span class="badge glyphicon glyphicon-eye-open">&nbsp;${doc.openNumber == null?0:doc.openNumber}</span>
                         <a href="#">
-                            <span class="badge glyphicon glyphicon-thumbs-up">&nbsp;${blogDoc.supportNumber == null?0:blogDoc.supportNumber}</span>
+                            <span class="badge glyphicon glyphicon-thumbs-up">&nbsp;${doc.favorNumber == null?0:doc.favorNumber}</span>
                         </a>
                     </div>
                 </div>
@@ -52,7 +55,7 @@
         </div>
         <hr />
         <div id="test-editormd-view">
-            <textarea style="display:none;">${blogDoc.blogMd}</textarea>
+            <textarea style="display:none;">${doc.docMd}</textarea>
         </div>
     </div>
 </div>
@@ -72,20 +75,20 @@
 <script src="/static/js/portamento.js"></script><!--这个js我定制了一下，暂时还没有压缩，必须使用非压缩的 -->
 <script type="text/javascript">
 
-    $('#blogToc').portamento({disableWorkaround: true});
+    $('#docToc').portamento({disableWorkaround: true});
 
     //让目录的宽度跟随他的父元素
     $(window).resize(function(){
-        $('#blogToc').width($('#col4').width());
+        $('#docToc').width($('#col4').width());
         //当宽度小于970时就取消目录的相对定位
         if ($(window).width()<970){
-            $("#portamento_container #blogToc").addClass("relative");
+            $("#portamento_container #docToc").addClass("relative");
         }else {
-            $("#portamento_container #blogToc").removeClass("relative");
+            $("#portamento_container #docToc").removeClass("relative");
         }
     });
     $(function () {
-        $('#blogToc').width($('#col4').width());
+        $('#docToc').width($('#col4').width());
     });
     //end
 

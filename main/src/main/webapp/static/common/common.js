@@ -116,7 +116,7 @@ var common = {
                 source: function (request, response) {
                     var key = request.term.trim().toUpperCase();
                     //如果没有输入任何数据，则返回全部数据
-                    if (key =="" || key == undefined || key == null){
+                    if (!$.trim(key)){
                         response(cache);
                         return;
                     }

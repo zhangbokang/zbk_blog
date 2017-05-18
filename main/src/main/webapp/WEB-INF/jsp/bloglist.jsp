@@ -14,7 +14,7 @@
 
         <c:forEach items="${docList}" var="doc">
             <li class="list-group-item">
-                <a class="" href="docpage?docId=${doc.docId}">
+                <a class="" href="/doc/docPage?docId=${doc.docId}">
                     <span class="h3">${doc.title}</span>
                     <c:set var="docMdStr" value="${fn:substring(doc.docMd,0,60)}" />
                     <p> ...</p>

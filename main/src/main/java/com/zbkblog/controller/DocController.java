@@ -86,7 +86,7 @@ public class DocController {
         doc.setTag(tag);
 
         //保存的逻辑
-        if (null != docId && docId.matches("[0-9]{10}")) {
+        if (null != docId && docId.matches("[0-9]*")) {
             Doc doc1 = docService.findById(Long.parseLong(docId));
             if (doc1 != null){
                 //将doc中的非空属性值复制到doc1
@@ -104,16 +104,21 @@ public class DocController {
     }
 
     @RequestMapping("/docPage")
-    public String blogpage(HttpServletRequest request){
+    public String docPage(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
-//        if (blogId == null){
-//            return "index";
-//        }
+        if (docId == null || !docId.matches("[0-9]*")){
+            request.setAttribute("errorInfo","没有该文章。");
+            return "errorPage";
+        }
         //调用service查询
         Doc doc = docService.findById(Long.parseLong(docId));
+        if (null == doc){
+            request.setAttribute("errorInfo","未查询到该文章。");
+            return "errorPage";
+        }
         request.setAttribute("doc",doc);
-        return "blogpage";
+        return "docPage";
     }
 
     @RequestMapping("/editDoc")
@@ -125,7 +130,11 @@ public class DocController {
         }
         //调用service查询
         Doc doc = docService.findById(Long.parseLong(docId));
-        request.setAttribute("doc",doc==null?new Doc():doc);
+        if (null == doc){
+            request.setAttribute("errorInfo","未查询到该文章。");
+            return "errorPage";
+        }
+        request.setAttribute("doc",doc);
         return "editdoc";
     }
 

@@ -20,13 +20,13 @@ public class ClassifyServiceImpl implements ClassifyService {
 
     @Override
     public Long save(Classify classify) {
-        classify.setCreateTime(System.currentTimeMillis()/1000);
+        classify.setCreateTime(System.currentTimeMillis());
         return classifyDao.save(classify);
     }
 
     @Override
     public Classify update(Classify classify) {
-        classify.setCreateTime(System.currentTimeMillis()/1000);
+        classify.setCreateTime(System.currentTimeMillis());
         classifyDao.update(classify);
         return classify;
     }

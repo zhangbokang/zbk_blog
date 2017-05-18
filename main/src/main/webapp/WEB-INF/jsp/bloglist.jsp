@@ -18,7 +18,7 @@
                 <a class="" href="/doc/docPage?docId=${doc.docId}">
                     <span class="h3">${doc.title}</span>
                     <c:set var="docMdStr" value="${fn:substring(doc.docMd,0,60)}" />
-                    <p> ...</p>
+                    <p>${docMdStr} ...</p>
                 </a>
                 <div class="row">
                     <div class="col-sm-5">分类：${doc.classify.name}</div>

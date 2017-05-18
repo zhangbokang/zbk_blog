@@ -5,8 +5,10 @@
 </div>
 <script>
     $('#classifyTable').bootstrapTable({
-        url: 'data.json',
+        //url: 'data.json',
         columns:common.COLUMNS.classify
     });
+    var classifyData = common.Fn.queryData("/classify/findAllClassify",{},"un");
+    $('#classifyTable').bootstrapTable("load",classifyData);
 
 </script>

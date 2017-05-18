@@ -26,7 +26,11 @@ public class DocDaoImpl extends MyDaoSupport implements DocDao {
     @Override
     public List<Doc> findAll() {
         String hql = "from Doc ";
-        return (List)getHibernateTemplate().find(hql);
+        try {
+            return (List)getHibernateTemplate().find(hql);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override

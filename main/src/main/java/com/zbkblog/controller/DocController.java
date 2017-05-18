@@ -8,6 +8,7 @@ import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.PageUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -34,6 +35,21 @@ public class DocController {
     @Resource
     private ClassifyService classifyService;
 
+    @RequestMapping("/findAllDoc")
+    @ResponseBody
+    public Map<String,Object> findAllDoc(HttpServletRequest request){
+        Map<String,Object> map = new HashedMap();
+        List<Doc> docList = docService.findAll();
+        if (null == docList){
+            map.put("code",0);
+            map.put("msg","查询发生错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",docList);
+        return map;
+
+    }
 
     @RequestMapping("/saveDoc")
     @ResponseBody
@@ -117,6 +133,9 @@ public class DocController {
             request.setAttribute("errorInfo","未查询到该文章。");
             return "errorPage";
         }
+        Long openNumber = doc.getOpenNumber()!=null?doc.getOpenNumber():0L;
+        doc.setOpenNumber(++openNumber);
+        docService.update(doc);
         request.setAttribute("doc",doc);
         return "docPage";
     }

@@ -17,7 +17,7 @@ var common = {
                 title: '分类名称',
                 width:"40%"
             }, {
-                field: 'updateTime',
+                field: 'createTime',
                 title: '最后更新时间',
                 width:"20%"
             },{
@@ -35,7 +35,7 @@ var common = {
                 title: '标签名称',
                 width:"40%"
             }, {
-                field: 'updateTime',
+                field: 'createTime',
                 title: '最后更新时间',
                 width:"20%"
             },{
@@ -178,7 +178,7 @@ var common = {
                         alert(result.msg);
                     },
                     error: function () {
-                        alert("请求出现问题！");
+                        alert("“"+url +"”请求出现问题！");
                         return;
                     }
                 });

@@ -90,7 +90,7 @@ public class ClassifyController {
             map.put("msg","分类名称不能为空");
             return map;
         }
-        if (null == classifyId || !classifyId.matches("[0-9]*")){
+        if (null == classifyId || !classifyId.matches("[0-9]{13}")){
             map.put("code",0);
             map.put("msg","分类ID不能为空，且必须是数字");
             return map;
@@ -117,7 +117,7 @@ public class ClassifyController {
     public Map<String,Object> deleteClassify(HttpServletRequest request){
         String classifyId = request.getParameter("classifyId");
         Map<String ,Object> map = new HashMap<>();
-        if (null == classifyId || !classifyId.matches("[0-9]*")){
+        if (null == classifyId || !classifyId.matches("[0-9]{13}")){
             map.put("code",0);
             map.put("msg","分类ID不能为空，且必须是数字");
             return map;

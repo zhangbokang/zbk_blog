@@ -19,7 +19,7 @@
 </head>
 <body>
 <jsp:include page="header.jsp" />
-<div class="row">
+<div class="row" id="docPageBody">
     <div class="col-md-4" id="col4">
         <div id="portamento_container">
             <div id="docToc">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8" id="docBody">
         <div class="row">
             <div class="col-lg-12">
                 <div class="h1">${doc.title}</div>

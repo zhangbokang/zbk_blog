@@ -86,7 +86,7 @@ public class DocController {
         doc.setTag(tag);
 
         //保存的逻辑
-        if (null != docId && docId.matches("[0-9]*")) {
+        if (null != docId && docId.matches("[0-9]{13}")) {
             Doc doc1 = docService.findById(Long.parseLong(docId));
             if (doc1 != null){
                 //将doc中的非空属性值复制到doc1
@@ -107,7 +107,7 @@ public class DocController {
     public String docPage(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
-        if (docId == null || !docId.matches("[0-9]*")){
+        if (docId == null || !docId.matches("[0-9]{13}")){
             request.setAttribute("errorInfo","没有该文章。");
             return "errorPage";
         }

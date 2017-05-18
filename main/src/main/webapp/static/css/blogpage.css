@@ -16,3 +16,9 @@ body{
 
 #portamento_container #blogToc.fixed {position:fixed;}
 #portamento_container #blogToc.relative{position:relative;}
+
+#docPageBody{
+    margin: 0px;
+    /*padding: 1px;*/
+    background-color: #FFF;
+}

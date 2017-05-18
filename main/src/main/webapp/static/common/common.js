@@ -6,6 +6,92 @@ document.write('<script src="/static/spell/py.js"></script>');
 // document.write('<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>');
 // document.write('<script src="/static/jqueryui/jquery-ui.min.js"></script>');
 var common = {
+    COLUMNS:{
+        classify:
+            [{
+                field: 'classifyId',
+                title: '分类ID',
+                width:"20%"
+            }, {
+                field: 'name',
+                title: '分类名称',
+                width:"40%"
+            }, {
+                field: 'updateTime',
+                title: '最后更新时间',
+                width:"20%"
+            },{
+                field:'opt',
+                title:'操作',
+                width:"20%"
+            }],
+        tag:
+            [{
+                field: 'tagId',
+                title: '标签ID',
+                width:"20%"
+            }, {
+                field: 'name',
+                title: '标签名称',
+                width:"40%"
+            }, {
+                field: 'updateTime',
+                title: '最后更新时间',
+                width:"20%"
+            },{
+                field:'opt',
+                title:'操作',
+                width:"20%"
+            }],
+        comment:
+            [{
+                field: 'commentId',
+                title: '评论ID',
+                width:"15%"
+            },{
+                field: 'docTitle',
+                title: '文章标题',
+                width:"25%"
+            },{
+                field: 'content',
+                title: '评论内容',
+                width:"30%"
+            },{
+                field: 'createTime',
+                title: '评论时间',
+                width:"15%"
+            },{
+                field:'opt',
+                title:'操作',
+                width:"15%"
+            }],
+        doc:
+            [{
+                field: 'docId',
+                title: '文章ID',
+                width:"15%"
+            }, {
+                field: 'title',
+                title: '文章标题',
+                width:"25%"
+            },{
+                field: 'classifyName',
+                title: '文章分类',
+                width:"15%"
+            },{
+                field: 'tagName',
+                title: '文章标题',
+                width:"15%"
+            }, {
+                field: 'updateTime',
+                title: '最后更新时间',
+                width:"15%"
+            },{
+                field:'opt',
+                title:'操作',
+                width:"15%"
+            }],
+    },
     URL:{
         classify:{
             findAllClassify:"/classify/findAllClassify",

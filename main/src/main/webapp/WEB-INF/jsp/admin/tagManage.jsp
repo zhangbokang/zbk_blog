@@ -9,11 +9,6 @@
 <meta charset="UTF-8">
 <style rel="stylesheet">
     #allMake{
-        /*position: fixed;*/
-        /*display: none*/
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*z-index: 999;*/
         width:100%;
         height:100%;
         background-color:#000;
@@ -48,14 +43,7 @@
     <table id="tagTable"></table>
 </div>
 
-<%--遮罩--%>
-<div id="allMake"></div>
-    <div id="makeBody">
-        <div>
-            <label for="tagName">标签名称</label>
-            <input id="tagName" class="form-control">
-        </div>
-    </div>
+
 
 <script>
     $('#tagTable').bootstrapTable({

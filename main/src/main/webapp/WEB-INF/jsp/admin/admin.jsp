@@ -15,6 +15,34 @@
     <link rel="stylesheet" href="/static/css/common.css">
 
     <style rel="stylesheet">
+        #allMake{
+            width:100%;
+            height:100%;
+            background-color:#000;
+            position:fixed;
+            top:0;
+            left:0;
+            z-index:98;
+            opacity:0.3;
+            /*兼容IE8及以下版本浏览器*/
+            filter: alpha(opacity=30);
+            display:none;
+        }
+        #makeBody{
+            border: #8F938F 1px solid;
+            width: 500px;
+            height: 200px;
+            background-color:#FFF;
+            margin: auto;
+            position: fixed;
+            z-index:99;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            display:none;
+        }
         #loadDiv{
             padding: 20px 30px;
             min-height: 600px;
@@ -41,12 +69,30 @@
     <div id="loadDiv"></div>
 </div>
 
+<%--遮罩--%>
+<div id="allMake"></div>
+<div id="makeBody">
+    <label for="theName">名称</label>
+    <input id="theName" class="form-control"><br />
+    <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
+    <button id="clean_btn" onclick="noMake();" class="btn btn-warning">取消添加</button>
+</div>
+
 <script src="/static/js/jquery-3.2.0.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="/static/bootstraptable/bootstrap-table.min.js"></script>
 <script src="/static/bootstraptable/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="/static/common/common.js"></script>
 <script>
+    //遮罩
+    function isMake() {
+        $("#allMake").show();
+        $("#makeBody").show();
+    }
+    function noMake() {
+        $("#ok_btn").hide();
+        $("#makeBody").hide();
+    }
     $(function () {
         //默认加载文章管理页面
         $('#loadDiv').load('/admin/docManage');

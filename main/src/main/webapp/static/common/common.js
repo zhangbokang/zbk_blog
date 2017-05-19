@@ -19,11 +19,29 @@ var common = {
             }, {
                 field: 'createTime',
                 title: '最后更新时间',
-                width:"20%"
+                width:"20%",
+                formatter:function(value,row,index){
+                    function add0(m){return m<10?'0'+m:m }
+                    var time = new Date(value);
+                    var y = time.getFullYear();
+                    var m = time.getMonth()+1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+                }
+
             },{
                 field:'opt',
                 title:'操作',
-                width:"20%"
+                width:"20%",
+                formatter:function(value,row,index){
+                    return ["<a class='btn btn-default' onclick='loadClassifyTable()' href="+
+                    common.URL.classify.deleteClassify+"?classifyId="+ row.classifyId+">删除</a>",
+
+                    ].join("")
+                }
             }],
         tag:
             [{
@@ -37,11 +55,23 @@ var common = {
             }, {
                 field: 'createTime',
                 title: '最后更新时间',
-                width:"20%"
+                width:"20%",
+                formatter:function(value,row,index){
+                    function add0(m){return m<10?'0'+m:m }
+                    var time = new Date(value);
+                    var y = time.getFullYear();
+                    var m = time.getMonth()+1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+                }
             },{
                 field:'opt',
                 title:'操作',
-                width:"20%"
+                width:"20%",
+                formatter:function(value,row,index){}
             }],
         comment:
             [{
@@ -59,11 +89,23 @@ var common = {
             },{
                 field: 'createTime',
                 title: '评论时间',
-                width:"15%"
+                width:"15%",
+                formatter:function(value,row,index){
+                    function add0(m){return m<10?'0'+m:m }
+                    var time = new Date(value);
+                    var y = time.getFullYear();
+                    var m = time.getMonth()+1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+                }
             },{
                 field:'opt',
                 title:'操作',
-                width:"15%"
+                width:"15%",
+                formatter:function(value,row,index){}
             }],
         doc:
             [{
@@ -85,11 +127,23 @@ var common = {
             }, {
                 field: 'updateTime',
                 title: '最后更新时间',
-                width:"15%"
+                width:"15%",
+                formatter:function(value,row,index){
+                    function add0(m){return m<10?'0'+m:m }
+                    var time = new Date(value);
+                    var y = time.getFullYear();
+                    var m = time.getMonth()+1;
+                    var d = time.getDate();
+                    var h = time.getHours();
+                    var mm = time.getMinutes();
+                    var s = time.getSeconds();
+                    return y+'-'+add0(m)+'-'+add0(d)+' '+add0(h)+':'+add0(mm)+':'+add0(s);
+                }
             },{
                 field:'opt',
                 title:'操作',
-                width:"15%"
+                width:"15%",
+                formatter:function(value,row,index){}
             }],
     },
     URL:{

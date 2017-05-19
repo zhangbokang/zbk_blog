@@ -28,21 +28,7 @@
             filter: alpha(opacity=30);
             display:none;
         }
-        #makeBody{
-            border: #8F938F 1px solid;
-            width: 500px;
-            height: 200px;
-            background-color:#FFF;
-            margin: auto;
-            position: fixed;
-            z-index:99;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            display:none;
-        }
+
         #loadDiv{
             padding: 20px 30px;
             min-height: 600px;
@@ -71,12 +57,7 @@
 
 <%--遮罩--%>
 <div id="allMake"></div>
-<div id="makeBody">
-    <label for="theName">名称</label>
-    <input id="theName" class="form-control"><br />
-    <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
-    <button id="clean_btn" onclick="noMake();" class="btn btn-warning">取消添加</button>
-</div>
+
 
 <script src="/static/js/jquery-3.2.0.js"></script>
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
@@ -90,7 +71,7 @@
         $("#makeBody").show();
     }
     function noMake() {
-        $("#ok_btn").hide();
+        $("#allMake").hide();
         $("#makeBody").hide();
     }
     $(function () {

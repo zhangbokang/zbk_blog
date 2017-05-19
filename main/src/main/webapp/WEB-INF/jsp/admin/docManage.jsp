@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="UTF-8">
 <div id="docManage">
-    <div><a href="/doc/editDoc" class="btn btn-default">新增</a><button onclick="loadTable();" class="btn btn-default">刷新</button></div><br />
+    <div><a href="/doc/editDoc" class="btn btn-default">新增</a>&nbsp;<button onclick="loadTable();" class="btn btn-default">刷新</button></div><br />
     <table id="docTable"></table>
 </div>
 <script>

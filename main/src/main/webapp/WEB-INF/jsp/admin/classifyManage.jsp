@@ -7,18 +7,63 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="UTF-8">
+<style rel="stylesheet">
+    #classifyMake{
+        border: #8F938F 1px solid;
+        width: 500px;
+        height: 200px;
+        background-color:#FFF;
+        margin: auto;
+        position: fixed;
+        z-index:99;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        display:none;
+    }
+</style>
 <div id="classifyManage">
-    <div><button class="btn btn-default">新增</button>
-        <button onclick="loadTable();" class="btn btn-default">刷新</button></div><br />
+    <div><button class="btn btn-default" onclick="isMake();$('#classifyMake').show();">新增</button>
+        <button onclick="loadClassifyTable();" class="btn btn-default">刷新</button></div><br />
     <table id="classifyTable"></table>
 </div>
+<div id="classifyMake">
+    <label for="theName">名称</label>
+    <input type="text" id="theName" class="form-control"><br />
+    <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
+    <button id="clean_btn" onclick="noMake();" class="btn btn-warning">取消添加</button>
+</div>
 <script>
+    $(function () {
+        $("#classifyMake #ok_btn").click(function () {
+            var classifyName = $("#classifyMake #theName").val();
+            $.ajax({
+                url:"/classify/addClassify",
+                type:"POST",
+                data:{"classifyName":classifyName},
+                dataType:"json",
+                success:function (data) {
+                    if (data.code == 1){
+                        loadTable();
+                        return;
+                    }
+                    alert(data.msg);
+                },
+                error:function () {
+                    alert("保存失败，请求发生错误！");
+                }
+            });
+            $("#classifyMake").hide();
+        });
+    });
     $('#classifyTable').bootstrapTable({
         //url: 'data.json',
-        columns:common.COLUMNS.classify
+        columns:common.COLUMNS.classify,
     });
     //刷新表格
-    function loadTable() {
+    function loadClassifyTable() {
         $.ajax({
             url:"/classify/findAllClassify",
             type:"GET",
@@ -38,6 +83,6 @@
         });
 
     }
-    loadTable();
+    loadClassifyTable();
 
 </script>

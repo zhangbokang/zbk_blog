@@ -8,20 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="UTF-8">
 <style rel="stylesheet">
-    #allMake{
-        width:100%;
-        height:100%;
-        background-color:#000;
-        position:fixed;
-        top:0;
-        left:0;
-        z-index:98;
-        opacity:0.3;
-        /*兼容IE8及以下版本浏览器*/
-        filter: alpha(opacity=30);
-        /*display:none;*/
-    }
-    #makeBody{
+    #tagMake{
         border: #8F938F 1px solid;
         width: 500px;
         height: 200px;
@@ -33,19 +20,46 @@
         bottom: 0;
         left: 0;
         right: 0;
-        opacity:1;
-        /*display:none;*/
+        padding: 20px;
+        display:none;
     }
 </style>
 <div id="tagManage">
-    <div><button class="btn btn-default">新增</button>
+    <div><button class="btn btn-default" onclick="isMake();$('#tagMake').show();">新增</button>
         <button onclick="loadTable();" class="btn btn-default">刷新</button></div><br />
     <table id="tagTable"></table>
 </div>
 
-
+<div id="tagMake">
+    <label for="theName">名称</label>
+    <input type="text" id="theName" class="form-control"><br />
+    <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
+    <button id="clean_btn" onclick="noMake();" class="btn btn-warning">取消添加</button>
+</div>
 
 <script>
+    $(function () {
+        $("#tagMake #ok_btn").click(function () {
+            var tagName = $("#tagMake #theName").val();
+            $.ajax({
+                url:"/tag/addTag",
+                type:"POST",
+                data:{"tagName":tagName},
+                dataType:"json",
+                success:function (data) {
+                    if (data.code == 1){
+                        loadTable();
+                        return;
+                    }
+                    alert(data.msg);
+                },
+                error:function () {
+                    alert("保存失败，请求发生错误！");
+                }
+            });
+            $("#tagMake").hide();
+        });
+    });
     $('#tagTable').bootstrapTable({
         //url: 'data.json',
         columns:common.COLUMNS.tag

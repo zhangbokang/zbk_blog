@@ -26,7 +26,7 @@
 </style>
 <div id="tagManage">
     <div><button class="btn btn-default" onclick="isMake();$('#tagMake').show();">新增</button>
-        <button onclick="loadTable();" class="btn btn-default">刷新</button></div><br />
+        <button onclick="loadTagTable();" class="btn btn-default">刷新</button></div><br />
     <table id="tagTable"></table>
 </div>
 
@@ -34,7 +34,7 @@
     <label for="theName">名称</label>
     <input type="text" id="theName" class="form-control"><br />
     <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
-    <button id="clean_btn" onclick="noMake();" class="btn btn-warning">取消添加</button>
+    <button id="clean_btn" onclick="noMake();$('#tagMake').hide();" class="btn btn-warning">取消添加</button>
 </div>
 
 <script>
@@ -48,7 +48,7 @@
                 dataType:"json",
                 success:function (data) {
                     if (data.code == 1){
-                        loadTable();
+                        loadTagTable();
                         return;
                     }
                     alert(data.msg);
@@ -65,7 +65,7 @@
         columns:common.COLUMNS.tag
     });
     //刷新表格
-    function loadTable() {
+    function loadTagTable() {
         $.ajax({
             url:"/tag/findAllTag",
             type:"GET",
@@ -85,7 +85,26 @@
         });
 
     }
-    loadTable();
+    loadTagTable();
 
+    //删除分类
+    function deleteTagManage(tagId) {
+        $.ajax({
+            url:common.URL.tag.deleteTag + "?tagId="+tagId,
+            type:"GET",
+            dataType:"json",
+            success:function (result) {
+                if (result.code == 1){
+                    loadTagTable();
+                    return;
+                }
+                alert(result.msg);
+            },
+            error:function () {
+                alert("请求出现问题！");
+                return;
+            }
+        });
+    }
 
 </script>

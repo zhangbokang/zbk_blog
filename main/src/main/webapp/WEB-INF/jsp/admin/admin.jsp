@@ -39,11 +39,8 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="../header.jsp" />
 <div style="background-color: #FFF">
-    <div class="h1" style="padding: 8px 15px;">
-        管理界面
-    </div>
     <div id="navDiv">
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a href="javascrpt:void(0)" onclick="$('#loadDiv').load('/admin/docManage');">文章管理</a></li>
@@ -54,6 +51,7 @@
     </div>
     <div id="loadDiv"></div>
 </div>
+<jsp:include page="../footer.jsp" />
 
 <%--遮罩--%>
 <div id="allMake"></div>
@@ -68,11 +66,9 @@
     //遮罩
     function isMake() {
         $("#allMake").show();
-        $("#makeBody").show();
     }
     function noMake() {
         $("#allMake").hide();
-        $("#makeBody").hide();
     }
     $(function () {
         //默认加载文章管理页面

@@ -33,7 +33,7 @@
     <label for="theName">名称</label>
     <input type="text" id="theName" class="form-control"><br />
     <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
-    <button id="clean_btn" onclick="noMake();" class="btn btn-warning">取消添加</button>
+    <button id="clean_btn" onclick="noMake();$('#classifyMake').hide();" class="btn btn-warning">取消添加</button>
 </div>
 <script>
     $(function () {
@@ -46,7 +46,7 @@
                 dataType:"json",
                 success:function (data) {
                     if (data.code == 1){
-                        loadTable();
+                        loadClassifyTable();
                         return;
                     }
                     alert(data.msg);
@@ -85,4 +85,23 @@
     }
     loadClassifyTable();
 
+    //删除分类
+    function deleteClassifyManage(classifyId) {
+        $.ajax({
+            url:common.URL.classify.deleteClassify + "?classifyId="+classifyId,
+            type:"GET",
+            dataType:"json",
+            success:function (result) {
+                if (result.code == 1){
+                    loadClassifyTable();
+                    return;
+                }
+                alert(result.msg);
+            },
+            error:function () {
+                alert("请求出现问题！");
+                return;
+            }
+        });
+    }
 </script>

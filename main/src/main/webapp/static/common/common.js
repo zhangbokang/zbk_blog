@@ -37,10 +37,9 @@ var common = {
                 title:'操作',
                 width:"20%",
                 formatter:function(value,row,index){
-                    return ["<a class='btn btn-default' onclick='loadClassifyTable()' href="+
-                    common.URL.classify.deleteClassify+"?classifyId="+ row.classifyId+">删除</a>",
-
-                    ].join("")
+                    return ["<button class='btn btn-default' onclick='deleteClassifyManage("
+                    +row.classifyId+")'>删除</button>"
+                    ].join("");
                 }
             }],
         tag:
@@ -71,7 +70,11 @@ var common = {
                 field:'opt',
                 title:'操作',
                 width:"20%",
-                formatter:function(value,row,index){}
+                formatter:function(value,row,index){
+                    return ["<button class='btn btn-default' onclick='deleteTagManage("
+                    +row.tagId+")'>删除</button>"
+                    ].join("");
+                }
             }],
         comment:
             [{
@@ -127,7 +130,7 @@ var common = {
             }, {
                 field: 'updateTime',
                 title: '最后更新时间',
-                width:"15%",
+                width:"20%",
                 formatter:function(value,row,index){
                     function add0(m){return m<10?'0'+m:m }
                     var time = new Date(value);
@@ -142,8 +145,15 @@ var common = {
             },{
                 field:'opt',
                 title:'操作',
-                width:"15%",
-                formatter:function(value,row,index){}
+                width:"10%",
+                formatter:function(value,row,index){
+                    return ["<a class='btn btn-default' href='/doc/editDoc?docId=" +
+                    row.docId+"'>修改</a>"//,
+                        // "<button class='btn btn-default' onclick='deleteTagManage("
+                        // +row.tagId+")'>删除</button>"
+
+                    ].join("");
+                }
             }],
     },
     URL:{

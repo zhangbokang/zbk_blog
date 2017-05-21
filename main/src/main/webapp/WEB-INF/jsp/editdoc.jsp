@@ -20,7 +20,7 @@
 <div class="row">
     <div class="col-sm-4">
         <a href="/index"><b>返回主页</b></a>&nbsp;&nbsp;
-        <a href="/admin">文章管理</a>
+        <a href="/admin">管理页面</a>
     </div>
     <div class="col-sm-8" id="msg">上一次保存结果：<span></span></div>
 </div>

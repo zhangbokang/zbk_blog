@@ -4,6 +4,8 @@ import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.Page;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +54,25 @@ public class DocServiceImpl implements DocService {
     @Override
     public Doc findById(Long id) {
         return docDao.findById(id);
+    }
+
+    @Override
+    public List<Doc> findByUpdateOfTopX(Integer top) {
+        return docDao.findByUpdateOfTopX(top);
+    }
+
+    @Override
+    public List<Doc> findByOpenNumberOfTopX(Integer top) {
+        return docDao.findByOpenNumberOfTopX(top);
+    }
+
+    @Override
+    public List<Doc> findByFavorNumberOfTopX(Integer top) {
+        return docDao.findByFavorNumberOfTopX(top);
+    }
+
+    @Override
+    public List<Doc> findByClassifyId(Long classifyId) {
+        return docDao.findByClassifyId(classifyId);
     }
 }

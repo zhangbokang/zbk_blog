@@ -1,5 +1,6 @@
 package com.zbkblog.test;
 
+import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.ClassifyService;
@@ -127,6 +128,17 @@ public class MyTest {
         dis.setDocMd("ahfdsf");
 //        myBeanUtils
         MyBeanUtils.copyPropertiesIgnoreNull(src,dis);
+    }
+
+    @Test
+    public void testTopX(){
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("classpath:spring.xml");
+        DocDao docDao = context.getBean("docDao", DocDao.class);
+        List<Doc> list = docDao.findByUpdateOfTopX(10);
+        for (Doc doc:list) {
+            System.out.println(doc.getTitle() + ":" + doc.getUpdateTime());
+        }
     }
 
 }

@@ -93,4 +93,73 @@ public class DocDaoImpl extends MyDaoSupport implements DocDao {
         }
         session.close();
     }
+
+    @Override
+    public List<Doc> findByUpdateOfTopX(Integer top) {
+        Session session = getSession();
+        String hql = "from Doc order by updateTime desc";
+        Query query = session.createQuery(hql);
+        query.setFirstResult(0);
+        query.setMaxResults(top);
+        try {
+            List<Doc> list = query.list();
+            return list;
+        }catch (Exception e){
+            return null;
+        }finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<Doc> findByOpenNumberOfTopX(Integer top) {
+        Session session = getSession();
+        String hql = "from Doc order by openNumber desc";
+        Query query = session.createQuery(hql);
+        query.setFirstResult(0);
+        query.setMaxResults(top);
+        try {
+            List<Doc> list = query.list();
+            return list;
+        }catch (Exception e){
+            return null;
+        }finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<Doc> findByFavorNumberOfTopX(Integer top) {
+        Session session = getSession();
+        String hql = "from Doc order by favorNumber desc";
+        Query query = session.createQuery(hql);
+        query.setFirstResult(0);
+        query.setMaxResults(top);
+        try {
+            List<Doc> list = query.list();
+            return list;
+        }catch (Exception e){
+            return null;
+        }finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public List<Doc> findByClassifyId(Long classifyId) {
+        Session session = getSession();
+        String hql = "from Doc where classify.classifyId = ?";
+        Query query = session.createQuery(hql);
+//        query.setFirstResult(0);
+//        query.setMaxResults(top);
+        query.setParameter(0,classifyId);
+        try {
+            List<Doc> list = query.list();
+            return list;
+        }catch (Exception e){
+            return null;
+        }finally {
+            session.close();
+        }
+    }
 }

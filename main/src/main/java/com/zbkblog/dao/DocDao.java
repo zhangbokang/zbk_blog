@@ -47,4 +47,32 @@ public interface DocDao {
      * @param doc
      */
     void update(Doc doc);
+
+    /**
+     * 查询topX的文章
+     * @param top
+     * @return
+     */
+    List<Doc> findByUpdateOfTopX(Integer top);
+
+    /**
+     * 查询打开条数topX的文章
+     * @param top
+     * @return
+     */
+    List<Doc> findByOpenNumberOfTopX(Integer top);
+
+    /**
+     * 查询点赞条数topX的文章
+     * @param top
+     * @return
+     */
+    List<Doc> findByFavorNumberOfTopX(Integer top);
+
+    /**
+     * 根据分类ID查询文章列表
+     * @param classifyId
+     * @return
+     */
+    List<Doc> findByClassifyId(Long classifyId);
 }

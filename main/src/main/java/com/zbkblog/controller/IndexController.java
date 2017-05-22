@@ -18,6 +18,10 @@ public class IndexController {
     @Resource
     private DocService docService;
 
+    @RequestMapping("")
+    public String all(HttpServletRequest request){
+        return index(request);
+    }
     @RequestMapping("index")
     public String index(HttpServletRequest request){
         //Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);

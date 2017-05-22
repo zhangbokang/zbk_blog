@@ -12,13 +12,13 @@
 <header>
     <div class="masthead">
         <a href="index.html" id="logo">
-            <img src="http://zhishi01.nos-eastchina1.126.net/logo.jpg" alt="MyBlog">
+            <img src="http://zhishi01.nos-eastchina1.126.net/logo.jpg" alt="MyNote">
         </a>
         <ul class="nav nav-pills pull-right">
             <li><a href="/index">主页</a></li>
-            <li><a href="/admin">管理</a></li>
+            <li><a href="/admin">管理页面</a></li>
             <%--<li><a href="#">关于</a></li>--%>
-            <li><a href="#">联系方式</a></li>
+            <%--<li><a href="#">联系方式</a></li>--%>
         </ul>
     </div>
     <!-- 导航条 -->
@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/index">MyBlog博客</a>
+            <a class="navbar-brand" href="/index">我的笔记系统</a>
         </div>
         <div class="collapse navbar-collapse navbar-responsive-collapse">
             <ul class="nav nav-tabs">

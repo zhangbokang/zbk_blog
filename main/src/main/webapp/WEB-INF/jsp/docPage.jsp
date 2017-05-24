@@ -34,10 +34,10 @@
                 <div class="h1">${doc.title}</div>
                 <div class="row" id="classRow">
                     <div class="col-sm-4">
-                        分类：<a href="#">${doc.classify.name}</a>
+                        分类：<a href="/findDocByClassifyId?classifyId=${doc.classify.classifyId}">${doc.classify.name}</a>
                     </div>
                     <div class="col-sm-8">
-                        标签：<a href="#">${doc.tag.name}</a>
+                        标签：<a href="/findDocByTagId?tagId=${doc.tag.tagId}">${doc.tag.name}</a>
                     </div>
                 </div>
                 <div class="row">

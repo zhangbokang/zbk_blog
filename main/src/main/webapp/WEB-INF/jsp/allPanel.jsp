@@ -10,9 +10,26 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <meta charset="utf-8">
 <style rel="stylesheet">
-    #tagsList {position:relative; height: 300px; margin: -15px auto; }
-    #tagsList a {position:absolute; top:0px; left:0px; font-family: Microsoft YaHei; font-weight:bold; text-decoration:none; padding: 3px 6px; }
-    #tagsList a:hover { color:#FF0000; letter-spacing:2px;}
+    #tagsList {
+        position: relative;
+        height: 300px;
+        margin: -15px auto;
+    }
+
+    #tagsList a {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        font-family: Microsoft YaHei;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 3px 6px;
+    }
+
+    #tagsList a:hover {
+        color: #FF0000;
+        letter-spacing: 2px;
+    }
 </style>
 <!-- 分类列表、标签列表等列表 -->
 <div class="panel panel-default">
@@ -24,8 +41,6 @@
                     <a href="/findDocByClassifyId?classifyId=${classify.classifyId}">${classify.name}</a>
                 </li>
             </c:forEach>
-            <%--<li><a href="#">Hadeep</a> </li>--%>
-            <%--<li><a href="#">Java</a> </li>--%>
         </ul>
     </div>
 </div>
@@ -44,20 +59,16 @@
     <div class="panel-body">
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${zxwz}">
-            <li>
-                <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                <jsp:useBean id="dataValue" class="java.util.Date" />
-                <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}" />
-                <span class="pull-right"><fmt:formatDate value="${dataValue}" type="both" /></span>
-            </li>
+                <li>
+                    <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
+                    <jsp:useBean id="dataValue" class="java.util.Date"/>
+                    <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}"/>
+                    <span class="pull-right"><fmt:formatDate value="${dataValue}" type="both"/></span>
+                </li>
             </c:forEach>
         </ul>
     </div>
 </div>
-<%--<div class="panel panel-default">--%>
-    <%--<div class="panel-heading">推荐阅读</div>--%>
-    <%--<div class="panel-body"></div>--%>
-<%--</div>--%>
 <div class="panel panel-default">
     <div class="panel-heading">阅读排行</div>
     <div class="panel-body">

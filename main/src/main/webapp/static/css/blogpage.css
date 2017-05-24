@@ -1,24 +1,14 @@
-body{
-    padding:50px 100px;
-}
+/*body{  padding:50px 100px;  }*/
 
-#classRow{
+#classRow {
     padding: 10px 0;
 }
-/*#portamento_container{*/
-    /*position:relative;*/
-/*}*/
-/*#portamento_container #blogToc{*/
-    /*!*border: 1px solid red;*!*/
-    /*float:none;*/
-    /*position:absolute;*/
-/*}*/
 
-/*#portamento_container #blogToc.fixed {position:fixed;}*/
-/*#portamento_container #blogToc.relative{position:relative;}*/
+#portamento_container #blogToc.relative {
+    position: relative;
+}
 
-#docPageBody{
+#docPageBody {
     margin: 0px;
-    /*padding: 1px;*/
     background-color: #FFF;
 }

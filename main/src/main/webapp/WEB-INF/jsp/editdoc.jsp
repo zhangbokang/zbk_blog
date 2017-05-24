@@ -183,7 +183,7 @@
                     imageUpload : true,
                     imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
 //                    imageUploadURL : "./php/upload.php",
-                    imageUploadURL : "/upImage",
+                    imageUploadURL : "/doc/upImage",
                     /*onload : function() {  //onload后执行的函数
                         //console.log('onload', this);
                         //this.fullscreen();

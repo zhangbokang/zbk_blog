@@ -9,6 +9,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <meta charset="utf-8">
+<style rel="stylesheet">
+    #tagsList {position:relative; height: 300px; margin: -15px auto; }
+    #tagsList a {position:absolute; top:0px; left:0px; font-family: Microsoft YaHei; font-weight:bold; text-decoration:none; padding: 3px 6px; }
+    #tagsList a:hover { color:#FF0000; letter-spacing:2px;}
+</style>
 <!-- 分类列表、标签列表等列表 -->
 <div class="panel panel-default">
     <div class="panel-heading">分类列表</div>
@@ -26,7 +31,13 @@
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">标签地图</div>
-    <div class="panel-body"></div>
+    <div class="panel-body">
+        <div id="tagsList">
+            <c:forEach var="tag" items="${tagList}">
+                <span><a href="/findDocByTagId?tagId=${tag.tagId}">${tag.name}</a></span>
+            </c:forEach>
+        </div>
+    </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">最新文章</div>
@@ -73,3 +84,4 @@
         </ul>
     </div>
 </div>
+<script src="/static/js/tagcloud.js"></script>

@@ -162,4 +162,22 @@ public class DocDaoImpl extends MyDaoSupport implements DocDao {
             session.close();
         }
     }
+
+    @Override
+    public List<Doc> findByTagId(Long tagId) {
+        Session session = getSession();
+        String hql = "from Doc where tag.tagId = ?";
+        Query query = session.createQuery(hql);
+//        query.setFirstResult(0);
+//        query.setMaxResults(top);
+        query.setParameter(0,tagId);
+        try {
+            List<Doc> list = query.list();
+            return list;
+        }catch (Exception e){
+            return null;
+        }finally {
+            session.close();
+        }
+    }
 }

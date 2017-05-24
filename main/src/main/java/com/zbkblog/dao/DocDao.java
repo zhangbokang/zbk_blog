@@ -75,4 +75,11 @@ public interface DocDao {
      * @return
      */
     List<Doc> findByClassifyId(Long classifyId);
+
+    /**
+     * 根据标签ID查询文章列表
+     * @param tagId
+     * @return
+     */
+    List<Doc> findByTagId(Long tagId);
 }

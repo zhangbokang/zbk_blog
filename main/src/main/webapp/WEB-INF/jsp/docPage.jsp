@@ -72,7 +72,8 @@
 <script src="/static/editormd/lib/sequence-diagram.min.js"></script>
 <script src="/static/editormd/lib/flowchart.min.js"></script>
 <script src="/static/editormd/lib/jquery.flowchart.min.js"></script>
-<script src="/static/js/portamento.js"></script><!--这个js我定制了一下，暂时还没有压缩，必须使用非压缩的 -->
+<%--<script src="/static/js/portamento.js"></script><!--这个js我定制了一下，暂时还没有压缩，必须使用非压缩的 -->--%>
+<script src="/static/portamento-1.1.1/portamento-min.js"></script>
 <script type="text/javascript">
 
     $('#docToc').portamento({disableWorkaround: true});

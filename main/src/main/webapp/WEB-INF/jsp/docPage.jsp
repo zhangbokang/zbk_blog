@@ -96,7 +96,7 @@
 <script src="/static/editormd/lib/sequence-diagram.min.js"></script>
 <script src="/static/editormd/lib/flowchart.min.js"></script>
 <script src="/static/editormd/lib/jquery.flowchart.min.js"></script>
-<script src="/static/portamento-1.1.1/portamento.js"></script>
+<script src="/static/portamento-1.1.1/portamento-min.js"></script>
 <script type="text/javascript">
 
     $('#sidebar').portamento();

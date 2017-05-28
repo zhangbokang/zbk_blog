@@ -108,7 +108,11 @@
             dataType:"json",
             success:function (result) {
                 if (result.code == 1){
-                    loadTagTable();
+                    var tagIdNum = parseInt(tagId);
+                    $("#tagTable").bootstrapTable("remove",{
+                        field: 'tagId',
+                        values: [tagIdNum]
+                    });
                     return;
                 }
                 alert(result.msg);

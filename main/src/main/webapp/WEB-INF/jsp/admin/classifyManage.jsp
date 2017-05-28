@@ -106,7 +106,11 @@
             dataType:"json",
             success:function (result) {
                 if (result.code == 1){
-                    loadClassifyTable();
+                    var classifyIdNum = parseInt(classifyId);
+                    $("#classifyTable").bootstrapTable("remove",{
+                        field: 'classifyId',
+                        values: [classifyIdNum]
+                    });
                     return;
                 }
                 alert(result.msg);

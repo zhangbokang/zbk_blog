@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="UTF-8">
 <style rel="stylesheet">
-    #classifyMake{
+    .classifyMake{
         border: #8F938F 1px solid;
         width: 500px;
         height: 200px;
@@ -29,11 +29,17 @@
         <button onclick="loadClassifyTable();" class="btn btn-default">刷新</button></div><br />
     <table id="classifyTable"></table>
 </div>
-<div id="classifyMake">
+<div id="classifyMake" class="classifyMake">
     <label for="theName">名称</label>
     <input type="text" id="theName" class="form-control"><br />
     <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
     <button id="clean_btn" onclick="noMake();$('#classifyMake').hide();" class="btn btn-warning">取消添加</button>
+</div>
+<div id="classifyDelete" class="classifyMake">
+    <input id="classifyDeleteId" type="hidden">
+    <label>确认删除"<span></span>"吗？</label>
+    <button onclick="deleteClassifyManage($('#classifyDeleteId').val());noMake();$('#classifyDelete').hide()" class="btn btn-default">确定</button>
+    <button onclick="noMake();$('#classifyDelete').hide()" class="btn btn-default">取消</button>
 </div>
 <script>
     $(function () {
@@ -85,6 +91,13 @@
     }
     loadClassifyTable();
 
+    //删除分类确认框
+    function deleteClassifyMake(id,name) {
+        isMake();
+        $("#classifyDelete").show();
+        $("#classifyDeleteId").val(id);
+        $("#classifyDelete label span").text(name);
+    }
     //删除分类
     function deleteClassifyManage(classifyId) {
         $.ajax({

@@ -37,8 +37,8 @@ var common = {
                 title:'操作',
                 width:"20%",
                 formatter:function(value,row,index){
-                    return ["<button class='btn btn-default' onclick='deleteClassifyManage("
-                    +row.classifyId+")'>删除</button>"
+                    return ["<button class='btn btn-default' onclick='deleteClassifyMake("
+                    +row.classifyId+",\""+row.name+"\")'>删除</button>"
                     ].join("");
                 }
             }],
@@ -71,8 +71,8 @@ var common = {
                 title:'操作',
                 width:"20%",
                 formatter:function(value,row,index){
-                    return ["<button class='btn btn-default' onclick='deleteTagManage("
-                    +row.tagId+")'>删除</button>"
+                    return ["<button class='btn btn-default' onclick='deleteTagMake("
+                    +row.tagId+",\""+row.name+"\")'>删除</button>"
                     ].join("");
                 }
             }],

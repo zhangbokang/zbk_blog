@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <meta charset="UTF-8">
 <style rel="stylesheet">
-    #tagMake{
+    .tagMake{
         border: #8F938F 1px solid;
         width: 500px;
         height: 200px;
@@ -30,11 +30,17 @@
     <table id="tagTable"></table>
 </div>
 
-<div id="tagMake">
+<div id="tagMake" class="tagMake">
     <label for="theName">名称</label>
     <input type="text" id="theName" class="form-control"><br />
     <button id="ok_btn" onclick="noMake();" class="btn btn-success">确定添加</button>&nbsp;
     <button id="clean_btn" onclick="noMake();$('#tagMake').hide();" class="btn btn-warning">取消添加</button>
+</div>
+<div id="tagDelete" class="tagMake">
+    <input id="tagDeleteId" type="hidden">
+    <label>确认删除"<span></span>"吗？</label>
+    <button onclick="deleteTagManage($('#tagDeleteId').val());noMake();$('#tagDelete').hide()" class="btn btn-default">确定</button>
+    <button onclick="noMake();$('#tagDelete').hide()" class="btn btn-default">取消</button>
 </div>
 
 <script>
@@ -87,6 +93,13 @@
     }
     loadTagTable();
 
+    //删除分类确认框
+    function deleteTagMake(id,name) {
+        isMake();
+        $("#tagDelete").show();
+        $("#tagDeleteId").val(id);
+        $("#tagDelete label span").text(name);
+    }
     //删除分类
     function deleteTagManage(tagId) {
         $.ajax({

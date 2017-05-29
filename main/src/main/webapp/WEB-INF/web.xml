@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring.xml</param-value>
+    </context-param>
+
     <filter>
         <filter-name>myEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -17,10 +22,17 @@
         <servlet-name>springmvc</servlet-name>
     </filter-mapping>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <!-- 默认HibernateTemplate方法调用后自动关闭Session;
  配置Filter后可以将Session关闭推迟到OpenSessionInViewFilter做关闭
  注意:1.放置在Struts的Filter控制器前面
  	2.它将session设置成只读模式，如果需要增删改必须结合事务处理才可以
+ 	特别注意：配置openSessionInViewFilter后需要配置一个Listener，如上面的，
+ 	    同时需要指定contextConfigLocation，如上面，但是这个配置文件要和servlet中指定的
+ 	    xml配置文件分开，因为如果两个配置文件中都有hibernate相关的配置，
+ 	    会导致session不唯一，出现no session的错误。
  -->
     <filter>
         <filter-name>openSessionInViewFilter</filter-name>
@@ -36,7 +48,7 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring.xml</param-value>
+            <param-value>classpath:springmvc.xml</param-value>
         </init-param>
         <!--<load-on-startup>2</load-on-startup>-->
     </servlet>

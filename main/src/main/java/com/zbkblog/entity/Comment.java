@@ -1,9 +1,20 @@
 package com.zbkblog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.io.Serializable;
+
 /**
  * Created by zhangbokang on 2017/5/14.
  */
-public class Comment {
+/*
+在使用SpringMVC+Hibernate环境中返回JSON数据有时会出现对象属性不能序列化，
+这是因为你需要序列化对象有一个属性是一类类型，
+而你使用了Hibernate的延迟加载所以这里是个Hibernate的代理对象。
+该代理对象有些属性不能被序列化所以会报错。
+ */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
+public class Comment implements Serializable {
     private Long commentId;
     private String content;
     private Long createTime;

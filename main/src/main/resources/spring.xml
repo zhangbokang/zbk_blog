@@ -14,56 +14,9 @@
 
     <!-- 加载资源文件  其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载-->
     <context:property-placeholder location="classpath:db.properties" />
-
+    <context:annotation-config />
     <context:component-scan base-package="com.zbkblog" />
-
-    <!--&lt;!&ndash; 解决使用@ResposenBody返回中文乱码和返回Map错误问题 &ndash;&gt;-->
-    <!--&lt;!&ndash; DefaultAnnotationHandlerMapping 和 AnnotationMethodHandlerAdapter 的使用已经过时！-->
-        <!--spring 3.1 开始应该用-->
-        <!--RequestMappingHandlerMapping 来替换 DefaultAnnotationHandlerMapping，-->
-        <!--RequestMappingHandlerAdapter 来替换 AnnotationMethodHandlerAdapter。 &ndash;&gt;-->
-    <!--&lt;!&ndash;<bean class="org.springframework.web.servlet.handler.AbstractHandlerMethodMapping"&ndash;&gt;-->
-    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
-        <!--<property name="messageConverters">-->
-            <!--<list>-->
-                <!--<ref bean="stringHttpMessageConverter"/>-->
-                <!--<ref bean="mappingJacksonHttpMessageConverter"/>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-    <!--<bean id="stringHttpMessageConverter"-->
-          <!--class="org.springframework.http.converter.StringHttpMessageConverter">-->
-        <!--<property name="supportedMediaTypes">-->
-            <!--<list>-->
-                <!--<value>text/html;charset=UTF-8</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-    <!--&lt;!&ndash; rest json related... start &ndash;&gt;-->
-    <!--<bean id="mappingJacksonHttpMessageConverter"-->
-          <!--class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
-        <!--<property name="supportedMediaTypes">-->
-            <!--<list>-->
-                <!--<value>application/json;charset=UTF-8</value>-->
-            <!--</list>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-    <mvc:annotation-driven />
-
-
-    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-    <mvc:resources mapping="/static/**" location="/static/" />
-    <mvc:resources mapping="/images/**" location="/images/" />
-
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 指定前缀，所在目录，起点/为webroot -->
-        <property name="prefix" value="/WEB-INF/jsp/">
-        </property>
-        <!-- 指定后缀扩展名 -->
-        <property name="suffix" value=".jsp">
-        </property>
-    </bean>
+    <aop:aspectj-autoproxy/>
 
     <!--c3p0连接池-->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
@@ -92,7 +45,7 @@
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <!--<prop key="hibernate.format_sql">true</prop>-->
+                <prop key="hibernate.format_sql">true</prop>
             </props>
         </property>
         <!-- 指定映射描述文件 -->
@@ -108,48 +61,33 @@
         <property name="sessionFactory" ref="sessionFactory">
         </property>
     </bean>
-
-     <!--配置Hibernate事务管理器 -->
+    <!-- 配置Hibernate事务管理器 -->
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <!--<bean id="transactionInterceptor"-->
-          <!--class="org.springframework.transaction.interceptor.TransactionInterceptor">-->
-        <!--<property name="transactionManager" ref="transactionManager" />-->
-        <!--&lt;!&ndash; 配置事务属性 &ndash;&gt;-->
-        <!--<property name="transactionAttributes">-->
-            <!--<props>-->
-                <!--<prop key="*">PROPAGATION_REQUIRED</prop>-->
-            <!--</props>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-    <!-- 开启@Transactional事务注解 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
     <!-- 配置事务异常封装 -->
-    <!--<bean id="persistenceExceptionTranslationPostProcessor"-->
-          <!--class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
+    <bean id="persistenceExceptionTranslationPostProcessor"
+          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 
     <!--  声明式容器事务管理 ,transaction-manager指定事务管理器为transactionManager -->
-    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
-        <!--<tx:attributes>-->
-            <!--<tx:method name="get*" propagation="REQUIRED" read-only="true" />-->
-            <!--<tx:method name="find*" propagation="REQUIRED" read-only="true" />-->
-            <!--<tx:method name="query*" propagation="REQUIRED" read-only="true" />-->
-            <!--<tx:method name="load*" propagation="REQUIRED" read-only="true" />-->
-            <!--<tx:method name="*" propagation="REQUIRED" />-->
-        <!--</tx:attributes>-->
-    <!--</tx:advice>-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--<tx:method name="delete*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+</tx:advice>
 
-    <!--<aop:config expose-proxy="true">-->
-        <!--&lt;!&ndash; 只对业务逻辑层实施事务 &ndash;&gt;-->
-        <!--<aop:pointcut id="txPointcut" expression="execution(* com.zbkblog.service..*.*(..))" />-->
-        <!--&lt;!&ndash; aop:pointcut id="txPointcut" expression="execution(* cn.himto.module.web..service..*.*(..)) OR (execution (* cn.himto.module.XXX.service..*.*(..)))" /&ndash;&gt;-->
-        <!--&lt;!&ndash; Advisor定义，切入点和通知分别为txPointcut、txAdvice &ndash;&gt;-->
-        <!--<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>-->
-    <!--</aop:config>-->
+    <aop:config expose-proxy="true">
+        <!-- 只对业务逻辑层实施事务 -->
+        <aop:pointcut id="txPointcut" expression="execution(* com.zbkblog.service..*.*(..))" />
+        <!-- aop:pointcut id="txPointcut" expression="execution(* cn.himto.module.web..service..*.*(..)) OR (execution (* cn.himto.module.XXX.service..*.*(..)))" /-->
+        <!-- Advisor定义，切入点和通知分别为txPointcut、txAdvice -->
+        <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
+    </aop:config>
 </beans>

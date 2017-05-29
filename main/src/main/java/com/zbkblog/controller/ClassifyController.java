@@ -3,7 +3,6 @@ package com.zbkblog.controller;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.service.ClassifyService;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,7 +15,6 @@ import java.util.Map;
 /**
  * Created by zhangbokang on 2017/5/15.
  */
-@Transactional(value = "transactionManager")
 @Controller
 @RequestMapping("/classify")
 public class ClassifyController {

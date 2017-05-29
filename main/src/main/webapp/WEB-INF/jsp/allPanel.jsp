@@ -30,6 +30,12 @@
         color: #FF0000;
         letter-spacing: 2px;
     }
+    .panel-body a:hover{
+        text-decoration: none;
+    }
+    .panel-body li>div:hover{
+        background-color: #f7f7f7;
+    }
 </style>
 <!-- 分类列表、标签列表等列表 -->
 <div class="panel panel-default">
@@ -60,10 +66,13 @@
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${zxwz}">
                 <li>
-                    <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                    <jsp:useBean id="dataValue" class="java.util.Date"/>
-                    <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}"/>
-                    <span class="pull-right"><fmt:formatDate value="${dataValue}" type="both"/></span>
+                    <div><a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
+                        <div style="text-align: right">
+                            <jsp:useBean id="dataValue" class="java.util.Date"/>
+                            <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}"/>
+                            <fmt:formatDate value="${dataValue}" type="both"/>
+                        </div>
+                    </div>
                 </li>
             </c:forEach>
         </ul>
@@ -75,8 +84,10 @@
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${ydph}">
                 <li>
-                    <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                    <span class="badge glyphicon glyphicon-eye-open pull-right">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span>
+                    <div class="row">
+                        <div class="col-sm-9"><a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
+                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
+                    </div>
                 </li>
             </c:forEach>
         </ul>
@@ -88,8 +99,10 @@
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${dzph}">
                 <li>
-                    <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                    <span class="badge glyphicon glyphicon-thumbs-up pull-right">&nbsp;${doc.favorNumber==null?0:doc.favorNumber}</span>
+                    <div class="row">
+                        <div class="col-sm-9"><a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
+                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-thumbs-up pull-right">&nbsp;${doc.favorNumber==null?0:doc.favorNumber}</span></div>
+                    </div>
                 </li>
             </c:forEach>
         </ul>

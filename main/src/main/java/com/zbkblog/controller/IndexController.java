@@ -8,6 +8,7 @@ import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.PageUtil;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * Created by zhangbokang on 2017/5/13.
  */
+@Transactional(value = "transactionManager")
 @Controller
 public class IndexController {
     @Resource

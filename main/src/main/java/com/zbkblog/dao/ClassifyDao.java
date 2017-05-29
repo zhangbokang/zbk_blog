@@ -31,7 +31,7 @@ public interface ClassifyDao {
      * 保存
      * @param classify
      */
-    Long save(Classify classify);
+    void save(Classify classify);
 
     /**
      * 更新

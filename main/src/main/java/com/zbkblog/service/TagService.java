@@ -12,7 +12,7 @@ public interface TagService {
      * 添加一个标签
      * @param tag
      */
-    Long save(Tag tag);
+    Tag save(Tag tag);
 
     /**
      * 修改标签

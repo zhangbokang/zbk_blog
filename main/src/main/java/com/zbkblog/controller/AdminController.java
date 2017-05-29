@@ -1,6 +1,7 @@
 package com.zbkblog.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by zhangbokang on 2017/5/18.
  */
+@Transactional(value = "transactionManager")
 @Controller
 @RequestMapping("/admin")
 public class AdminController {

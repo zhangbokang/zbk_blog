@@ -50,12 +50,15 @@
                 type:"POST",
                 data:{"classifyName":classifyName},
                 dataType:"json",
-                success:function (data) {
-                    if (data.code == 1){
-                        loadClassifyTable();
+                success:function (result) {
+                    if (result.code == 1){
+                        var rows = [];
+                        rows.push(result.data);
+                        $('#classifyTable').bootstrapTable("append",rows);
+//                        loadClassifyTable();
                         return;
                     }
-                    alert(data.msg);
+                    alert(result.msg);
                 },
                 error:function () {
                     alert("保存失败，请求发生错误！");

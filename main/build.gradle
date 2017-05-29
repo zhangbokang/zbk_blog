@@ -17,28 +17,30 @@ dependencies {
     compile fileTree(dir: '../libs', includes: ['*.jar'])
 
     // https://mvnrepository.com/artifact/org.springframework/spring-core
-    compile group: 'org.springframework', name: 'spring-core', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-core', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-beans
-    compile group: 'org.springframework', name: 'spring-beans', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-beans', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-context
-    compile group: 'org.springframework', name: 'spring-context', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
-    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-web
-    compile group: 'org.springframework', name: 'spring-web', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-aop
-    compile group: 'org.springframework', name: 'spring-aop', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-aop', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
-    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-tx
-    compile group: 'org.springframework', name: 'spring-tx', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-tx', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-orm
-    compile group: 'org.springframework', name: 'spring-orm', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.2.7.RELEASE'
     // https://mvnrepository.com/artifact/org.springframework/spring-context-support
-    compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.8.RELEASE'
+    compile group: 'org.springframework', name: 'spring-context-support', version: '4.2.7.RELEASE'
 
     compile 'org.hibernate:hibernate-core:4.3.7.Final'
     compile 'org.hibernate:hibernate-c3p0:4.3.7.Final'
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.3.7.Final'
 
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'

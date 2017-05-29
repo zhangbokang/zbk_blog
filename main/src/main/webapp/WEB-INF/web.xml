@@ -17,6 +17,20 @@
         <servlet-name>springmvc</servlet-name>
     </filter-mapping>
 
+    <!-- 默认HibernateTemplate方法调用后自动关闭Session;
+ 配置Filter后可以将Session关闭推迟到OpenSessionInViewFilter做关闭
+ 注意:1.放置在Struts的Filter控制器前面
+ 	2.它将session设置成只读模式，如果需要增删改必须结合事务处理才可以
+ -->
+    <filter>
+        <filter-name>openSessionInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>openSessionInViewFilter</filter-name>
+        <servlet-name>springmvc</servlet-name>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>springmvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

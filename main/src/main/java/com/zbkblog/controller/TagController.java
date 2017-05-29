@@ -3,6 +3,7 @@ package com.zbkblog.controller;
 import com.zbkblog.entity.Tag;
 import com.zbkblog.service.TagService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * Created by zhangbokang on 2017/5/16.
  */
+@Transactional(value = "transactionManager")
 @Controller
 @RequestMapping("/tag")
 public class TagController {
@@ -64,9 +66,9 @@ public class TagController {
         }
         Tag tag = new Tag();
         tag.setName(tagName);
-        Long tagId = tagService.save(tag);
+        tag = tagService.save(tag);
         map.put("code",1);
-        map.put("data",tagId);
+        map.put("data",tag);
         return map;
     }
 

@@ -12,7 +12,7 @@ public interface ClassifyService {
      * 添加一个标签
      * @param classify
      */
-    Long save(Classify classify);
+    Classify save(Classify classify);
 
     /**
      * 修改标签

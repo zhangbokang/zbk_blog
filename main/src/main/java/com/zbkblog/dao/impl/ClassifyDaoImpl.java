@@ -2,13 +2,8 @@ package com.zbkblog.dao.impl;
 
 import com.zbkblog.dao.ClassifyDao;
 import com.zbkblog.entity.Classify;
-import com.zbkblog.utils.MyDaoSupport;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,66 +12,33 @@ import java.util.List;
  * Created by zhangbokang on 2017/5/13.
  */
 @Repository("classifyDao")
-//@Transactional
-public class ClassifyDaoImpl extends MyDaoSupport implements ClassifyDao {
+public class ClassifyDaoImpl implements ClassifyDao {
     @Resource
-    public void setSessionFacotry(SessionFactory sessionFacotry){
-        super.setSessionFactory(sessionFacotry);
-    }
+    private HibernateTemplate hibernateTemplate;
 
     @Override
     public List<Classify> findAll() {
         String hql = "from Classify";
-        try {
-            return (List)getHibernateTemplate().find(hql);
-        }catch (Exception e){
-            return null;
-        }
+        return (List)hibernateTemplate.find(hql);
     }
 
     @Override
     public Classify findById(Long id) {
-        return getHibernateTemplate().get(Classify.class,id);
+        return hibernateTemplate.load(Classify.class,id);
     }
 
     @Override
     public void delete(Classify classify) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.delete(classify);
-            transaction.commit();
-        }catch (Exception e){
-            transaction.rollback();
-        }
-        session.close();
+        hibernateTemplate.delete(classify);
     }
 
     @Override
-    public Long save(Classify classify) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            Long classifyId=new Long(session.save(classify).toString());
-            transaction.commit();
-            return classifyId;
-        }catch (Exception e){
-            transaction.rollback();
-        }
-        session.close();
-        return null;
+    public void save(Classify classify) {
+        hibernateTemplate.save(classify);
     }
 
     @Override
     public void update(Classify classify) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.update(classify);
-            transaction.commit();
-        }catch (Exception e){
-            transaction.rollback();
-        }
-        session.close();
+        hibernateTemplate.update(classify);
     }
 }

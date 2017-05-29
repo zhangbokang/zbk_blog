@@ -52,12 +52,15 @@
                 type:"POST",
                 data:{"tagName":tagName},
                 dataType:"json",
-                success:function (data) {
-                    if (data.code == 1){
-                        loadTagTable();
+                success:function (result) {
+                    if (result.code == 1){
+                        var rows = [];
+                        rows.push(result.data);
+                        $('#tagTable').bootstrapTable("append",rows);
+//                        loadTagTable();
                         return;
                     }
-                    alert(data.msg);
+                    alert(result.msg);
                 },
                 error:function () {
                     alert("保存失败，请求发生错误！");

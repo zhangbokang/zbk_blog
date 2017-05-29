@@ -13,6 +13,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +26,7 @@ import java.util.*;
 /**
  * Created by zhangbokang on 2017/5/13.
  */
+@Transactional(value = "transactionManager")
 @Controller
 @RequestMapping("/doc")
 public class DocController {

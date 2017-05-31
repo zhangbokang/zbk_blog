@@ -3,7 +3,6 @@ package com.zbkblog.dao;
 
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.Page;
-import org.hibernate.criterion.DetachedCriteria;
 
 import java.util.List;
 

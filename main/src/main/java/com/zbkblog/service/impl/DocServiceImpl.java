@@ -4,13 +4,10 @@ import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.Page;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**

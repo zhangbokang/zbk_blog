@@ -64,9 +64,9 @@ public class ClassifyController {
         }
         Classify classify = new Classify();
         classify.setName(classifyName);
-        Long classifyId = classifyService.save(classify);
+        classify = classifyService.save(classify);
         map.put("code",1);
-        map.put("data",classifyId);
+        map.put("data",classify);
         return map;
     }
 

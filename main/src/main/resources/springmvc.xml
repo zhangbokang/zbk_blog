@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 加载资源文件  其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载-->
+    <context:property-placeholder location="classpath:db.properties" />
+    <!--
+    使用<context:component-scan/>后，即可将<context:annotation-config/>省去
+    <context:annotation-config />-->
+    <context:component-scan base-package="com.zbkblog" />
+    <aop:aspectj-autoproxy/>
+    <!--&lt;!&ndash; 解决使用@ResposenBody返回中文乱码和返回Map错误问题 &ndash;&gt;-->
+    <!--&lt;!&ndash; DefaultAnnotationHandlerMapping 和 AnnotationMethodHandlerAdapter 的使用已经过时！-->
+        <!--spring 3.1 开始应该用-->
+        <!--RequestMappingHandlerMapping 来替换 DefaultAnnotationHandlerMapping，-->
+        <!--RequestMappingHandlerAdapter 来替换 AnnotationMethodHandlerAdapter。 &ndash;&gt;-->
+    <!--&lt;!&ndash;<bean class="org.springframework.web.servlet.handler.AbstractHandlerMethodMapping"&ndash;&gt;-->
+    <!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
+        <!--<property name="messageConverters">-->
+            <!--<list>-->
+                <!--<ref bean="stringHttpMessageConverter"/>-->
+                <!--<ref bean="mappingJacksonHttpMessageConverter"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="stringHttpMessageConverter"-->
+          <!--class="org.springframework.http.converter.StringHttpMessageConverter">-->
+        <!--<property name="supportedMediaTypes">-->
+            <!--<list>-->
+                <!--<value>text/html;charset=UTF-8</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--&lt;!&ndash; rest json related... start &ndash;&gt;-->
+    <!--<bean id="mappingJacksonHttpMessageConverter"-->
+          <!--class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">-->
+        <!--<property name="supportedMediaTypes">-->
+            <!--<list>-->
+                <!--<value>application/json;charset=UTF-8</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <mvc:annotation-driven />
+
+
+    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+    <mvc:resources mapping="/static/**" location="/static/" />
+    <mvc:resources mapping="/images/**" location="/images/" />
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 指定前缀，所在目录，起点/为webroot -->
+        <property name="prefix" value="/WEB-INF/jsp/">
+        </property>
+        <!-- 指定后缀扩展名 -->
+        <property name="suffix" value=".jsp">
+        </property>
+    </bean>
+
+</beans>

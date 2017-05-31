@@ -8,7 +8,6 @@ import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.PageUtil;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -20,7 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -38,7 +40,7 @@ public class DocController {
     @RequestMapping("/findAllDoc")
     @ResponseBody
     public Map<String,Object> findAllDoc(HttpServletRequest request){
-        Map<String,Object> map = new HashedMap();
+        Map<String,Object> map = new HashMap<>();
         List<Doc> docList = docService.findAll();
         if (null == docList){
             map.put("code",0);

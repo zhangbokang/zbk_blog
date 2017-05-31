@@ -31,7 +31,7 @@ public interface TagDao {
      * 保存
      * @param tag
      */
-    Long save(Tag tag);
+    void save(Tag tag);
 
     /**
      * 更新

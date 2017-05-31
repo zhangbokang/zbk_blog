@@ -64,9 +64,9 @@ public class TagController {
         }
         Tag tag = new Tag();
         tag.setName(tagName);
-        Long tagId = tagService.save(tag);
+        tag = tagService.save(tag);
         map.put("code",1);
-        map.put("data",tagId);
+        map.put("data",tag);
         return map;
     }
 

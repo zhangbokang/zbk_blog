@@ -55,7 +55,7 @@
                         var rows = [];
                         rows.push(result.data);
                         $('#classifyTable').bootstrapTable("append",rows);
-//                        loadClassifyTable();
+                        $("#classifyMake input[type='text']").val("");
                         return;
                     }
                     alert(result.msg);

@@ -12,7 +12,7 @@
 <header>
     <div class="masthead">
         <a href="index.html" id="logo">
-            <img src="/static/img/logo.jpg" alt="MyNote">
+            <img src="http://zhishi01.nos-eastchina1.126.net/logo1.jpg" alt="MyNote">
         </a>
         <ul class="nav nav-pills pull-right">
             <li><a href="/index">主页</a></li>

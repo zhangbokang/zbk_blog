@@ -57,7 +57,7 @@
                         var rows = [];
                         rows.push(result.data);
                         $('#tagTable').bootstrapTable("append",rows);
-//                        loadTagTable();
+                        $("#tagMake input[type='text']").val("");
                         return;
                     }
                     alert(result.msg);

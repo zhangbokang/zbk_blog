@@ -26,4 +26,5 @@ header .masthead{
 }
 header #logo>img{
     height: 60px;
+    width: 150px;
 }

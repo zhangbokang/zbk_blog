@@ -4,6 +4,7 @@ import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.Page;
+import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +28,8 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public List<Doc> findAllByPage(Page page) {
-        return docDao.findAllByPage(page);
+    public Paging<Doc> findAllByPage(Paging paging) {
+        return docDao.findAllByPage(paging);
     }
 
     @Override

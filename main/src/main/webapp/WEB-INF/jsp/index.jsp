@@ -27,8 +27,8 @@
             <jsp:include page="allPanel.jsp"/>
         </div>
         <!-- 主体显示部分 -->
-        <div class="col-sm-8">
-            <jsp:include page="bloglist.jsp"/>
+        <div class="col-sm-8" id="bloglist">
+            <%--<jsp:include page="bloglist.jsp"/>--%>
         </div>
     </div>
 </div>
@@ -40,5 +40,21 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>
+<script src="/static/jqPaginator/dist/jqPaginator.min.js"></script>
+<script>
+    $("#bloglist").load("/findAllDoc?accessType=doc");
+    function loadBlogList(url,par) {
+        if (!$.trim(par)){
+            par = {};
+        }
+        $("#bloglist").load(url,par
+//        {
+//        totalCounts:this.totalCounts,
+//            pageSize:5,
+//            currentPage:1
+//        }
+        );
+    }
+</script>
 </body>
 </html>

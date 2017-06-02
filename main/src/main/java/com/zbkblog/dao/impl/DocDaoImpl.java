@@ -12,6 +12,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -162,5 +163,25 @@ public class DocDaoImpl implements DocDao {
                 return query.list();
             }
         }) ;
+    }
+
+    @Override
+    public Paging<Doc> findByTagIdOfPage(Long tagId, Paging paging) {
+        String hql = "from Doc where tag.tagId = ?";
+        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+            @Override
+            public Paging doInHibernate(Session session) throws HibernateException {
+                Query q1 = session.createQuery("select count (*) from Doc where tag.tagId=:tagId");
+                q1.setParameter("tagId",tagId);
+                paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
+
+                Query query = session.createQuery(hql);
+                query.setFirstResult(paging.getFirstResult());
+                query.setMaxResults(paging.getPageSize());
+                query.setParameter(0,tagId);
+                paging.setPageList(query.list());
+                return paging;
+            }
+        });
     }
 }

@@ -83,4 +83,9 @@ public class DocServiceImpl implements DocService {
     public List<Doc> findByTagId(Long tagId) {
         return docDao.findByTagId(tagId);
     }
+
+    @Override
+    public Paging<Doc> findByTagIdOfPage(Long tagId, Paging paging) {
+        return docDao.findByTagIdOfPage(tagId,paging);
+    }
 }

@@ -90,4 +90,12 @@ public interface DocDao {
      * @return
      */
     List<Doc> findByTagId(Long tagId);
+
+    /**
+     * 根据标签ID分页查询
+     * @param tagId
+     * @param paging
+     * @return
+     */
+    Paging<Doc> findByTagIdOfPage(Long tagId,Paging paging);
 }

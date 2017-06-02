@@ -37,6 +37,11 @@ public class DocController {
     @Resource
     private ClassifyService classifyService;
 
+    /**
+     * 查询所有文档，并以json字符串形式返回
+     * @param request
+     * @return
+     */
     @RequestMapping("/findAllDoc")
     @ResponseBody
     public Map<String,Object> findAllDoc(HttpServletRequest request){
@@ -53,6 +58,11 @@ public class DocController {
 
     }
 
+    /**
+     * 保存或更新文档
+     * @param request
+     * @return
+     */
     @RequestMapping("/saveDoc")
     @ResponseBody
     public Map<String,Object> saveDoc(HttpServletRequest request){
@@ -121,6 +131,11 @@ public class DocController {
         return map;
     }
 
+    /**
+     * 查看具体的文章
+     * @param request
+     * @return
+     */
     @RequestMapping("/docPage")
     public String docPage(HttpServletRequest request){
         //编辑文章的ID
@@ -142,6 +157,11 @@ public class DocController {
         return "docPage";
     }
 
+    /**
+     * 编辑或创建文章界面
+     * @param request
+     * @return
+     */
     @RequestMapping("/editDoc")
     public String editDoc(HttpServletRequest request){
         //编辑文章的ID
@@ -159,6 +179,11 @@ public class DocController {
         return "editdoc";
     }
 
+    /**
+     * 上传图片
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/upImage",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> upImage(HttpServletRequest request){//,@RequestParam MultipartFile editormdImageFile){

@@ -58,7 +58,8 @@ public class IndexController {
         //根据分类ID查询文章
         String classifyId = request.getParameter("classifyId");
         if (classifyId == null){
-            return index(request);
+            request.setAttribute("errorInfo","分类ID不能为空！");
+            return "errorPage";
         }
 
         String pageSize = request.getParameter("pageSize");
@@ -79,10 +80,18 @@ public class IndexController {
         //根据标签ID查询文章
         String tagId = request.getParameter("tagId");
         if (tagId == null){
-            return index(request);
+            request.setAttribute("errorInfo","标签ID不能为空！");
+            return "errorPage";
         }
-        List<Doc> docList = docService.findByTagId(Long.parseLong(tagId));
-        request.setAttribute("docList",docList);
+        String pageSize = request.getParameter("pageSize");
+        String currentPage = request.getParameter("currentPage");
+        pageSize = pageSize==null?"10":pageSize;
+        currentPage = currentPage==null?"1":currentPage;
+        Paging paging = new Paging();
+        paging.setPageSize(Integer.parseInt(pageSize));
+        paging.setCurrentPage(Integer.parseInt(currentPage));
+        paging = docService.findByTagIdOfPage(Long.parseLong(tagId),paging);
+        request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
         request.setAttribute("tagId",tagId);
         return "bloglist";

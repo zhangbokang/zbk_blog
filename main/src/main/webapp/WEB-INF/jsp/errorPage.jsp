@@ -14,8 +14,9 @@
 发生错误，错误信息：
 <p>${errorInfo}</p>
 <p>
-<a href="">返回主页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="">返回上一页</a>
+<a href="/index">返回主页</a>
+    <%--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
+<%--<a href="">返回上一页</a>--%>
 </p>
 </body>
 </html>

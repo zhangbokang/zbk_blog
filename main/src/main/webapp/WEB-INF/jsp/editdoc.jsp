@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <%--<link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/bootstrap/css/bootstrap.css">--%>
     <link rel="stylesheet" href="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.css">
+    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/editblog.css">
     <meta charset="utf-8">
 </head>
 <body>

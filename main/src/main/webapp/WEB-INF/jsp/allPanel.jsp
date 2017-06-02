@@ -110,4 +110,4 @@
         </ul>
     </div>
 </div>
-<script src="/static/js/tagcloud.js"></script>
+<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/js/tagcloud.js"></script>

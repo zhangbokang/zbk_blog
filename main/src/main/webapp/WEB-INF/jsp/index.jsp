@@ -6,8 +6,8 @@
     <title>myblog主页</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/style.css">
+    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/common.css">
     <style rel="stylesheet">
 
         div{
@@ -40,7 +40,7 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>
-<script src="/static/jqPaginator/dist/jqPaginator.min.js"></script>
+<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/jqPaginator/dist/jqPaginator.min.js"></script>
 <script>
     $("#bloglist").load("/findAllDoc?accessType=doc");
     function loadBlogList(url,par) {

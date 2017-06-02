@@ -10,9 +10,9 @@
 <head>
     <meta charset="UTF-8">
     <title>管理页面</title>
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/bootstraptable/bootstrap-table.min.css">
-    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/common.css">
 
     <style rel="stylesheet">
         #allMake{
@@ -57,11 +57,11 @@
 <div id="allMake"></div>
 
 
-<script src="/static/js/jquery-3.2.0.js"></script>
-<script src="/static/bootstrap/js/bootstrap.min.js"></script>
-<script src="/static/bootstraptable/bootstrap-table.min.js"></script>
-<script src="/static/bootstraptable/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="/static/common/common.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>
+<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/common/common.js"></script>
 <script>
     //遮罩
     function isMake() {

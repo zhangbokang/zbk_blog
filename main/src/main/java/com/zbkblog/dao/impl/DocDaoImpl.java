@@ -129,6 +129,27 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
+    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Paging paging) {
+        String hql = "from Doc Where classify.classifyId = ?";
+        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+            @Override
+            public Paging doInHibernate(Session session) throws HibernateException {
+                String chql = "select count(*) from Doc where classify.classifyId=:classifyId";
+                Query q1 = session.createQuery(chql);
+                q1.setParameter("classifyId",classifyId);
+                paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
+
+                Query query = session.createQuery(hql);
+                query.setFirstResult(paging.getFirstResult());
+                query.setMaxResults(paging.getPageSize());
+                query.setParameter(0,classifyId);
+                paging.setPageList(query.list());
+                return paging;
+            }
+        });
+    }
+
+    @Override
     public List<Doc> findByTagId(Long tagId) {
         String hql = "from Doc where tag.tagId = ?";
         return (List)hibernateTemplate.execute(new HibernateCallback<List>() {

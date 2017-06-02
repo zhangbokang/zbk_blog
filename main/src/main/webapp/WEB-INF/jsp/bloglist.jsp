@@ -69,7 +69,7 @@
 //          回调函数，当换页时触发（包括初始化第一页的时候），会传入两个参数：
 //          1、“目标页"的页码，Number类型
 //          2、触发类型，可能的值：“init”（初始化），“change”（点击分页）
-            $("#xxx").text("共" + this.totalCounts + "条，每页" + this.pageSize + "条，当前第" + num + "页");
+            $("#xxx").text("共" + this.totalCounts + "条记录，每页" + this.pageSize + "条，当前第" + num + "页");
             if (type == "change") {
                 loadBlogList(
                         <c:choose>

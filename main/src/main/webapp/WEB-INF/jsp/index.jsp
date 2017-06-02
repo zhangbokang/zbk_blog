@@ -44,16 +44,7 @@
 <script>
     $("#bloglist").load("/findAllDoc?accessType=doc");
     function loadBlogList(url,par) {
-        if (!$.trim(par)){
-            par = {};
-        }
-        $("#bloglist").load(url,par
-//        {
-//        totalCounts:this.totalCounts,
-//            pageSize:5,
-//            currentPage:1
-//        }
-        );
+        $("#bloglist").load(url,par);
     }
 </script>
 </body>

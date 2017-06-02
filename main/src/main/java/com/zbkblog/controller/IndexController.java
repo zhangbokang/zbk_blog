@@ -32,19 +32,8 @@ public class IndexController {
     }
     @RequestMapping("index")
     public String index(HttpServletRequest request){
-        //查询文章列表
-        //Page page1 = RequestToBean.getBeanOfRequest(request,Page.class);
-        //查询逻辑
-        //PageInfo<BlogDoc> pageInfo =blogService.findAllBlogDocPaging(null,1,10);
-//        String everyPage = request.getParameter("everyPage");
-//        String totalCount = request.getParameter("totalCount");
-//        String currentPage = request.getParameter("currentPage");
-//        List<Doc> docList = docService.findAllByPage(PageUtil.createPage(Integer.parseInt(everyPage),Integer.parseInt(totalCount,0),Integer.parseInt(currentPage,0)));
-
-
         //调用填充标签列表
         this.panel(request);
-
         return "index";
     }
 
@@ -58,9 +47,9 @@ public class IndexController {
         Paging paging = new Paging();
         paging.setPageSize(Integer.parseInt(pageSize));
         paging.setCurrentPage(Integer.parseInt(currentPage));
-        Paging<Doc> docPaging = docService.findAllByPage(paging);
+        paging = docService.findAllByPage(paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
-        request.setAttribute("docPaging",docPaging);
+        request.setAttribute("docPaging",paging);
         return "bloglist";
     }
 
@@ -79,9 +68,8 @@ public class IndexController {
         Paging paging = new Paging();
         paging.setPageSize(Integer.parseInt(pageSize));
         paging.setCurrentPage(Integer.parseInt(currentPage));
-        //未完成
-        List<Doc> docList = docService.findByClassifyId(Long.parseLong(classifyId));
-        request.setAttribute("docList",docList);
+        paging = docService.findByClassifyIdOfPage(Long.parseLong(classifyId),paging);
+        request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
         request.setAttribute("classifyId",classifyId);
         return "bloglist";

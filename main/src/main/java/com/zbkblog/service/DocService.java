@@ -75,6 +75,14 @@ public interface DocService {
     List<Doc> findByClassifyId(Long classifyId);
 
     /**
+     * 根据分类ID查询并分页
+     * @param classifyId
+     * @param paging
+     * @return
+     */
+    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Paging paging);
+
+    /**
      * 根据标签ID查询文章列表
      * @param tagId
      * @return

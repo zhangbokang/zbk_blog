@@ -44,7 +44,7 @@
         <ul class="list-unstyled">
             <c:forEach var="classify" varStatus="status" items="${classifyList}">
                 <li>
-                    <a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}');">${classify.name}</a>
+                    <a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}',{});">${classify.name}</a>
                 </li>
             </c:forEach>
         </ul>
@@ -56,7 +56,7 @@
         <div id="tagsList">
             <c:forEach var="tag" items="${tagList}">
                 <span>
-                    <a href="#" onclick="loadBlogList('/findDocByTagId?accessType=tag&tagId=${tag.tagId}');">${tag.name}</a>
+                    <a href="#" onclick="loadBlogList('/findDocByTagId?accessType=tag&tagId=${tag.tagId}',{});">${tag.name}</a>
                 </span>
             </c:forEach>
         </div>

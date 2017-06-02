@@ -45,8 +45,9 @@ public class MyTest {
         //统计行数
         SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class,"sessionFactory");
         Session session = sessionFactory.openSession();
-        String hql = "select count(*) from Doc";
+        String hql = "select count(*) from Doc where classify.classifyId=:classifyId";
         Query query = session.createQuery(hql);
+        query.setParameter("classifyId",1495603834642L);
         Long l = (Long)query.uniqueResult();
         System.out.println(l);
         session.close();

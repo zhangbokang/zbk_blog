@@ -6,7 +6,6 @@ import com.zbkblog.entity.Tag;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
-import com.zbkblog.utils.PageUtil;
 import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

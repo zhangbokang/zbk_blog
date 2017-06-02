@@ -3,6 +3,7 @@ package com.zbkblog.dao;
 
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.Page;
+import com.zbkblog.utils.Paging;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface DocDao {
      * 分页查询
      * @return
      */
-    List<Doc> findAllByPage(final Page page);
+    Paging<Doc> findAllByPage(final Paging paging);
 
     /**
      * 根据ID查找

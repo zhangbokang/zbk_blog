@@ -7,6 +7,7 @@ import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.PageUtil;
+import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -40,13 +41,28 @@ public class IndexController {
 //        String totalCount = request.getParameter("totalCount");
 //        String currentPage = request.getParameter("currentPage");
 //        List<Doc> docList = docService.findAllByPage(PageUtil.createPage(Integer.parseInt(everyPage),Integer.parseInt(totalCount,0),Integer.parseInt(currentPage,0)));
-        List<Doc> docList = docService.findAll();
-        request.setAttribute("docList",docList);
+
 
         //调用填充标签列表
         this.panel(request);
 
         return "index";
+    }
+
+    @RequestMapping("findAllDoc")
+    public String blogList(HttpServletRequest request){
+        String pageSize = request.getParameter("pageSize");
+        String currentPage = request.getParameter("currentPage");
+        pageSize = pageSize==null?"10":pageSize;
+        currentPage = currentPage==null?"1":currentPage;
+
+        Paging paging = new Paging();
+        paging.setPageSize(Integer.parseInt(pageSize));
+        paging.setCurrentPage(Integer.parseInt(currentPage));
+        Paging<Doc> docPaging = docService.findAllByPage(paging);
+        request.setAttribute("accessType",request.getParameter("accessType"));
+        request.setAttribute("docPaging",docPaging);
+        return "bloglist";
     }
 
     @RequestMapping("findDocByClassifyId")
@@ -56,11 +72,20 @@ public class IndexController {
         if (classifyId == null){
             return index(request);
         }
+
+        String pageSize = request.getParameter("pageSize");
+        String currentPage = request.getParameter("currentPage");
+        pageSize = pageSize==null?"10":pageSize;
+        currentPage = currentPage==null?"1":currentPage;
+        Paging paging = new Paging();
+        paging.setPageSize(Integer.parseInt(pageSize));
+        paging.setCurrentPage(Integer.parseInt(currentPage));
+        //未完成
         List<Doc> docList = docService.findByClassifyId(Long.parseLong(classifyId));
         request.setAttribute("docList",docList);
-        //调用填充标签列表
-        this.panel(request);
-        return "index";
+        request.setAttribute("accessType",request.getParameter("accessType"));
+        request.setAttribute("classifyId",classifyId);
+        return "bloglist";
     }
     @RequestMapping("findDocByTagId")
     public String findDocByTagId(HttpServletRequest request){
@@ -71,9 +96,9 @@ public class IndexController {
         }
         List<Doc> docList = docService.findByTagId(Long.parseLong(tagId));
         request.setAttribute("docList",docList);
-        //调用填充标签列表
-        this.panel(request);
-        return "index";
+        request.setAttribute("accessType",request.getParameter("accessType"));
+        request.setAttribute("tagId",tagId);
+        return "bloglist";
     }
     /**
      * 填充标签列表

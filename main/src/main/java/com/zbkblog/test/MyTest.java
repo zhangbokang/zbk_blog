@@ -11,6 +11,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.type.LongType;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,6 +34,24 @@ public class MyTest {
         System.out.println(session);
         DataSource d = applicationContext.getBean("dataSource", DataSource.class);
         System.out.println(d);
+    }
+
+    @Test
+    public void testPaging(){
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("spring.xml");
+//        DocDao docDao = applicationContext.getBean(DocDao.class,"docDao");
+//        docDao.findAllByPage()
+        //统计行数
+        SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class,"sessionFactory");
+        Session session = sessionFactory.openSession();
+        String hql = "select count(*) from Doc";
+        Query query = session.createQuery(hql);
+        Long l = (Long)query.uniqueResult();
+        System.out.println(l);
+        session.close();
+
+
     }
 
     @Test

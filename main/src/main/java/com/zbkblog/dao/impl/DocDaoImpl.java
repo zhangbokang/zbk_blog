@@ -3,6 +3,7 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.Page;
+import com.zbkblog.utils.Paging;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -28,17 +29,24 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public List<Doc> findAllByPage(final Page page) {
+    public Paging<Doc> findAllByPage(final Paging paging) {
         String hql = "from Doc";
-        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+        return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
-            public List doInHibernate(Session session) throws HibernateException {
+            public Paging doInHibernate(Session session) throws HibernateException {
+                //查询总记录数
+                Query queryCount = session.createQuery("select count(*) from Doc");
+                Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
+                paging.setTotalCounts(totalCounts);
+
                 Query query = session.createQuery(hql);
                 //设置每页显示多少个，设置多大结果。
-                query.setMaxResults(page.getEveryPage());
+                query.setMaxResults(paging.getPageSize());
                 //设置起点
-                query.setFirstResult(page.getBeginIndex());
-                return query.list();
+                query.setFirstResult(paging.getFirstResult());
+                List<Doc> docList =  query.list();
+                paging.setPageList(docList);
+                return paging;
             }
         });
     }

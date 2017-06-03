@@ -8,13 +8,6 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/style.css">
     <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/common.css">
-    <style rel="stylesheet">
-
-        div{
-            /*border: 1px red solid;*/
-        }
-
-    </style>
 </head>
 <body>
 <!-- 头部 -->

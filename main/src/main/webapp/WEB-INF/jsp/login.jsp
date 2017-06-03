@@ -11,13 +11,14 @@
 <head>
     <meta charset="UTF-8">
     <title>登陆</title>
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">
+    <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">--%>
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style rel="stylesheet">
-        #logindiv{
+        #logindiv {
             border: #8F938F 1px solid;
             width: 500px;
             height: 300px;
-            background-color:#FFF;
+            background-color: #FFF;
             margin: auto;
             position: fixed;
             top: 0;
@@ -26,14 +27,13 @@
             right: 0;
             padding: 40px;
         }
-        #logindiv .row{
+        #logindiv .row {
             margin-top: 40px;
         }
-        #errorMsg{
+        #errorMsg {
             margin-top: 10px;
             color: red;
         }
-
     </style>
 </head>
 <body>
@@ -53,56 +53,13 @@
     </div>
     <div id="errorMsg"></div>
 </div>
-<script src="/static/js/jquery-3.2.0.js"></script>
-<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
+<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<%--<script src="/static/bootstrap/js/bootstrap.min.js"></script>--%>
 <script src="/static/js-md5/md5.min.js"></script>
-<script src="/static/jquery-cookie/jquery.cookie.js"></script>
-<script>
-    function loginFn() {
-        var $uObj = $("#username");
-        var $pObj = $("#password");
-        var $errorMsg = $("#errorMsg");
-        var username = $uObj.val();
-        var password = $pObj.val();
-        if (!$.trim(username)){
-            $errorMsg.text("请输入用户名！");
-            $uObj.focus();
-            return;
-        }
-        if (!$.trim(password)){
-            $errorMsg.text("请输入密码！");
-            $pObj.focus();
-            return;
-        }
-        var passwordMD5 = md5(password);
-        var userData = new Object();
-        userData.username = username;
-        userData.password = passwordMD5;
-        //发送登陆请求
-        alert(username +"|"+passwordMD5);
-        $.ajax({
-            url:"/loginAuth",
-            dataType:"json",
-            type:"POST",
-            data:userData,
-            success:function (result) {
-                if (result.code==0){
-                    //失败
-                    $errorMsg.text(result.msg);
-                    return;
-                }
-                if (result.code==1){
-//                    $.cookie("userId",result.data.userId,{path:"/"});
-                    window.location="/admin";
-                    return;
-                }
-            },
-            error:function () {
-                $errorMsg.text("登陆请求失败，请稍后重试！");
-                return;
-            }
-        });
-    }
-</script>
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<%--<script src="/static/jquery-cookie/jquery.cookie.js"></script>--%>
+<script src="/static/js/login.js"></script>
 </body>
 </html>

@@ -19,7 +19,7 @@
     //刷新表格
     function loadDocTable() {
         $.ajax({
-            url:"/doc/findAllDoc",
+            url:"/findAllDocOutJson",
             type:"GET",
             dataType:"json",
             success:function (result) {

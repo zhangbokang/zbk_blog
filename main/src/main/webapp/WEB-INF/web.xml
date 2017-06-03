@@ -22,6 +22,18 @@
         <servlet-name>springmvc</servlet-name>
     </filter-mapping>
 
+    <filter>
+        <filter-name>authFilter</filter-name>
+        <filter-class>com.zbkblog.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/tag/*</url-pattern>
+        <url-pattern>/classify/*</url-pattern>
+        <url-pattern>/doc/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

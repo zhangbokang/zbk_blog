@@ -68,7 +68,7 @@
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${zxwz}">
                 <li>
-                    <div><a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
+                    <div><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
                         <div style="text-align: right">
                             <jsp:useBean id="dataValue" class="java.util.Date"/>
                             <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}"/>
@@ -87,7 +87,7 @@
             <c:forEach var="doc" varStatus="status" items="${ydph}">
                 <li>
                     <div class="row">
-                        <div class="col-sm-9"><a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
+                        <div class="col-sm-9"><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
                         <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
                     </div>
                 </li>
@@ -102,7 +102,7 @@
             <c:forEach var="doc" varStatus="status" items="${dzph}">
                 <li>
                     <div class="row">
-                        <div class="col-sm-9"><a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
+                        <div class="col-sm-9"><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
                         <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-thumbs-up pull-right">&nbsp;${doc.favorNumber==null?0:doc.favorNumber}</span></div>
                     </div>
                 </li>

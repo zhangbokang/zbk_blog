@@ -120,7 +120,7 @@
                         $("#docId").val(result.data.docId);
                         $msg.text("保存成功，现在可以");
                         var $a = $("<a>");//.text(查看)
-                        $a.attr('href','/doc/docPage?docId='+result.data.docId);
+                        $a.attr('href','/docPage?docId='+result.data.docId);
                         $a.text("查看");
                         $a.css("color","blue");
                         $msg.css("color","#0F0");

@@ -9,10 +9,13 @@ import com.zbkblog.service.TagService;
 import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -96,6 +99,100 @@ public class IndexController {
         request.setAttribute("tagId",tagId);
         return "bloglist";
     }
+
+    /**
+     * 查询所有标签信息
+     *  查询失败：{"code":1,"data":List<Tag>}
+     *  查询成功：{"code":0,"msg":"查询出现错误"}
+     * @param request
+     *  无
+     * @return
+     */
+    @RequestMapping("/findAllTag")
+    @ResponseBody
+    public Map<String,Object> findAllTag(HttpServletRequest request){
+        List<Tag> list = tagService.findAll();
+        Map<String ,Object> map = new HashMap<>();
+        if (null == list){
+            map.put("code",0);
+            map.put("msg","查询出现错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",list);
+        return map;
+    }
+
+    /**
+     * 查询所有分类信息
+     *  查询失败：{"code":1,"data":List<Classify>}
+     *  查询成功：{"code":0,"msg":"查询出现错误"}
+     * @param request
+     *  无
+     * @return
+     */
+    @RequestMapping("/findAllClassify")
+    @ResponseBody
+    public Map<String ,Object> findAllClassify(HttpServletRequest request){
+        List<Classify> list = classifyService.findAll();
+        Map<String ,Object> map = new HashMap<>();
+        if (null == list){
+            map.put("code",0);
+            map.put("msg","查询出现错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",list);
+        return map;
+    }
+
+    /**
+     * 查询所有文档，并以json字符串形式返回
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findAllDocOutJson")
+    @ResponseBody
+    public Map<String,Object> findAllDoc(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        List<Doc> docList = docService.findAll();
+        if (null == docList){
+            map.put("code",0);
+            map.put("msg","查询发生错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",docList);
+        return map;
+
+    }
+
+    /**
+     * 查看具体的文章
+     * @param request
+     * @return
+     */
+    @RequestMapping("/docPage")
+    public String docPage(HttpServletRequest request){
+        //编辑文章的ID
+        String docId = request.getParameter("docId");
+        if (docId == null || !docId.matches("[0-9]{13}")){
+            request.setAttribute("errorInfo","没有该文章。");
+            return "errorPage";
+        }
+        //调用service查询
+        Doc doc = docService.findById(Long.parseLong(docId));
+        if (null == doc){
+            request.setAttribute("errorInfo","未查询到该文章。");
+            return "errorPage";
+        }
+        Long openNumber = doc.getOpenNumber()!=null?doc.getOpenNumber():0L;
+        doc.setOpenNumber(++openNumber);
+        docService.update(doc);
+        request.setAttribute("doc",doc);
+        return "docPage";
+    }
+
     /**
      * 填充标签列表
      * @param request

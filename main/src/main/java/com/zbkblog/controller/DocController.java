@@ -36,26 +36,7 @@ public class DocController {
     @Resource
     private ClassifyService classifyService;
 
-    /**
-     * 查询所有文档，并以json字符串形式返回
-     * @param request
-     * @return
-     */
-    @RequestMapping("/findAllDoc")
-    @ResponseBody
-    public Map<String,Object> findAllDoc(HttpServletRequest request){
-        Map<String,Object> map = new HashMap<>();
-        List<Doc> docList = docService.findAll();
-        if (null == docList){
-            map.put("code",0);
-            map.put("msg","查询发生错误");
-            return map;
-        }
-        map.put("code",1);
-        map.put("data",docList);
-        return map;
 
-    }
 
     /**
      * 保存或更新文档
@@ -130,31 +111,7 @@ public class DocController {
         return map;
     }
 
-    /**
-     * 查看具体的文章
-     * @param request
-     * @return
-     */
-    @RequestMapping("/docPage")
-    public String docPage(HttpServletRequest request){
-        //编辑文章的ID
-        String docId = request.getParameter("docId");
-        if (docId == null || !docId.matches("[0-9]{13}")){
-            request.setAttribute("errorInfo","没有该文章。");
-            return "errorPage";
-        }
-        //调用service查询
-        Doc doc = docService.findById(Long.parseLong(docId));
-        if (null == doc){
-            request.setAttribute("errorInfo","未查询到该文章。");
-            return "errorPage";
-        }
-        Long openNumber = doc.getOpenNumber()!=null?doc.getOpenNumber():0L;
-        doc.setOpenNumber(++openNumber);
-        docService.update(doc);
-        request.setAttribute("doc",doc);
-        return "docPage";
-    }
+
 
     /**
      * 编辑或创建文章界面

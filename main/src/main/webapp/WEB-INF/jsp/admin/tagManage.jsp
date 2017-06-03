@@ -76,7 +76,7 @@
     //刷新表格
     function loadTagTable() {
         $.ajax({
-            url:"/tag/findAllTag",
+            url:"/findAllTag",
             type:"GET",
             dataType:"json",
             success:function (result) {

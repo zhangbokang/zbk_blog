@@ -74,7 +74,7 @@
     //刷新表格
     function loadClassifyTable() {
         $.ajax({
-            url:"/classify/findAllClassify",
+            url:"/findAllClassify",
             type:"GET",
             dataType:"json",
             success:function (result) {

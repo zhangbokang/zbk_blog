@@ -158,13 +158,13 @@ var common = {
     },
     URL:{
         classify:{
-            findAllClassify:"/classify/findAllClassify",
+            findAllClassify:"/findAllClassify",
             addClassify:"/classify/addClassify",
             updateClassify:"/classify/updateClassify",
             deleteClassify:"/classify/deleteClassify"
         },
         tag:{
-            findAllTag:"/tag/findAllTag",
+            findAllTag:"/findAllTag",
             addTag:"/tag/addTag",
             updateTag:"/tag/updateTag",
             deleteTag:"/tag/deleteTag"

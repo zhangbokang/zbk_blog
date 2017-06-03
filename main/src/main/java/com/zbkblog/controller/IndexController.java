@@ -1,8 +1,10 @@
 package com.zbkblog.controller;
 
+import com.zbkblog.entity.BlogUser;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.entity.Tag;
+import com.zbkblog.service.BlogUserService;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
@@ -28,6 +30,8 @@ public class IndexController {
     private ClassifyService classifyService;
     @Resource
     private TagService tagService;
+    @Resource
+    private BlogUserService blogUserService;
 
     @RequestMapping("")
     public String all(HttpServletRequest request){
@@ -38,6 +42,42 @@ public class IndexController {
         //调用填充标签列表
         this.panel(request);
         return "index";
+    }
+
+    @RequestMapping("login")
+    public String login(HttpServletRequest request){
+        return "login";
+    }
+
+    @RequestMapping("loginAuth")
+    @ResponseBody
+    public Map<String,Object> loginAuth(HttpServletRequest request){
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Map<String,Object> map = new HashMap<>();
+        if (username==null){
+            map.put("code",0);
+            map.put("msg","用户名不能为空！");
+            return map;
+        }
+        if (password==null){
+            map.put("code",0);
+            map.put("msg","密码不能为空！");
+            return map;
+        }
+        BlogUser blogUser = new BlogUser();
+        blogUser.setUserName(username);
+        blogUser.setPassword(password);
+        blogUser = blogUserService.authBlogUser(blogUser);
+        if (blogUser==null){
+            map.put("code",0);
+            map.put("msg","验证失败，请确认用户名和密码是否正确！");
+            return map;
+        }
+        map.put("code",1);
+//        map.put("data",blogUser);
+        request.getSession().setAttribute("userId",blogUser.getUserId());
+        return map;
     }
 
     @RequestMapping("findAllDoc")

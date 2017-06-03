@@ -1,8 +1,10 @@
 package com.zbkblog.test;
 
 import com.zbkblog.dao.DocDao;
+import com.zbkblog.entity.BlogUser;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
+import com.zbkblog.service.BlogUserService;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.HibernateSessionUtil;
@@ -34,6 +36,23 @@ public class MyTest {
         System.out.println(session);
         DataSource d = applicationContext.getBean("dataSource", DataSource.class);
         System.out.println(d);
+    }
+
+    @Test
+    public void testBlogUserAuth(){
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("spring.xml");
+        BlogUserService blogUserService = applicationContext.getBean("blogUserService",BlogUserService.class);
+        BlogUser blogUser = new BlogUser();
+        blogUser.setUserName("abc");
+        blogUser.setPassword("xxxxx");
+        blogUser = blogUserService.authBlogUser(blogUser);
+
+        System.out.println(blogUser==null);
+
+        System.out.println(blogUser);
+
+
     }
 
     @Test

@@ -36,7 +36,26 @@ public class DocController {
     @Resource
     private ClassifyService classifyService;
 
+    /**
+     * 查询所有文档，并以json字符串形式返回
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findAllDocOutJson")
+    @ResponseBody
+    public Map<String,Object> findAllDoc(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        List<Doc> docList = docService.findAll();
+        if (null == docList){
+            map.put("code",0);
+            map.put("msg","查询发生错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",docList);
+        return map;
 
+    }
 
     /**
      * 保存或更新文档

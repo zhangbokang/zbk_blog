@@ -22,6 +22,28 @@ public class TagController {
     private TagService tagService;
 
 
+    /**
+     * 查询所有标签信息
+     *  查询失败：{"code":1,"data":List<Tag>}
+     *  查询成功：{"code":0,"msg":"查询出现错误"}
+     * @param request
+     *  无
+     * @return
+     */
+    @RequestMapping("/findAllTag")
+    @ResponseBody
+    public Map<String,Object> findAllTag(HttpServletRequest request){
+        List<Tag> list = tagService.findAll();
+        Map<String ,Object> map = new HashMap<>();
+        if (null == list){
+            map.put("code",0);
+            map.put("msg","查询出现错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("data",list);
+        return map;
+    }
 
     /**
      * 添加标签

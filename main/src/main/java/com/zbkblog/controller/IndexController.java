@@ -162,72 +162,11 @@ public class IndexController {
         return "bloglist";
     }
 
-    /**
-     * 查询所有标签信息
-     *  查询失败：{"code":1,"data":List<Tag>}
-     *  查询成功：{"code":0,"msg":"查询出现错误"}
-     * @param request
-     *  无
-     * @return
-     */
-    @RequestMapping("/findAllTag")
-    @ResponseBody
-    public Map<String,Object> findAllTag(HttpServletRequest request){
-        List<Tag> list = tagService.findAll();
-        Map<String ,Object> map = new HashMap<>();
-        if (null == list){
-            map.put("code",0);
-            map.put("msg","查询出现错误");
-            return map;
-        }
-        map.put("code",1);
-        map.put("data",list);
-        return map;
-    }
 
-    /**
-     * 查询所有分类信息
-     *  查询失败：{"code":1,"data":List<Classify>}
-     *  查询成功：{"code":0,"msg":"查询出现错误"}
-     * @param request
-     *  无
-     * @return
-     */
-    @RequestMapping("/findAllClassify")
-    @ResponseBody
-    public Map<String ,Object> findAllClassify(HttpServletRequest request){
-        List<Classify> list = classifyService.findAll();
-        Map<String ,Object> map = new HashMap<>();
-        if (null == list){
-            map.put("code",0);
-            map.put("msg","查询出现错误");
-            return map;
-        }
-        map.put("code",1);
-        map.put("data",list);
-        return map;
-    }
 
-    /**
-     * 查询所有文档，并以json字符串形式返回
-     * @param request
-     * @return
-     */
-    @RequestMapping("/findAllDocOutJson")
-    @ResponseBody
-    public Map<String,Object> findAllDoc(HttpServletRequest request){
-        Map<String,Object> map = new HashMap<>();
-        List<Doc> docList = docService.findAll();
-        if (null == docList){
-            map.put("code",0);
-            map.put("msg","查询发生错误");
-            return map;
-        }
-        map.put("code",1);
-        map.put("data",docList);
-        return map;
 
-    }
+
+
 
     /**
      * 查看具体的文章

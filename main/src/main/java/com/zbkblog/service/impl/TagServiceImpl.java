@@ -19,9 +19,10 @@ public class TagServiceImpl implements TagService {
     private TagDao tagDao;
 
     @Override
-    public Long save(Tag tag) {
+    public Tag save(Tag tag) {
         tag.setCreateTime(System.currentTimeMillis());
-        return tagDao.save(tag);
+        tagDao.save(tag);
+        return tag;
     }
 
     @Override

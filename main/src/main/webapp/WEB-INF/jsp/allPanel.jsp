@@ -9,6 +9,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <meta charset="utf-8">
+<style rel="stylesheet">
+    #tagsList {
+        position: relative;
+        height: 300px;
+        margin: -15px auto;
+    }
+
+    #tagsList a {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        font-family: Microsoft YaHei;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 3px 6px;
+    }
+
+    #tagsList a:hover {
+        color: #FF0000;
+        letter-spacing: 2px;
+    }
+    .panel-body a:hover{
+        text-decoration: none;
+    }
+    .panel-body li>div:hover{
+        background-color: #f7f7f7;
+    }
+</style>
 <!-- 分类列表、标签列表等列表 -->
 <div class="panel panel-default">
     <div class="panel-heading">分类列表</div>
@@ -16,45 +44,52 @@
         <ul class="list-unstyled">
             <c:forEach var="classify" varStatus="status" items="${classifyList}">
                 <li>
-                    <a href="/findDocByClassifyId?classifyId=${classify.classifyId}">${classify.name}</a>
+                    <a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}',{});">${classify.name}</a>
                 </li>
             </c:forEach>
-            <%--<li><a href="#">Hadeep</a> </li>--%>
-            <%--<li><a href="#">Java</a> </li>--%>
         </ul>
     </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">标签地图</div>
-    <div class="panel-body"></div>
+    <div class="panel-body">
+        <div id="tagsList">
+            <c:forEach var="tag" items="${tagList}">
+                <span>
+                    <a href="#" onclick="loadBlogList('/findDocByTagId?accessType=tag&tagId=${tag.tagId}',{});">${tag.name}</a>
+                </span>
+            </c:forEach>
+        </div>
+    </div>
 </div>
 <div class="panel panel-default">
     <div class="panel-heading">最新文章</div>
     <div class="panel-body">
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${zxwz}">
-            <li>
-                <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                <jsp:useBean id="dataValue" class="java.util.Date" />
-                <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}" />
-                <span class="pull-right"><fmt:formatDate value="${dataValue}" type="both" /></span>
-            </li>
+                <li>
+                    <div><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
+                        <div style="text-align: right">
+                            <jsp:useBean id="dataValue" class="java.util.Date"/>
+                            <jsp:setProperty name="dataValue" property="time" value="${doc.updateTime}"/>
+                            <fmt:formatDate value="${dataValue}" type="both"/>
+                        </div>
+                    </div>
+                </li>
             </c:forEach>
         </ul>
     </div>
 </div>
-<%--<div class="panel panel-default">--%>
-    <%--<div class="panel-heading">推荐阅读</div>--%>
-    <%--<div class="panel-body"></div>--%>
-<%--</div>--%>
 <div class="panel panel-default">
     <div class="panel-heading">阅读排行</div>
     <div class="panel-body">
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${ydph}">
                 <li>
-                    <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                    <span class="badge glyphicon glyphicon-eye-open pull-right">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span>
+                    <div class="row">
+                        <div class="col-sm-9"><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
+                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
+                    </div>
                 </li>
             </c:forEach>
         </ul>
@@ -66,10 +101,13 @@
         <ul class="list-unstyled">
             <c:forEach var="doc" varStatus="status" items="${dzph}">
                 <li>
-                    <a href="/doc/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a>
-                    <span class="badge glyphicon glyphicon-thumbs-up pull-right">&nbsp;${doc.favorNumber==null?0:doc.favorNumber}</span>
+                    <div class="row">
+                        <div class="col-sm-9"><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
+                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-thumbs-up pull-right">&nbsp;${doc.favorNumber==null?0:doc.favorNumber}</span></div>
+                    </div>
                 </li>
             </c:forEach>
         </ul>
     </div>
 </div>
+<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/js/tagcloud.js"></script>

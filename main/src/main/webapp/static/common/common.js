@@ -2,7 +2,7 @@
  * Created by zhangbokang on 2017/5/17.
  */
 //引入py.js，用来处理汉字添加拼音的处理
-document.write('<script src="/static/spell/py.js"></script>');
+document.write('<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/spell/py.js"></script>');
 // document.write('<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>');
 // document.write('<script src="/static/jqueryui/jquery-ui.min.js"></script>');
 var common = {
@@ -37,8 +37,8 @@ var common = {
                 title:'操作',
                 width:"20%",
                 formatter:function(value,row,index){
-                    return ["<button class='btn btn-default' onclick='deleteClassifyManage("
-                    +row.classifyId+")'>删除</button>"
+                    return ["<button class='btn btn-default' onclick='deleteClassifyMake("
+                    +row.classifyId+",\""+row.name+"\")'>删除</button>"
                     ].join("");
                 }
             }],
@@ -71,8 +71,8 @@ var common = {
                 title:'操作',
                 width:"20%",
                 formatter:function(value,row,index){
-                    return ["<button class='btn btn-default' onclick='deleteTagManage("
-                    +row.tagId+")'>删除</button>"
+                    return ["<button class='btn btn-default' onclick='deleteTagMake("
+                    +row.tagId+",\""+row.name+"\")'>删除</button>"
                     ].join("");
                 }
             }],
@@ -158,13 +158,13 @@ var common = {
     },
     URL:{
         classify:{
-            findAllClassify:"/classify/findAllClassify",
+            findAllClassify:"/findAllClassify",
             addClassify:"/classify/addClassify",
             updateClassify:"/classify/updateClassify",
             deleteClassify:"/classify/deleteClassify"
         },
         tag:{
-            findAllTag:"/tag/findAllTag",
+            findAllTag:"/findAllTag",
             addTag:"/tag/addTag",
             updateTag:"/tag/updateTag",
             deleteTag:"/tag/deleteTag"

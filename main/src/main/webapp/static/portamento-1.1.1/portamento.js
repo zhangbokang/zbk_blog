@@ -192,9 +192,8 @@
 		// ---------------------------------------------------------------------------------------------------
 		
 		thisWindow.bind("scroll.portamento", function () {
-
-			//我添加了当窗口小于1200px时不执行
-			if(thisWindow.height() > panel.outerHeight() && thisWindow.width() >= (thisDocument.width() - ieFix) && thisWindow.width() > 970) { // don't scroll if the window isn't big enough
+			
+			if(thisWindow.height() > panel.outerHeight() && thisWindow.width() >= (thisDocument.width() - ieFix)) { // don't scroll if the window isn't big enough
 				
 				var y = thisDocument.scrollTop(); // current scroll position of the document
 												

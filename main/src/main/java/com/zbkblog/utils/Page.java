@@ -7,7 +7,7 @@ public class Page {
     // 1.每页显示数量(everyPage)
     private int everyPage;
     // 2.总记录数(totalCount)
-    private int totalCount;
+    private int totalCounts;
     // 3.总页数(totalPage)
     private int totalPage;
     // 4.当前页(currentPage)
@@ -19,10 +19,10 @@ public class Page {
     // 7.是否有下一页(hasNextPage)
     private boolean hasNextPage;
 
-    public Page(int everyPage, int totalCount, int totalPage, int currentPage,
+    public Page(int everyPage, int totalCounts, int totalPage, int currentPage,
                 int beginIndex, boolean hasPrePage, boolean hasNextPage) {
         this.everyPage = everyPage;
-        this.totalCount = totalCount;
+        this.totalCounts = totalCounts;
         this.totalPage = totalPage;
         this.currentPage = currentPage;
         this.beginIndex = beginIndex;
@@ -45,11 +45,11 @@ public class Page {
     }
 
     public int getTotalCount() {
-        return totalCount;
+        return totalCounts;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
+    public void setTotalCount(int totalCounts) {
+        this.totalCounts = totalCounts;
     }
 
     public int getTotalPage() {

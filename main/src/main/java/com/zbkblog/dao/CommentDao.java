@@ -1,7 +1,6 @@
 package com.zbkblog.dao;
 
 import com.zbkblog.entity.Comment;
-import org.hibernate.criterion.DetachedCriteria;
 
 import java.util.List;
 

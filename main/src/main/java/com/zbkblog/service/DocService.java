@@ -2,6 +2,7 @@ package com.zbkblog.service;
 
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.Page;
+import com.zbkblog.utils.Paging;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface DocService {
      * 分页查询所有
      * @return
      */
-    List<Doc> findAllByPage(Page page);
+    Paging<Doc> findAllByPage(Paging paging);
 
     /**
      * 修改
@@ -73,4 +74,26 @@ public interface DocService {
      */
     List<Doc> findByClassifyId(Long classifyId);
 
+    /**
+     * 根据分类ID查询并分页
+     * @param classifyId
+     * @param paging
+     * @return
+     */
+    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Paging paging);
+
+    /**
+     * 根据标签ID查询文章列表
+     * @param tagId
+     * @return
+     */
+    List<Doc> findByTagId(Long tagId);
+
+    /**
+     * 根据标签ID分页查询
+     * @param tagId
+     * @param paging
+     * @return
+     */
+    Paging<Doc> findByTagIdOfPage(Long tagId,Paging paging);
 }

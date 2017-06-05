@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Portamento Demo</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="" />
+		<meta name="author" content="Kris Noble" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		
+		<!-- just some default styles, nothing important -->
+		<link rel="stylesheet" href="demo.css" />
+		
+		<!-- the important styles are below... -->
+		<style>
+			#wrapper {overflow: hidden;}
+			#content {
+				width:486px;
+				margin-right:10px;
+				float:left;
+				min-height:1200px;
+			}
+
+			#portamento_container {float:right; position:relative;} /* take the positioning of the sidebar, and become the start point for the sidebar positioning */
+			#portamento_container #sidebar {float:none; position:absolute;} /* no need to float anymore, become absolutely positoned */
+			#portamento_container #sidebar.fixed {position:fixed;} /* if the panel is sliding, it needs position:fixed */
+		</style>
+		
+
+	</head>
+
+	<body>
+		<div>
+
+			<div id="wrapper">
+<div class="row">
+				<div class="col-lg-3"><div id="sidebar">要滑动定位的元素</div></div>
+				<div class="col-lg-9"><div id="content">正常布局或内常布局或内常布局或内常布局或内常布局或内常
+
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容
+					正常布局或内常布局或内常布局或内常布局或内常布局或内常
+					布局或内常布局或内常布局或内
+					常布局或内常布局或内常布局或内常布局或内常布局或内常布局或内容</div></div>
+			</div>
+			</div>
+		</div>
+		
+		<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>-->
+		<script src="../../js/jquery-3.2.0.js"></script>
+		<script src="../portamento.js"></script>		
+		<script>
+			$('#sidebar').portamento();	
+		</script>
+		
+	</body>
+</html>

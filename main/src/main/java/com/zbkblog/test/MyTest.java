@@ -1,8 +1,10 @@
 package com.zbkblog.test;
 
 import com.zbkblog.dao.DocDao;
+import com.zbkblog.entity.BlogUser;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
+import com.zbkblog.service.BlogUserService;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.HibernateSessionUtil;
@@ -11,6 +13,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.type.LongType;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -32,6 +36,42 @@ public class MyTest {
         System.out.println(session);
         DataSource d = applicationContext.getBean("dataSource", DataSource.class);
         System.out.println(d);
+    }
+
+    @Test
+    public void testBlogUserAuth(){
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("spring.xml");
+        BlogUserService blogUserService = applicationContext.getBean("blogUserService",BlogUserService.class);
+        BlogUser blogUser = new BlogUser();
+        blogUser.setUserName("abc");
+        blogUser.setPassword("xxxxx");
+        blogUser = blogUserService.authBlogUser(blogUser);
+
+        System.out.println(blogUser==null);
+
+        System.out.println(blogUser);
+
+
+    }
+
+    @Test
+    public void testPaging(){
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("spring.xml");
+//        DocDao docDao = applicationContext.getBean(DocDao.class,"docDao");
+//        docDao.findAllByPage()
+        //统计行数
+        SessionFactory sessionFactory = applicationContext.getBean(SessionFactory.class,"sessionFactory");
+        Session session = sessionFactory.openSession();
+        String hql = "select count(1) from Doc where classify.classifyId=:classifyId";
+        Query query = session.createQuery(hql);
+        query.setParameter("classifyId",1495603834642L);
+        Long l = (Long)query.uniqueResult();
+        System.out.println(l);
+        session.close();
+
+
     }
 
     @Test

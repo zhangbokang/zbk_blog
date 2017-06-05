@@ -1,6 +1,6 @@
 package com.zbkblog.utils;
 
-import org.apache.commons.beanutils.BeanUtils;
+//import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.beans.IntrospectionException;
@@ -27,13 +27,13 @@ public class RequestToBean {
      * @param source     源数据对象
      */
     public static <T> void  beanConvert(T newSource,T source){
-        try {
-            BeanUtils.copyProperties(newSource,source);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            BeanUtils.copyProperties(newSource,source);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**

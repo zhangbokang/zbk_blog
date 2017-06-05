@@ -2,164 +2,186 @@ package com.zbkblog.dao.impl;
 
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
-import com.zbkblog.utils.MyDaoSupport;
 import com.zbkblog.utils.Page;
-import org.hibernate.*;
+import com.zbkblog.utils.Paging;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateCallback;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by zhangbokang on 2017/5/13.
  */
 @Repository("docDao")
-//@Transactional
-public class DocDaoImpl extends MyDaoSupport implements DocDao {
+public class DocDaoImpl implements DocDao {
     @Resource
-    public void setSessionFacotry(SessionFactory sessionFacotry){
-        super.setSessionFactory(sessionFacotry);
-    }
+    private HibernateTemplate hibernateTemplate;
 
     @Override
     public List<Doc> findAll() {
         String hql = "from Doc ";
-        try {
-            return (List)getHibernateTemplate().find(hql);
-        }catch (Exception e){
-            return null;
-        }
+        return (List)hibernateTemplate.find(hql);
     }
 
     @Override
-    public List<Doc> findAllByPage(final Page page) {
+    public Paging<Doc> findAllByPage(final Paging paging) {
         String hql = "from Doc";
-        Query query = getSessionFactory().openSession().createQuery(hql);
-        //设置每页显示多少个，设置多大结果。
-        query.setMaxResults(page.getEveryPage());
-        //设置起点
-        query.setFirstResult(page.getBeginIndex());
-        return query.list();
+        return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
+            @Override
+            public Paging doInHibernate(Session session) throws HibernateException {
+                //查询总记录数
+                Query queryCount = session.createQuery("select count(1) from Doc");
+                Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
+                paging.setTotalCounts(totalCounts);
+
+                Query query = session.createQuery(hql);
+                //设置每页显示多少个，设置多大结果。
+                query.setMaxResults(paging.getPageSize());
+                //设置起点
+                query.setFirstResult(paging.getFirstResult());
+                List<Doc> docList =  query.list();
+                paging.setPageList(docList);
+                return paging;
+            }
+        });
     }
 
     @Override
     public Doc findById(Long id) {
-//        return getHibernateTemplate().execute(new HibernateCallback<Doc>() {
-//            @Override
-//            public Doc doInHibernate(Session session) throws HibernateException {
-//                return (Doc)session.load(Doc.class,id);
-//            }
-//        });
-        return getHibernateTemplate().get(Doc.class,id);
+        return hibernateTemplate.load(Doc.class,id);
     }
 
     @Override
     public void delete(Doc doc) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.delete(doc);
-            transaction.commit();
-        }catch (Exception e){
-            transaction.rollback();
-        }
-        session.close();
+        hibernateTemplate.delete(doc);
     }
 
     @Override
     public void save(Doc doc) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.save(doc);
-            transaction.commit();
-        }catch (Exception e){
-            transaction.rollback();
-        }
-        session.close();
+        hibernateTemplate.save(doc);
     }
 
     @Override
     public void update(Doc doc) {
-        Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.update(doc);
-            transaction.commit();
-        }catch (Exception e){
-            transaction.rollback();
-        }
-        session.close();
+        hibernateTemplate.update(doc);
     }
 
     @Override
     public List<Doc> findByUpdateOfTopX(Integer top) {
-        Session session = getSession();
         String hql = "from Doc order by updateTime desc";
-        Query query = session.createQuery(hql);
-        query.setFirstResult(0);
-        query.setMaxResults(top);
-        try {
-            List<Doc> list = query.list();
-            return list;
-        }catch (Exception e){
-            return null;
-        }finally {
-            session.close();
-        }
+        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+            @Override
+            public List doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+                query.setFirstResult(0);
+                query.setMaxResults(top);
+                return query.list();
+            }
+        });
     }
 
     @Override
     public List<Doc> findByOpenNumberOfTopX(Integer top) {
-        Session session = getSession();
         String hql = "from Doc order by openNumber desc";
-        Query query = session.createQuery(hql);
-        query.setFirstResult(0);
-        query.setMaxResults(top);
-        try {
-            List<Doc> list = query.list();
-            return list;
-        }catch (Exception e){
-            return null;
-        }finally {
-            session.close();
-        }
+        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+            @Override
+            public List doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+                query.setFirstResult(0);
+                query.setMaxResults(top);
+                return query.list();
+            }
+        });
     }
 
     @Override
     public List<Doc> findByFavorNumberOfTopX(Integer top) {
-        Session session = getSession();
         String hql = "from Doc order by favorNumber desc";
-        Query query = session.createQuery(hql);
-        query.setFirstResult(0);
-        query.setMaxResults(top);
-        try {
-            List<Doc> list = query.list();
-            return list;
-        }catch (Exception e){
-            return null;
-        }finally {
-            session.close();
-        }
+        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+            @Override
+            public List doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+                query.setFirstResult(0);
+                query.setMaxResults(top);
+                return query.list();
+            }
+        });
     }
 
     @Override
     public List<Doc> findByClassifyId(Long classifyId) {
-        Session session = getSession();
         String hql = "from Doc where classify.classifyId = ?";
-        Query query = session.createQuery(hql);
-//        query.setFirstResult(0);
-//        query.setMaxResults(top);
-        query.setParameter(0,classifyId);
-        try {
-            List<Doc> list = query.list();
-            return list;
-        }catch (Exception e){
-            return null;
-        }finally {
-            session.close();
-        }
+        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+            @Override
+            public List doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+//              query.setFirstResult(0);
+//              query.setMaxResults(top);
+                query.setParameter(0,classifyId);
+                return query.list();
+            }
+        }) ;
+    }
+
+    @Override
+    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Paging paging) {
+        String hql = "from Doc Where classify.classifyId = ?";
+        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+            @Override
+            public Paging doInHibernate(Session session) throws HibernateException {
+                String chql = "select count(1) from Doc where classify.classifyId=:classifyId";
+                Query q1 = session.createQuery(chql);
+                q1.setParameter("classifyId",classifyId);
+                paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
+
+                Query query = session.createQuery(hql);
+                query.setFirstResult(paging.getFirstResult());
+                query.setMaxResults(paging.getPageSize());
+                query.setParameter(0,classifyId);
+                paging.setPageList(query.list());
+                return paging;
+            }
+        });
+    }
+
+    @Override
+    public List<Doc> findByTagId(Long tagId) {
+        String hql = "from Doc where tag.tagId = ?";
+        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+            @Override
+            public List doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+//              query.setFirstResult(0);
+//              query.setMaxResults(top);
+                query.setParameter(0,tagId);
+                return query.list();
+            }
+        }) ;
+    }
+
+    @Override
+    public Paging<Doc> findByTagIdOfPage(Long tagId, Paging paging) {
+        String hql = "from Doc where tag.tagId = ?";
+        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+            @Override
+            public Paging doInHibernate(Session session) throws HibernateException {
+                Query q1 = session.createQuery("select count (*) from Doc where tag.tagId=:tagId");
+                q1.setParameter("tagId",tagId);
+                paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
+
+                Query query = session.createQuery(hql);
+                query.setFirstResult(paging.getFirstResult());
+                query.setMaxResults(paging.getPageSize());
+                query.setParameter(0,tagId);
+                paging.setPageList(query.list());
+                return paging;
+            }
+        });
     }
 }

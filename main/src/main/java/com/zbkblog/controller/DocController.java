@@ -7,8 +7,6 @@ import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.MyBeanUtils;
-import com.zbkblog.utils.PageUtil;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -20,7 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -35,22 +36,13 @@ public class DocController {
     @Resource
     private ClassifyService classifyService;
 
-    @RequestMapping("/findAllDoc")
-    @ResponseBody
-    public Map<String,Object> findAllDoc(HttpServletRequest request){
-        Map<String,Object> map = new HashedMap();
-        List<Doc> docList = docService.findAll();
-        if (null == docList){
-            map.put("code",0);
-            map.put("msg","查询发生错误");
-            return map;
-        }
-        map.put("code",1);
-        map.put("data",docList);
-        return map;
 
-    }
 
+    /**
+     * 保存或更新文档
+     * @param request
+     * @return
+     */
     @RequestMapping("/saveDoc")
     @ResponseBody
     public Map<String,Object> saveDoc(HttpServletRequest request){
@@ -119,27 +111,13 @@ public class DocController {
         return map;
     }
 
-    @RequestMapping("/docPage")
-    public String docPage(HttpServletRequest request){
-        //编辑文章的ID
-        String docId = request.getParameter("docId");
-        if (docId == null || !docId.matches("[0-9]{13}")){
-            request.setAttribute("errorInfo","没有该文章。");
-            return "errorPage";
-        }
-        //调用service查询
-        Doc doc = docService.findById(Long.parseLong(docId));
-        if (null == doc){
-            request.setAttribute("errorInfo","未查询到该文章。");
-            return "errorPage";
-        }
-        Long openNumber = doc.getOpenNumber()!=null?doc.getOpenNumber():0L;
-        doc.setOpenNumber(++openNumber);
-        docService.update(doc);
-        request.setAttribute("doc",doc);
-        return "docPage";
-    }
 
+
+    /**
+     * 编辑或创建文章界面
+     * @param request
+     * @return
+     */
     @RequestMapping("/editDoc")
     public String editDoc(HttpServletRequest request){
         //编辑文章的ID
@@ -157,6 +135,11 @@ public class DocController {
         return "editdoc";
     }
 
+    /**
+     * 上传图片
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/upImage",method= RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> upImage(HttpServletRequest request){//,@RequestParam MultipartFile editormdImageFile){

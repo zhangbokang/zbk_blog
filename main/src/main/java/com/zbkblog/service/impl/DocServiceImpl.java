@@ -4,13 +4,11 @@ import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.Page;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
+import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,8 +28,8 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public List<Doc> findAllByPage(Page page) {
-        return docDao.findAllByPage(page);
+    public Paging<Doc> findAllByPage(Paging paging) {
+        return docDao.findAllByPage(paging);
     }
 
     @Override
@@ -74,5 +72,20 @@ public class DocServiceImpl implements DocService {
     @Override
     public List<Doc> findByClassifyId(Long classifyId) {
         return docDao.findByClassifyId(classifyId);
+    }
+
+    @Override
+    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Paging paging) {
+        return docDao.findByClassifyIdOfPage(classifyId,paging);
+    }
+
+    @Override
+    public List<Doc> findByTagId(Long tagId) {
+        return docDao.findByTagId(tagId);
+    }
+
+    @Override
+    public Paging<Doc> findByTagIdOfPage(Long tagId, Paging paging) {
+        return docDao.findByTagIdOfPage(tagId,paging);
     }
 }

@@ -3,7 +3,7 @@ package com.zbkblog.dao;
 
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.Page;
-import org.hibernate.criterion.DetachedCriteria;
+import com.zbkblog.utils.Paging;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface DocDao {
      * 分页查询
      * @return
      */
-    List<Doc> findAllByPage(final Page page);
+    Paging<Doc> findAllByPage(final Paging paging);
 
     /**
      * 根据ID查找
@@ -75,4 +75,27 @@ public interface DocDao {
      * @return
      */
     List<Doc> findByClassifyId(Long classifyId);
+
+    /**
+     * 根据分类ID查询并分页
+     * @param classifyId
+     * @param paging
+     * @return
+     */
+    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Paging paging);
+
+    /**
+     * 根据标签ID查询文章列表
+     * @param tagId
+     * @return
+     */
+    List<Doc> findByTagId(Long tagId);
+
+    /**
+     * 根据标签ID分页查询
+     * @param tagId
+     * @param paging
+     * @return
+     */
+    Paging<Doc> findByTagIdOfPage(Long tagId,Paging paging);
 }

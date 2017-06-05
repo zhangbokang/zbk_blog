@@ -171,7 +171,7 @@ public class DocDaoImpl implements DocDao {
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
-                Query q1 = session.createQuery("select count (*) from Doc where tag.tagId=:tagId");
+                Query q1 = session.createQuery("select count (1) from Doc where tag.tagId=:tagId");
                 q1.setParameter("tagId",tagId);
                 paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
 
@@ -179,6 +179,26 @@ public class DocDaoImpl implements DocDao {
                 query.setFirstResult(paging.getFirstResult());
                 query.setMaxResults(paging.getPageSize());
                 query.setParameter(0,tagId);
+                paging.setPageList(query.list());
+                return paging;
+            }
+        });
+    }
+
+    @Override
+    public Paging<Doc> searchDocByKeywork(String keyword, Paging paging) {
+        String hql = "from Doc where UPPER(title) like UPPER(:keyword) or docMd like :keyword order by updateTime";
+        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+            @Override
+            public Paging doInHibernate(Session session) throws HibernateException {
+                Query q1 = session.createQuery("select count(1) "+hql);
+                q1.setParameter("keyword","%"+keyword+"%");
+                paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
+
+                Query query = session.createQuery(hql);
+                query.setFirstResult(paging.getFirstResult());
+                query.setMaxResults(paging.getPageSize());
+                query.setParameter("keyword","%"+keyword+"%");
                 paging.setPageList(query.list());
                 return paging;
             }

@@ -37,13 +37,22 @@
                 <li><a href="/index">文章列表</a></li>
                 <%--<li><a href="#">链接</a></li>--%>
 
-                <form action="#" method="post" class="navbar-form navbar-right">
+                <div class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请输入关键词" />
+                        <input id="keyword" type="text" class="form-control" placeholder="请输入关键词" />
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
+                    <button class="btn btn-default" onclick="searchKeyword()">搜索</button>
+                </div>
             </ul>
         </div>
     </div>
 </header>
+<script>
+    function searchKeyword() {
+        if (typeof(loadBlogList) == "function"){
+            loadBlogList('/searchDocByKeywork?accessType=keyword&keyword='+$('#keyword').val(),{});
+            return;
+        }
+        alert("请前往主页后搜索！");
+    }
+</script>

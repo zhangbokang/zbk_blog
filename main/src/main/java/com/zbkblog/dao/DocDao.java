@@ -21,7 +21,15 @@ public interface DocDao {
      * 分页查询
      * @return
      */
-    Paging<Doc> findAllByPage(final Paging paging);
+    Paging<Doc> findAllByPage(Paging paging);
+
+    /**
+     * 跟据关键字查询
+     * @param keyword
+     * @param paging
+     * @return
+     */
+    Paging<Doc> searchDocByKeywork(String keyword,Paging paging);
 
     /**
      * 根据ID查找

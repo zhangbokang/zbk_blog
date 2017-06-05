@@ -33,6 +33,11 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
+    public Paging<Doc> searchDocByKeywork(String keyword,Paging paging) {
+        return docDao.searchDocByKeywork(keyword, paging);
+    }
+
+    @Override
     public Doc update(Doc doc) {
         doc.setUpdateTime(System.currentTimeMillis());
         docDao.update(doc);

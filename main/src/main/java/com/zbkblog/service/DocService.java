@@ -23,6 +23,14 @@ public interface DocService {
     Paging<Doc> findAllByPage(Paging paging);
 
     /**
+     * 跟据关键字查询
+     * @param keyword
+     * @param paging
+     * @return
+     */
+    Paging<Doc> searchDocByKeywork(String keyword,Paging paging);
+
+    /**
      * 修改
      * @param doc
      */

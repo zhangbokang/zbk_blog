@@ -80,6 +80,28 @@ public class IndexController {
         return map;
     }
 
+    @RequestMapping("searchDocByKeywork")
+    public String searchDocByKeywork(HttpServletRequest request){
+        String keyword = request.getParameter("keyword");
+        if (null == keyword){
+            return blogList(request);
+        }
+        String pageSize = request.getParameter("pageSize");
+        String currentPage = request.getParameter("currentPage");
+        pageSize = pageSize==null?"10":pageSize;
+        currentPage = currentPage==null?"1":currentPage;
+
+        Paging paging = new Paging();
+        paging.setPageSize(Integer.parseInt(pageSize));
+        paging.setCurrentPage(Integer.parseInt(currentPage));
+        paging = docService.searchDocByKeywork(keyword,paging);
+        request.setAttribute("docPaging",paging);
+        request.setAttribute("accessType",request.getParameter("accessType"));
+        request.setAttribute("keyword",keyword);
+
+        return "bloglist";
+    }
+
     @RequestMapping("findAllDoc")
     public String blogList(HttpServletRequest request){
         String pageSize = request.getParameter("pageSize");

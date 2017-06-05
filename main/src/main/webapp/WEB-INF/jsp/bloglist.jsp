@@ -73,6 +73,9 @@
             if (type == "change") {
                 loadBlogList(
                         <c:choose>
+                    <c:when test="${accessType=='keyword'}">
+                    "/searchDocByKeywork?accessType=keyword&keyword=${keyword}"
+                    </c:when>
                         <c:when test="${accessType=='doc'}">
                         "/findAllDoc?accessType=doc"
                 </c:when>

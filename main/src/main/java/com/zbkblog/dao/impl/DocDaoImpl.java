@@ -36,7 +36,7 @@ public class DocDaoImpl implements DocDao {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
                 //查询总记录数
-                Query queryCount = session.createQuery("select count(*) from Doc");
+                Query queryCount = session.createQuery("select count(1) from Doc");
                 Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
                 paging.setTotalCounts(totalCounts);
 
@@ -135,7 +135,7 @@ public class DocDaoImpl implements DocDao {
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
-                String chql = "select count(*) from Doc where classify.classifyId=:classifyId";
+                String chql = "select count(1) from Doc where classify.classifyId=:classifyId";
                 Query q1 = session.createQuery(chql);
                 q1.setParameter("classifyId",classifyId);
                 paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());

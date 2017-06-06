@@ -95,6 +95,11 @@ public class IndexController {
         paging.setPageSize(Integer.parseInt(pageSize));
         paging.setCurrentPage(Integer.parseInt(currentPage));
         paging = docService.searchDocByKeywork(keyword,paging);
+        //防止零条记录时分页出错
+        if(paging.getTotalCounts()==0){
+            request.setAttribute("errorInfo","<b>未查询到记录，请更换关键词后重新查询！</b>");
+            return "errorPage";
+        }
         request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
         request.setAttribute("keyword",keyword);
@@ -113,6 +118,11 @@ public class IndexController {
         paging.setPageSize(Integer.parseInt(pageSize));
         paging.setCurrentPage(Integer.parseInt(currentPage));
         paging = docService.findAllByPage(paging);
+        //防止零条记录时分页出错
+        if(paging.getTotalCounts()==0){
+            request.setAttribute("errorInfo","<b>未查询到记录，暂无文章！</b>");
+            return "errorPage";
+        }
         request.setAttribute("accessType",request.getParameter("accessType"));
         request.setAttribute("docPaging",paging);
         return "bloglist";
@@ -135,6 +145,11 @@ public class IndexController {
         paging.setPageSize(Integer.parseInt(pageSize));
         paging.setCurrentPage(Integer.parseInt(currentPage));
         paging = docService.findByClassifyIdOfPage(Long.parseLong(classifyId),paging);
+        //防止零条记录时分页出错
+        if(paging.getTotalCounts()==0){
+            request.setAttribute("errorInfo","<b>未查询到记录，该分类暂无文章！</b>");
+            return "errorPage";
+        }
         request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
         request.setAttribute("classifyId",classifyId);
@@ -156,6 +171,11 @@ public class IndexController {
         paging.setPageSize(Integer.parseInt(pageSize));
         paging.setCurrentPage(Integer.parseInt(currentPage));
         paging = docService.findByTagIdOfPage(Long.parseLong(tagId),paging);
+        //防止零条记录时分页出错
+        if(paging.getTotalCounts()==0){
+            request.setAttribute("errorInfo","<b>未查询到记录，该标签暂无文章！</b>");
+            return "errorPage";
+        }
         request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
         request.setAttribute("tagId",tagId);

@@ -13,7 +13,7 @@
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 加载资源文件  其中包含变量信息，必须在Spring配置文件的最前面加载，即第一个加载-->
-    <context:property-placeholder location="classpath:db.properties" />
+    <context:property-placeholder location="classpath*:properties/*" />
     <!--
     使用<context:component-scan/>后，即可将<context:annotation-config/>省去
     <context:annotation-config />-->

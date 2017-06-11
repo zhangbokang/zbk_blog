@@ -20,14 +20,14 @@ public class BlogUserDaoImpl implements BlogUserDao {
     private HibernateTemplate hibernateTemplate;
 
     @Override
-    public BlogUser authBlogUser(BlogUser blogUser) {
+    public BlogUser authBlogUser(String username,String password) {
         return hibernateTemplate.execute(new HibernateCallback<BlogUser>() {
             @Override
             public BlogUser doInHibernate(Session session) throws HibernateException {
                 String hql = "from BlogUser where userName=:userName and password=:password";
                 Query query = session.createQuery(hql);
-                query.setParameter("userName",blogUser.getUserName());
-                query.setParameter("password",blogUser.getPassword());
+                query.setParameter("userName",username);
+                query.setParameter("password",password);
                 return (BlogUser)query.uniqueResult();
             }
         });

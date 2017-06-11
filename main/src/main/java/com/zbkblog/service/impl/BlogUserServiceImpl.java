@@ -3,6 +3,7 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.BlogUserDao;
 import com.zbkblog.entity.BlogUser;
 import com.zbkblog.service.BlogUserService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,8 @@ public class BlogUserServiceImpl implements BlogUserService {
     private BlogUserDao blogUserDao;
 
     @Override
-    public BlogUser authBlogUser(BlogUser blogUser) {
-        return blogUserDao.authBlogUser(blogUser);
+    @Cacheable("blogUser")
+    public BlogUser authBlogUser(String username,String password) {
+        return blogUserDao.authBlogUser(username,password);
     }
 }

@@ -68,7 +68,7 @@ public class IndexController {
         BlogUser blogUser = new BlogUser();
         blogUser.setUserName(username);
         blogUser.setPassword(password);
-        blogUser = blogUserService.authBlogUser(blogUser);
+        blogUser = blogUserService.authBlogUser(username,password);
         if (blogUser==null){
             map.put("code",0);
             map.put("msg","验证失败，请确认用户名和密码是否正确！");

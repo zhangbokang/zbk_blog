@@ -11,8 +11,9 @@ public interface BlogUserDao {
      * 校验用户
      *  校验正确就返回填充后的BlogUser
      *  校验失败返回null
-     * @param blogUser
+     * @param username
+     * @param password
      * @return
      */
-    BlogUser authBlogUser(BlogUser blogUser);
+    BlogUser authBlogUser(String username,String password);
 }

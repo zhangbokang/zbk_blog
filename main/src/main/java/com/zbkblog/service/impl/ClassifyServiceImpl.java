@@ -3,6 +3,8 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.ClassifyDao;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.service.ClassifyService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     private ClassifyDao classifyDao;
 
     @Override
+    @CacheEvict(value = {"classifyCache","docCache"},allEntries = true)
     public Classify save(Classify classify) {
         classify.setCreateTime(System.currentTimeMillis());
         classifyDao.save(classify);
@@ -26,6 +29,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
+    @CacheEvict(value = {"classifyCache","docCache"},allEntries = true)
     public Classify update(Classify classify) {
         classify.setCreateTime(System.currentTimeMillis());
         classifyDao.update(classify);
@@ -33,6 +37,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
+    @CacheEvict(value = {"classifyCache","docCache"},allEntries = true)
     public Classify delete(Classify classify) {
         classify = findById(classify.getClassifyId());
         if (null == classify){
@@ -43,11 +48,13 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
+    @Cacheable("classifyCache")
     public List<Classify> findAll() {
         return classifyDao.findAll();
     }
 
     @Override
+    @Cacheable("classifyCache")
     public Classify findById(Long id) {
         return classifyDao.findById(id);
     }

@@ -43,10 +43,7 @@ public class MyTest {
         ClassPathXmlApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("spring.xml");
         BlogUserService blogUserService = applicationContext.getBean("blogUserService",BlogUserService.class);
-        BlogUser blogUser = new BlogUser();
-        blogUser.setUserName("abc");
-        blogUser.setPassword("xxxxx");
-        blogUser = blogUserService.authBlogUser(blogUser);
+        BlogUser blogUser = blogUserService.authBlogUser("abc","xxxx");
 
         System.out.println(blogUser==null);
 

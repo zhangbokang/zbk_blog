@@ -3,6 +3,8 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.TagDao;
 import com.zbkblog.entity.Tag;
 import com.zbkblog.service.TagService;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class TagServiceImpl implements TagService {
     private TagDao tagDao;
 
     @Override
+    @CacheEvict(value = {"tagCache","docCache"},allEntries = true)
     public Tag save(Tag tag) {
         tag.setCreateTime(System.currentTimeMillis());
         tagDao.save(tag);
@@ -26,12 +29,14 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @CacheEvict(value = {"tagCache","docCache"},allEntries = true)
     public void update(Tag tag) {
         tag.setCreateTime(System.currentTimeMillis());
         tagDao.update(tag);
     }
 
     @Override
+    @CacheEvict(value = {"tagCache","docCache"},allEntries = true)
     public Tag delete(Tag tag) {
         tag = findById(tag.getTagId());
         if (null == tag){
@@ -42,11 +47,13 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @Cacheable("tagCache")
     public List<Tag> findAll() {
         return tagDao.findAll();
     }
 
     @Override
+    @Cacheable("tagCache")
     public Tag findById(Long id) {
         return tagDao.findById(id);
     }

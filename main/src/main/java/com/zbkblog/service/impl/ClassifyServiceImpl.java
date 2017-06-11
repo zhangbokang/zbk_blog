@@ -43,7 +43,7 @@ public class ClassifyServiceImpl implements ClassifyService {
     }
 
     @Override
-    @Cacheable(value = "classifyCache",key = "#root.target.class.toString()+#root.method.name")
+    @Cacheable("classifyCache")
     public List<Classify> findAllClassify() {
         return classifyDao.findAll();
     }

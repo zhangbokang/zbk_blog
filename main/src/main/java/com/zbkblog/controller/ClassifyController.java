@@ -32,7 +32,7 @@ public class ClassifyController {
     @RequestMapping("/findAllClassify")
     @ResponseBody
     public Map<String ,Object> findAllClassify(HttpServletRequest request){
-        List<Classify> list = classifyService.findAll();
+        List<Classify> list = classifyService.findAllClassify();
         Map<String ,Object> map = new HashMap<>();
         if (null == list){
             map.put("code",0);
@@ -124,7 +124,7 @@ public class ClassifyController {
         }
         Classify classify = new Classify();
         classify.setClassifyId(Long.parseLong(classifyId));
-        classify = classifyService.delete(classify);
+        classifyService.delete(classify);
         if (null == classify){
             map.put("code",0);
             map.put("msg","删除失败，没有该分类");

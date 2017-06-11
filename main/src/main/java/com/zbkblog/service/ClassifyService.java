@@ -24,17 +24,17 @@ public interface ClassifyService {
      * 根据ID删除标签
      * @param classify
      */
-    Classify delete(Classify classify);
+    void delete(Classify classify);
 
     /**
      * 查找所有标签
      * @return
      */
-    List<Classify> findAll();
+    List<Classify> findAllClassify();
 
     /**
      * 根据id查找标签
      * @return
      */
-    Classify findById(Long id);
+    Classify findClassifyById(Long id);
 }

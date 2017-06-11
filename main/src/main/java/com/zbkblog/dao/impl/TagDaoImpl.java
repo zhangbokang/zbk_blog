@@ -29,7 +29,7 @@ public class TagDaoImpl implements TagDao {
 
     @Override
     public void delete(Tag tag) {
-        hibernateTemplate.delete(tag);
+        hibernateTemplate.delete(hibernateTemplate.load(Tag.class,tag.getTagId()));
     }
 
     @Override

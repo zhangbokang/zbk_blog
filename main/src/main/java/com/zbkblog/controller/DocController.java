@@ -88,7 +88,7 @@ public class DocController {
             map.put("msg","保存失败，分类为空");
             return map;
         }
-        Classify classify = classifyService.findById(Long.parseLong(classifyId));
+        Classify classify = classifyService.findClassifyById(Long.parseLong(classifyId));
         if (null == classify){
             map.put("code",0);
             map.put("msg","保存失败，未查询到该分类");
@@ -99,7 +99,7 @@ public class DocController {
             map.put("msg","保存失败，标签为空");
             return map;
         }
-        Tag tag = tagService.findById(Long.parseLong(tagId));
+        Tag tag = tagService.findTagById(Long.parseLong(tagId));
         if (null ==tag){
             map.put("code",0);
             map.put("msg","保存失败，未查询到该标签");

@@ -116,7 +116,7 @@ public class MyTest {
         Classify classify = new Classify();
         classify.setName("测试标题");
         //classifyService.save(classify);
-        List<Classify> list = classifyService.findAll();
+        List<Classify> list = classifyService.findAllClassify();
         for (Classify c:list
              ) {
             System.out.println("className:"+c.getName());
@@ -131,7 +131,7 @@ public class MyTest {
         Classify classify = new Classify();
         classify.setClassifyId(new Long(1494857755));
         System.out.println(classify.getClassifyId() + ":" + classify.getName());
-        classify = classifyService.delete(classify);
+        classifyService.delete(classify);
         System.out.println(classify.getClassifyId() + ":" + classify.getName());
     }
 

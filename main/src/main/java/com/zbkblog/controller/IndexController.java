@@ -214,10 +214,10 @@ public class IndexController {
      */
     public void panel(HttpServletRequest request){
         //标签列表
-        List<Tag> tagList = tagService.findAll();
+        List<Tag> tagList = tagService.findAllTag();
         request.setAttribute("tagList",tagList);
         //分类列表
-        List<Classify> classifyList = classifyService.findAll();
+        List<Classify> classifyList = classifyService.findAllClassify();
         request.setAttribute("classifyList",classifyList);
 
         //点赞排行列表查询

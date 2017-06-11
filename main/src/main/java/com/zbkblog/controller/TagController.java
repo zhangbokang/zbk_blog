@@ -33,7 +33,7 @@ public class TagController {
     @RequestMapping("/findAllTag")
     @ResponseBody
     public Map<String,Object> findAllTag(HttpServletRequest request){
-        List<Tag> list = tagService.findAll();
+        List<Tag> list = tagService.findAllTag();
         Map<String ,Object> map = new HashMap<>();
         if (null == list){
             map.put("code",0);
@@ -125,7 +125,7 @@ public class TagController {
         }
         Tag tag = new Tag();
         tag.setTagId(Long.parseLong(tagId));
-        tag = tagService.delete(tag);
+        tagService.delete(tag);
         if (null == tag){
             map.put("code",0);
             map.put("msg","删除失败，没有该标签");

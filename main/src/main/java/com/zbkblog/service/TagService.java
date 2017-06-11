@@ -24,17 +24,17 @@ public interface TagService {
      * 根据ID删除标签
      * @param tag
      */
-    Tag delete(Tag tag);
+    void delete(Tag tag);
 
     /**
      * 查找所有标签
      * @return
      */
-    List<Tag> findAll();
+    List<Tag> findAllTag();
 
     /**
      * 根据id查找标签
      * @return
      */
-    Tag findById(Long id);
+    Tag findTagById(Long id);
 }

@@ -29,7 +29,7 @@ public class ClassifyDaoImpl implements ClassifyDao {
 
     @Override
     public void delete(Classify classify) {
-        hibernateTemplate.delete(classify);
+        hibernateTemplate.delete(hibernateTemplate.load(Classify.class,classify.getClassifyId()));
     }
 
     @Override

@@ -37,24 +37,19 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @CacheEvict(value = {"tagCache","docCache"},allEntries = true)
-    public Tag delete(Tag tag) {
-        tag = findById(tag.getTagId());
-        if (null == tag){
-            return null;
-        }
+    public void delete(Tag tag) {
         tagDao.delete(tag);
-        return tag;
     }
 
     @Override
-    @Cacheable("tagCache")
-    public List<Tag> findAll() {
+    @Cacheable(value = "tagCache",key = "#root.target.class.toString()+#root.method.name")
+    public List<Tag> findAllTag() {
         return tagDao.findAll();
     }
 
     @Override
     @Cacheable("tagCache")
-    public Tag findById(Long id) {
+    public Tag findTagById(Long id) {
         return tagDao.findById(id);
     }
 }

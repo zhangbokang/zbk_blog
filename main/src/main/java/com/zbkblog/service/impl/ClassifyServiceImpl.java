@@ -38,24 +38,19 @@ public class ClassifyServiceImpl implements ClassifyService {
 
     @Override
     @CacheEvict(value = {"classifyCache","docCache"},allEntries = true)
-    public Classify delete(Classify classify) {
-        classify = findById(classify.getClassifyId());
-        if (null == classify){
-            return null;
-        }
+    public void delete(Classify classify) {
         classifyDao.delete(classify);
-        return classify;
     }
 
     @Override
-    @Cacheable("classifyCache")
-    public List<Classify> findAll() {
+    @Cacheable(value = "classifyCache",key = "#root.target.class.toString()+#root.method.name")
+    public List<Classify> findAllClassify() {
         return classifyDao.findAll();
     }
 
     @Override
     @Cacheable("classifyCache")
-    public Classify findById(Long id) {
+    public Classify findClassifyById(Long id) {
         return classifyDao.findById(id);
     }
 }

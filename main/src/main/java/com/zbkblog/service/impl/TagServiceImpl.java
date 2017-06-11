@@ -42,7 +42,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    @Cacheable(value = "tagCache",key = "#root.target.class.toString()+#root.method.name")
+    @Cacheable("tagCache")
     public List<Tag> findAllTag() {
         return tagDao.findAll();
     }

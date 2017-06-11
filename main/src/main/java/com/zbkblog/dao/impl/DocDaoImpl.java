@@ -2,7 +2,7 @@ package com.zbkblog.dao.impl;
 
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
-import com.zbkblog.utils.Page;
+import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -30,7 +30,10 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public Paging<Doc> findAllByPage(final Paging paging) {
+    public Paging<Doc> findAllByPage(Integer pageSize,Integer currentPage) {
+        Paging paging1 = new Paging();
+        paging1.setPageSize(pageSize);
+        paging1.setCurrentPage(currentPage);
         String hql = "from Doc";
         return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
@@ -38,16 +41,15 @@ public class DocDaoImpl implements DocDao {
                 //查询总记录数
                 Query queryCount = session.createQuery("select count(1) from Doc");
                 Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
-                paging.setTotalCounts(totalCounts);
-
+                paging1.setTotalCounts(totalCounts);
                 Query query = session.createQuery(hql);
                 //设置每页显示多少个，设置多大结果。
-                query.setMaxResults(paging.getPageSize());
+                query.setMaxResults(pageSize);
                 //设置起点
-                query.setFirstResult(paging.getFirstResult());
+                query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
                 List<Doc> docList =  query.list();
-                paging.setPageList(docList);
-                return paging;
+                paging1.setPageList(docList);
+                return paging1;
             }
         });
     }
@@ -130,7 +132,10 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Paging paging) {
+    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Integer pageSize,Integer currentPage) {
+        Paging paging1 = new Paging();
+        paging1.setPageSize(pageSize);
+        paging1.setCurrentPage(currentPage);
         String hql = "from Doc Where classify.classifyId = ?";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
@@ -138,14 +143,13 @@ public class DocDaoImpl implements DocDao {
                 String chql = "select count(1) from Doc where classify.classifyId=:classifyId";
                 Query q1 = session.createQuery(chql);
                 q1.setParameter("classifyId",classifyId);
-                paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
-
+                paging1.setTotalCounts(((Number)q1.uniqueResult()).intValue());
                 Query query = session.createQuery(hql);
-                query.setFirstResult(paging.getFirstResult());
-                query.setMaxResults(paging.getPageSize());
+                query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
+                query.setMaxResults(pageSize);
                 query.setParameter(0,classifyId);
-                paging.setPageList(query.list());
-                return paging;
+                paging1.setPageList(query.list());
+                return paging1;
             }
         });
     }
@@ -166,7 +170,10 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public Paging<Doc> findByTagIdOfPage(Long tagId, Paging paging) {
+    public Paging<Doc> findByTagIdOfPage(Long tagId, Integer pageSize,Integer currentPage) {
+        Paging paging = new Paging();
+        paging.setPageSize(pageSize);
+        paging.setCurrentPage(currentPage);
         String hql = "from Doc where tag.tagId = ?";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
@@ -174,10 +181,9 @@ public class DocDaoImpl implements DocDao {
                 Query q1 = session.createQuery("select count (1) from Doc where tag.tagId=:tagId");
                 q1.setParameter("tagId",tagId);
                 paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
-
                 Query query = session.createQuery(hql);
-                query.setFirstResult(paging.getFirstResult());
-                query.setMaxResults(paging.getPageSize());
+                query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
+                query.setMaxResults(pageSize);
                 query.setParameter(0,tagId);
                 paging.setPageList(query.list());
                 return paging;
@@ -186,7 +192,10 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public Paging<Doc> searchDocByKeywork(String keyword, Paging paging) {
+    public Paging<Doc> searchDocByKeywork(String keyword, Integer pageSize,Integer currentPage) {
+        Paging paging = new Paging();
+        paging.setPageSize(pageSize);
+        paging.setCurrentPage(currentPage);
         String hql = "from Doc where UPPER(title) like UPPER(:keyword) or docMd like :keyword order by updateTime";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
@@ -196,8 +205,8 @@ public class DocDaoImpl implements DocDao {
                 paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
 
                 Query query = session.createQuery(hql);
-                query.setFirstResult(paging.getFirstResult());
-                query.setMaxResults(paging.getPageSize());
+                query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
+                query.setMaxResults(pageSize);
                 query.setParameter("keyword","%"+keyword+"%");
                 paging.setPageList(query.list());
                 return paging;

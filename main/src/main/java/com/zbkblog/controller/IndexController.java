@@ -91,10 +91,7 @@ public class IndexController {
         pageSize = pageSize==null?"10":pageSize;
         currentPage = currentPage==null?"1":currentPage;
 
-        Paging paging = new Paging();
-        paging.setPageSize(Integer.parseInt(pageSize));
-        paging.setCurrentPage(Integer.parseInt(currentPage));
-        paging = docService.searchDocByKeywork(keyword,paging);
+        Paging paging = docService.searchDocByKeywork(keyword,Integer.parseInt(pageSize),Integer.parseInt(currentPage));
         //防止零条记录时分页出错
         if(paging.getTotalCounts()==0){
             request.setAttribute("errorInfo","<b>未查询到记录，请更换关键词后重新查询！</b>");
@@ -114,10 +111,7 @@ public class IndexController {
         pageSize = pageSize==null?"10":pageSize;
         currentPage = currentPage==null?"1":currentPage;
 
-        Paging paging = new Paging();
-        paging.setPageSize(Integer.parseInt(pageSize));
-        paging.setCurrentPage(Integer.parseInt(currentPage));
-        paging = docService.findAllByPage(paging);
+        Paging paging = docService.findAllByPage(Integer.parseInt(pageSize),Integer.parseInt(currentPage));
         //防止零条记录时分页出错
         if(paging.getTotalCounts()==0){
             request.setAttribute("errorInfo","<b>未查询到记录，暂无文章！</b>");
@@ -141,10 +135,7 @@ public class IndexController {
         String currentPage = request.getParameter("currentPage");
         pageSize = pageSize==null?"10":pageSize;
         currentPage = currentPage==null?"1":currentPage;
-        Paging paging = new Paging();
-        paging.setPageSize(Integer.parseInt(pageSize));
-        paging.setCurrentPage(Integer.parseInt(currentPage));
-        paging = docService.findByClassifyIdOfPage(Long.parseLong(classifyId),paging);
+        Paging paging = docService.findByClassifyIdOfPage(Long.parseLong(classifyId),Integer.parseInt(pageSize),Integer.parseInt(currentPage));
         //防止零条记录时分页出错
         if(paging.getTotalCounts()==0){
             request.setAttribute("errorInfo","<b>未查询到记录，该分类暂无文章！</b>");
@@ -167,10 +158,7 @@ public class IndexController {
         String currentPage = request.getParameter("currentPage");
         pageSize = pageSize==null?"10":pageSize;
         currentPage = currentPage==null?"1":currentPage;
-        Paging paging = new Paging();
-        paging.setPageSize(Integer.parseInt(pageSize));
-        paging.setCurrentPage(Integer.parseInt(currentPage));
-        paging = docService.findByTagIdOfPage(Long.parseLong(tagId),paging);
+        Paging paging = docService.findByTagIdOfPage(Long.parseLong(tagId),Integer.parseInt(pageSize),Integer.parseInt(currentPage));
         //防止零条记录时分页出错
         if(paging.getTotalCounts()==0){
             request.setAttribute("errorInfo","<b>未查询到记录，该标签暂无文章！</b>");
@@ -207,9 +195,15 @@ public class IndexController {
             request.setAttribute("errorInfo","未查询到该文章。");
             return "errorPage";
         }
-        Long openNumber = doc.getOpenNumber()!=null?doc.getOpenNumber():0L;
-        doc.setOpenNumber(++openNumber);
-        docService.update(doc);
+        Object openNumberStr = request.getServletContext().getAttribute(docId);
+        Long openNumber = openNumberStr==null?doc.getOpenNumber():Long.parseLong(openNumberStr.toString());
+        openNumber++;
+        request.getServletContext().setAttribute(docId,openNumber);
+        //设置更新文章的条件，点击30次才更新
+        if (openNumber%30==0){
+            doc.setOpenNumber(++openNumber);
+            docService.update(doc);
+        }
         request.setAttribute("doc",doc);
         return "docPage";
     }

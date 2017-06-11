@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="com.zbkblog.entity.BlogUser" table="blog_user" schema="zbk_blog">
+    <class name="com.zbkblog.entity.BlogUser" table="blog_user" schema="zbk_blog" lazy="false">
         <id name="userId" column="user_id">
             <generator class="com.zbkblog.utils.GeneratorNumberId"/>
         </id>

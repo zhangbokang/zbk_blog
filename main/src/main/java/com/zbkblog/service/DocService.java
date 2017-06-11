@@ -1,7 +1,6 @@
 package com.zbkblog.service;
 
 import com.zbkblog.entity.Doc;
-import com.zbkblog.utils.Page;
 import com.zbkblog.utils.Paging;
 
 import java.util.List;
@@ -20,15 +19,16 @@ public interface DocService {
      * 分页查询所有
      * @return
      */
-    Paging<Doc> findAllByPage(Paging paging);
+    Paging<Doc> findAllByPage(Integer pageSize,Integer currentPage);
 
     /**
      * 跟据关键字查询
      * @param keyword
-     * @param paging
+     * @param pageSize
+     * @param currentPage
      * @return
      */
-    Paging<Doc> searchDocByKeywork(String keyword,Paging paging);
+    Paging<Doc> searchDocByKeywork(String keyword,Integer pageSize,Integer currentPage);
 
     /**
      * 修改
@@ -85,10 +85,11 @@ public interface DocService {
     /**
      * 根据分类ID查询并分页
      * @param classifyId
-     * @param paging
+     * @param pageSize
+     * @param currentPage
      * @return
      */
-    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Paging paging);
+    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Integer pageSize,Integer currentPage);
 
     /**
      * 根据标签ID查询文章列表
@@ -100,8 +101,9 @@ public interface DocService {
     /**
      * 根据标签ID分页查询
      * @param tagId
-     * @param paging
+     * @param pageSize
+     * @param currentPage
      * @return
      */
-    Paging<Doc> findByTagIdOfPage(Long tagId,Paging paging);
+    Paging<Doc> findByTagIdOfPage(Long tagId,Integer pageSize,Integer currentPage);
 }

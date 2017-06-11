@@ -3,8 +3,9 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
-import com.zbkblog.utils.Page;
 import com.zbkblog.utils.Paging;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,7 @@ public class DocServiceImpl implements DocService {
     private DocDao docDao;
 
     @Override
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public Doc save(Doc doc) {
         doc.setUpdateTime(System.currentTimeMillis());
         docDao.save(doc);
@@ -28,16 +30,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public Paging<Doc> findAllByPage(Paging paging) {
-        return docDao.findAllByPage(paging);
-    }
-
-    @Override
-    public Paging<Doc> searchDocByKeywork(String keyword,Paging paging) {
-        return docDao.searchDocByKeywork(keyword, paging);
-    }
-
-    @Override
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public Doc update(Doc doc) {
         doc.setUpdateTime(System.currentTimeMillis());
         docDao.update(doc);
@@ -45,8 +38,20 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public void delete(Doc doc) {
         docDao.delete(doc);
+    }
+
+    @Override
+    @Cacheable("docCache")
+    public Paging<Doc> findAllByPage(Integer pageSize,Integer currentPage) {
+        return docDao.findAllByPage(pageSize,currentPage);
+    }
+
+    @Override
+    public Paging<Doc> searchDocByKeywork(String keyword,Integer pageSize,Integer currentPage) {
+        return docDao.searchDocByKeywork(keyword, pageSize,currentPage);
     }
 
     @Override
@@ -55,21 +60,25 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
+    @Cacheable("docCache")
     public Doc findById(Long id) {
         return docDao.findById(id);
     }
 
     @Override
+    @Cacheable("docCache")
     public List<Doc> findByUpdateOfTopX(Integer top) {
         return docDao.findByUpdateOfTopX(top);
     }
 
     @Override
+    @Cacheable("docCache")
     public List<Doc> findByOpenNumberOfTopX(Integer top) {
         return docDao.findByOpenNumberOfTopX(top);
     }
 
     @Override
+    @Cacheable("docCache")
     public List<Doc> findByFavorNumberOfTopX(Integer top) {
         return docDao.findByFavorNumberOfTopX(top);
     }
@@ -80,8 +89,9 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Paging paging) {
-        return docDao.findByClassifyIdOfPage(classifyId,paging);
+    @Cacheable("docCache")
+    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Integer pageSize,Integer currentPage) {
+        return docDao.findByClassifyIdOfPage(classifyId,pageSize,currentPage);
     }
 
     @Override
@@ -90,7 +100,8 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public Paging<Doc> findByTagIdOfPage(Long tagId, Paging paging) {
-        return docDao.findByTagIdOfPage(tagId,paging);
+    @Cacheable("docCache")
+    public Paging<Doc> findByTagIdOfPage(Long tagId, Integer pageSize,Integer currentPage) {
+        return docDao.findByTagIdOfPage(tagId,pageSize,currentPage);
     }
 }

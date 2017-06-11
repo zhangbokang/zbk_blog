@@ -1,9 +1,11 @@
 package com.zbkblog.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by zhangbokang on 2017/6/3.
  */
-public class BlogUser {
+public class BlogUser implements Serializable {
     private Long userId;
     private String userName;
     private String password;

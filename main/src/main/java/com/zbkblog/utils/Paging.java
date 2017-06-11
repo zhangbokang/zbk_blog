@@ -1,11 +1,12 @@
 package com.zbkblog.utils;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by zhangbokang on 2017/6/1.
  */
-public class Paging<T> {
+public class Paging<T> implements Serializable {
     //总记录数
     private Integer totalCounts;
     //页面条目数
@@ -46,6 +47,19 @@ public class Paging<T> {
         if (firstResult==null && currentPage!=null){
             this.firstResult = (currentPage-1)*pageSize;
         }
+    }
+
+    public static Integer firstResultCount(Integer pageSize,Integer currentPage){
+        if (pageSize ==null || currentPage==null){
+            return 0;
+        }
+        if (pageSize<1){
+            pageSize = 1;
+        }
+        if (currentPage<1){
+            currentPage = 1;
+        }
+        return (currentPage-1)*pageSize;
     }
 
     public Integer getCurrentPage() {

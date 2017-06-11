@@ -196,11 +196,18 @@ public class IndexController {
             return "errorPage";
         }
         Object openNumberStr = request.getServletContext().getAttribute(docId);
-        Long openNumber = openNumberStr==null?doc.getOpenNumber():Long.parseLong(openNumberStr.toString());
+        Long openNumber = 0L;
+        if (openNumberStr == null){
+            if (doc.getOpenNumber()!=null) {
+                openNumber = doc.getOpenNumber();
+            }
+        }else {
+            openNumber = Long.parseLong(openNumberStr.toString());
+        }
         openNumber++;
         request.getServletContext().setAttribute(docId,openNumber);
-        //设置更新文章的条件，点击30次才更新
-        if (openNumber%30==0){
+        //设置更新文章的条件，点击x次才更新，避免频繁刷新缓存
+        if (openNumber%10==0){
             doc.setOpenNumber(++openNumber);
             docService.update(doc);
         }

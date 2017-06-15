@@ -34,7 +34,7 @@ public class DocDaoImpl implements DocDao {
         Paging paging1 = new Paging();
         paging1.setPageSize(pageSize);
         paging1.setCurrentPage(currentPage);
-        String hql = "from Doc";
+        String hql = "from Doc order by updateTime desc";
         return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
@@ -118,7 +118,7 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public List<Doc> findByClassifyId(Long classifyId) {
-        String hql = "from Doc where classify.classifyId = ?";
+        String hql = "from Doc where classify.classifyId = ? order by updateTime desc";
         return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
             @Override
             public List doInHibernate(Session session) throws HibernateException {
@@ -136,7 +136,7 @@ public class DocDaoImpl implements DocDao {
         Paging paging1 = new Paging();
         paging1.setPageSize(pageSize);
         paging1.setCurrentPage(currentPage);
-        String hql = "from Doc Where classify.classifyId = ?";
+        String hql = "from Doc Where classify.classifyId = ? order by updateTime desc";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
@@ -156,7 +156,7 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public List<Doc> findByTagId(Long tagId) {
-        String hql = "from Doc where tag.tagId = ?";
+        String hql = "from Doc where tag.tagId = ? order by updateTime desc";
         return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
             @Override
             public List doInHibernate(Session session) throws HibernateException {
@@ -174,7 +174,7 @@ public class DocDaoImpl implements DocDao {
         Paging paging = new Paging();
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
-        String hql = "from Doc where tag.tagId = ?";
+        String hql = "from Doc where tag.tagId = ? order by updateTime desc";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
@@ -196,7 +196,7 @@ public class DocDaoImpl implements DocDao {
         Paging paging = new Paging();
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
-        String hql = "from Doc where UPPER(title) like UPPER(:keyword) or docMd like :keyword order by updateTime";
+        String hql = "from Doc where UPPER(title) like UPPER(:keyword) or docMd like :keyword order by updateTime desc";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {

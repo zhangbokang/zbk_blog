@@ -31,8 +31,10 @@ public class DocServiceImpl implements DocService {
 
     @Override
     @CacheEvict(value = {"docCache"},allEntries = true)
-    public Doc update(Doc doc) {
-        doc.setUpdateTime(System.currentTimeMillis());
+    public Doc update(Doc doc,Boolean upTime) {
+        if (upTime){
+            doc.setUpdateTime(System.currentTimeMillis());
+        }
         docDao.update(doc);
         return doc;
     }

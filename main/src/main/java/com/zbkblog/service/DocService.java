@@ -33,8 +33,10 @@ public interface DocService {
     /**
      * 修改
      * @param doc
+     * @param upTime 是否更新修改时间
+     * @return
      */
-    Doc update(Doc doc);
+    Doc update(Doc doc,Boolean upTime);
 
     /**
      * 根据ID删除

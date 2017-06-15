@@ -40,9 +40,9 @@
 <div id="logindiv">
     <!--<div>用户登陆</div>-->
     <label for="username">用户名</label>
-    <input id="username" type="text" class="form-control">
+    <input id="username" type="text" onkeyup="EnteyKey(event)" class="form-control">
     <label for="password">密码</label>
-    <input id="password" type="password" class="form-control">
+    <input id="password" type="password" onkeyup="EnteyKey(event)" class="form-control">
     <div class="row">
         <div class="col-sm-6">
             <button id="login" onclick="loginFn()" class="btn btn-success form-control">登陆</button>
@@ -61,5 +61,11 @@
 <script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <%--<script src="/static/jquery-cookie/jquery.cookie.js"></script>--%>
 <script src="/static/js/login.js"></script>
+<script>
+    //输入框的回车事件
+    function EnteyKey(e) {
+        if (e.keyCode==13){loginFn();}
+    }
+</script>
 </body>
 </html>

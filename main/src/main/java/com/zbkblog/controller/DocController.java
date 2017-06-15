@@ -118,7 +118,7 @@ public class DocController {
             if (doc1 != null){
                 //将doc中的非空属性值复制到doc1
                 MyBeanUtils.copyPropertiesIgnoreNull(doc,doc1);
-                doc = docService.update(doc1);
+                doc = docService.update(doc1,true);
                 map.put("code",1);
                 map.put("data",doc);
                 return map;

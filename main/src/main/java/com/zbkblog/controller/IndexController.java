@@ -209,7 +209,7 @@ public class IndexController {
         //设置更新文章的条件，点击x次才更新，避免频繁刷新缓存
         if (openNumber%10==0){
             doc.setOpenNumber(++openNumber);
-            docService.update(doc);
+            docService.update(doc,false);
         }
         request.setAttribute("doc",doc);
         return "docPage";

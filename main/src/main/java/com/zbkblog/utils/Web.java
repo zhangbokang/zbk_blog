@@ -10,7 +10,7 @@ public class Web {
     static {
         Properties properties = new Properties();
         try {
-            FileInputStream fileInputStream = new FileInputStream("properties/application.properties");
+            FileInputStream fileInputStream = new FileInputStream("classpath:/properties/application.properties");
             properties.load(fileInputStream);
             jsLoadDomain = properties.getProperty("jsLoadDomain");
         } catch (Exception e) {

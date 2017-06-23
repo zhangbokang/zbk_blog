@@ -2,6 +2,7 @@ package com.zbkblog.controller;
 
 import com.zbkblog.entity.Classify;
 import com.zbkblog.service.ClassifyService;
+import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,8 +24,8 @@ public class ClassifyController {
 
     /**
      * 查询所有分类信息
-     *  查询失败：{"code":1,"data":List<Classify>}
-     *  查询成功：{"code":0,"msg":"查询出现错误"}
+     *  查询成功：{"code":1,"data":List<Classify>}
+     *  查询失败：{"code":0,"msg":"查询出现错误"}
      * @param request
      *  无
      * @return
@@ -41,6 +42,35 @@ public class ClassifyController {
         }
         map.put("code",1);
         map.put("data",list);
+        return map;
+    }
+
+    /**
+     * 分页查询所有分类信息
+     *  查询成功：{"code":1,"data":classifyPaging}
+     *  查询失败：{"code":0,"msg":"查询出现错误"}
+     * @param request
+     *  无
+     * @return
+     */
+    @RequestMapping("/findAllClassifyByPage")
+    @ResponseBody
+    public Map<String ,Object> findAllClassifyByPage(HttpServletRequest request){
+        String pageSize = request.getParameter("limit");
+        String firstResult = request.getParameter("offset");
+        pageSize = pageSize==null?"15":pageSize;
+        firstResult = firstResult==null?"0":firstResult;
+        Integer currentPage = Paging.currentPageCount(Integer.parseInt(pageSize), Integer.parseInt(firstResult));
+        Paging<Classify> classifyPaging = classifyService.findAllClassifyByPage(Integer.parseInt(pageSize), currentPage);
+        Map<String ,Object> map = new HashMap<>();
+        if (null == classifyPaging){
+            map.put("code",0);
+            map.put("msg","查询出现错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("total", classifyPaging.getTotalCounts());
+        map.put("rows",classifyPaging.getPageList());
         return map;
     }
 

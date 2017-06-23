@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/5/2
@@ -8,11 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- 头部 -->
 <meta charset="utf-8">
-<link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/header.css" />
+<link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/header.css" />
 <header>
     <div class="masthead">
         <a href="index" id="logo">
-            <img src="http://zhishi01-1253216462.costj.myqcloud.com/static/img/logo1.jpg" alt="MyNote">
+            <img src="http://<%=Web.jsLoadDomain%>/static/img/logo1.jpg" alt="MyNote">
         </a>
         <ul class="nav nav-pills pull-right">
             <li><a href="/index">主页</a></li>

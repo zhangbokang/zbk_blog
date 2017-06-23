@@ -1,6 +1,7 @@
 package com.zbkblog.dao;
 
 import com.zbkblog.entity.Classify;
+import com.zbkblog.utils.Paging;
 
 import java.util.List;
 
@@ -13,6 +14,14 @@ public interface ClassifyDao {
      * @return
      */
     List<Classify> findAll();
+
+    /**
+     * 分页查询所有
+     * @param pageSize
+     * @param currentPage
+     * @return
+     */
+    Paging<Classify> findAllByPage(Integer pageSize,Integer currentPage);
 
     /**
      * 根据ID查找

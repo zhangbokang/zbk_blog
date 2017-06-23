@@ -69,30 +69,34 @@
     });
     $('#classifyTable').bootstrapTable({
         //url: 'data.json',
+        url:common.URL.classify.findAllClassify,
+        sidePagination:"server", //分页方式为server
+        pageList:"[10, 25, 50, 100, All]", //分页可选的每页数据条数
+        pagination:"true", //在表格底部显示分页条
         columns:common.COLUMNS.classify,
     });
     //刷新表格
-    function loadClassifyTable() {
-        $.ajax({
-            url:common.URL.classify.findAllClassify,
-            type:"GET",
-            dataType:"json",
-            success:function (result) {
-                if (result.code == 1){
-                    var classifyData = result.data;
-                    $('#classifyTable').bootstrapTable("load",classifyData);
-                    return;
-                }
-                alert(result.msg);
-            },
-            error: function () {
-                alert("请求出现问题！");
-                return;
-            }
-        });
-
-    }
-    loadClassifyTable();
+//    function loadClassifyTable() {
+//        $.ajax({
+//            url:common.URL.classify.findAllClassify,
+//            type:"GET",
+//            dataType:"json",
+//            success:function (result) {
+//                if (result.code == 1){
+//                    var classifyData = result.data;
+//                    $('#classifyTable').bootstrapTable("load",classifyData);
+//                    return;
+//                }
+//                alert(result.msg);
+//            },
+//            error: function () {
+//                alert("请求出现问题！");
+//                return;
+//            }
+//        });
+//
+//    }
+//    loadClassifyTable();
 
     //删除分类确认框
     function deleteClassifyMake(id,name) {

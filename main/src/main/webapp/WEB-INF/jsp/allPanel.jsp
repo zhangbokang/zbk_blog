@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/5/4
@@ -110,4 +110,4 @@
         </ul>
     </div>
 </div>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/js/tagcloud.js"></script>
+<script src="http://<%=Web.jsLoadDomain%>/static/js/tagcloud.js"></script>

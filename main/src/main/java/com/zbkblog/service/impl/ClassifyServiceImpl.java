@@ -3,6 +3,7 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.ClassifyDao;
 import com.zbkblog.entity.Classify;
 import com.zbkblog.service.ClassifyService;
+import com.zbkblog.utils.Paging;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,12 @@ public class ClassifyServiceImpl implements ClassifyService {
     @Cacheable("classifyCache")
     public List<Classify> findAllClassify() {
         return classifyDao.findAll();
+    }
+
+    @Override
+    @Cacheable("classifyCache")
+    public Paging<Classify> findAllClassifyByPage(Integer pageSize, Integer currentPage) {
+        return classifyDao.findAllByPage(pageSize, currentPage);
     }
 
     @Override

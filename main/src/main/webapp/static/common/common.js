@@ -158,7 +158,7 @@ var common = {
     },
     URL:{
         classify:{
-            findAllClassify:"/classify/findAllClassify",
+            findAllClassify:"/classify/findAllClassifyByPage",
             addClassify:"/classify/addClassify",
             updateClassify:"/classify/updateClassify",
             deleteClassify:"/classify/deleteClassify"

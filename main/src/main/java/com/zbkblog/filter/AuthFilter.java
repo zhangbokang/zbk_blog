@@ -17,12 +17,12 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletResponseWrapper httpServletResponseWrapper = new HttpServletResponseWrapper((HttpServletResponse) response);
-        Long userId = (Long)((HttpServletRequest)request).getSession().getAttribute("userId");
-        if (null == userId){
-            httpServletResponseWrapper.sendRedirect("/login");
-            return;
-        }
+//        HttpServletResponseWrapper httpServletResponseWrapper = new HttpServletResponseWrapper((HttpServletResponse) response);
+//        Long userId = (Long)((HttpServletRequest)request).getSession().getAttribute("userId");
+//        if (null == userId){
+//            httpServletResponseWrapper.sendRedirect("/login");
+//            return;
+//        }
         chain.doFilter(request,response);
     }
 

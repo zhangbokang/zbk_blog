@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/5/4
@@ -9,11 +9,11 @@
 <html>
 <head>
     <title>文章编辑</title>
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/css/editormd.min.css" />
+    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/editormd/css/editormd.min.css" />
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/bootstrap/css/bootstrap.css">--%>
+    <%--<link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/bootstrap/css/bootstrap.css">--%>
     <link rel="stylesheet" href="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.css">
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/editblog.css">
+    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/editblog.css">
     <meta charset="utf-8">
 </head>
 <body>
@@ -70,12 +70,12 @@
     <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
     <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
     <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/editormd.min.js"></script>
+    <script src="http://<%=Web.jsLoadDomain%>/static/editormd/editormd.min.js"></script>
     <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
     <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
     <script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <%--<script src="/static/js/editblog.js"></script>--%>
-    <script src="http://zhishi01-1253216462.costj.myqcloud.com/static/common/common.js"></script>
+    <script src="http://<%=Web.jsLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">
         //设置分类和标签为自动完成按钮
         common.Fn.autoCompleteByDomId("classify",common.URL.classify.findAllClassify);
@@ -154,7 +154,7 @@
                 testEditor = editormd("editormd", {
                     //width: "90%",
                     //height: 550,
-                    path : 'http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/',
+                    path : 'http://<%=Web.jsLoadDomain%>/static/editormd/lib/',
                     theme : "dark",
                     //previewTheme : "dark",
                     editorTheme : "pastel-on-dark",

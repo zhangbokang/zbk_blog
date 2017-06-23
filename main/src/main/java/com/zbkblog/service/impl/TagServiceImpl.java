@@ -3,6 +3,7 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.TagDao;
 import com.zbkblog.entity.Tag;
 import com.zbkblog.service.TagService;
+import com.zbkblog.utils.Paging;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,12 @@ public class TagServiceImpl implements TagService {
     @Cacheable("tagCache")
     public List<Tag> findAllTag() {
         return tagDao.findAll();
+    }
+
+    @Override
+    @Cacheable("tagCache")
+    public Paging<Tag> findAllTagByPage(Integer pageSize, Integer currentPage) {
+        return tagDao.findAllByPage(pageSize, currentPage);
     }
 
     @Override

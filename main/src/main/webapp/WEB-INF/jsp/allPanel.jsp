@@ -88,7 +88,7 @@
                 <li>
                     <div class="row">
                         <div class="col-sm-9"><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
-                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
+                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open pull-right">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
                     </div>
                 </li>
             </c:forEach>

@@ -12,7 +12,7 @@
     <title>管理页面</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css">
-    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/common.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/common.css">
 
     <style rel="stylesheet">
         #allMake{
@@ -61,9 +61,9 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <%--<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>--%>
 <%--<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>--%>
-<script src="http://<%=Web.jsLoadDomain%>/static/bootstraptable/bootstrap-table.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/bootstraptable/locale/bootstrap-table-zh-CN.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/common/common.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/bootstraptable/bootstrap-table.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/bootstraptable/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
 <script>
     //遮罩
     function isMake() {

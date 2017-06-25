@@ -7,8 +7,8 @@
     <title>myblog主页</title>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css">
-    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/style.css">
-    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/common.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/style.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/common.css">
 </head>
 <body>
 <!-- 头部 -->
@@ -34,7 +34,7 @@
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/jqPaginator/dist/jqPaginator.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jqPaginator/dist/jqPaginator.min.js"></script>
 <script>
     $("#bloglist").load("/findAllDoc?accessType=doc");
     function loadBlogList(url,par) {

@@ -13,12 +13,12 @@ public class Web {
             ClassLoader classLoader = Web.class.getClassLoader();
             InputStream inputStream = classLoader.getResourceAsStream("/properties/application.properties");
             properties.load(inputStream);
-            jsLoadDomain = properties.getProperty("jsLoadDomain");
+            staticLoadDomain = properties.getProperty("staticLoadDomain");
         } catch (Exception e) {
             e.printStackTrace();
-            jsLoadDomain = "localhost";
+            staticLoadDomain = "";
         }
     }
     //web中用的一些常量
-    public static String jsLoadDomain;
+    public static String staticLoadDomain;
 }

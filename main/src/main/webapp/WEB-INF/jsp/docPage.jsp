@@ -11,11 +11,11 @@
 <head>
     <title>myblog - ${doc.title}</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/editormd/css/editormd.min.css"/>
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/editormd/css/editormd.min.css"/>
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">--%>
-    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/blogpage.css">
-    <link rel="stylesheet" href="http://<%=Web.jsLoadDomain%>/static/css/common.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/blogpage.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/common.css">
     <style>
         #wrapper {
             overflow: hidden;
@@ -90,15 +90,15 @@
 <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
 <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/editormd.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/marked.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/prettify.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/raphael.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/underscore.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/sequence-diagram.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/flowchart.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/editormd/lib/jquery.flowchart.min.js"></script>
-<script src="http://<%=Web.jsLoadDomain%>/static/portamento-1.1.1/portamento-min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/editormd.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/marked.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/prettify.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/raphael.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/underscore.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/sequence-diagram.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/flowchart.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/jquery.flowchart.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/portamento-1.1.1/portamento-min.js"></script>
 <script type="text/javascript">
 
     $('#sidebar').portamento();

@@ -110,4 +110,4 @@
         </ul>
     </div>
 </div>
-<script src="http://<%=Web.jsLoadDomain%>/static/js/tagcloud.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/js/tagcloud.js"></script>

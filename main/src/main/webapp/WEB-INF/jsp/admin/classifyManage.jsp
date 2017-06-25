@@ -68,10 +68,11 @@
             $("#classifyMake").hide();
         });
         $('#classifyTable').bootstrapTable({
-            //url: 'data.json',
             url:common.URL.classify.findAllClassify,
+            striped:true,
             sidePagination:"server", //分页方式为server
-            pageList:"[10, 25, 50, 100, All]", //分页可选的每页数据条数
+            pageList:"[15, 30, 50, 100, All]", //分页可选的每页数据条数
+            pageSize:15,//如果设置了分页，页面数据条数
             pagination:"true", //在表格底部显示分页条
             columns:common.COLUMNS.classify,
         });

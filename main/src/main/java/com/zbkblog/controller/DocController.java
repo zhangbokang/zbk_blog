@@ -7,6 +7,7 @@ import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.MyBeanUtils;
+import com.zbkblog.utils.Paging;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -43,7 +44,7 @@ public class DocController {
      */
     @RequestMapping("/findAllDocOutJson")
     @ResponseBody
-    public Map<String,Object> findAllDoc(HttpServletRequest request){
+    public Map<String,Object> findAllDocOutJson(HttpServletRequest request){
         Map<String,Object> map = new HashMap<>();
         List<Doc> docList = docService.findAll();
         if (null == docList){
@@ -55,6 +56,33 @@ public class DocController {
         map.put("data",docList);
         return map;
 
+    }
+
+    /**
+     * 查询所有文档，并以json字符串形式返回
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findAllDocOutJsonByPage")
+    @ResponseBody
+    public Map<String,Object> findAllDocOutJsonByPage(HttpServletRequest request){
+        String pageSize = request.getParameter("limit");
+        String firstResult = request.getParameter("offset");
+        pageSize = pageSize==null?"15":pageSize;
+        firstResult = firstResult==null?"0":firstResult;
+        Integer currentPage = Paging.currentPageCount(Integer.parseInt(pageSize), Integer.parseInt(firstResult));
+        Paging<Doc> docPaging = docService.findAllByPage(Integer.parseInt(pageSize),currentPage);
+
+        Map<String,Object> map = new HashMap<>();
+        if (null == docPaging){
+            map.put("code",0);
+            map.put("msg","查询发生错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("total", docPaging.getTotalCounts());
+        map.put("rows",docPaging.getPageList());
+        return map;
     }
 
     /**

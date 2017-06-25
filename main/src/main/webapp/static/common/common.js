@@ -157,6 +157,9 @@ var common = {
             }],
     },
     URL:{
+        doc:{
+            findAllDoc:"/doc/findAllDocOutJsonByPage",
+        },
         classify:{
             findAllClassify:"/classify/findAllClassifyByPage",
             addClassify:"/classify/addClassify",

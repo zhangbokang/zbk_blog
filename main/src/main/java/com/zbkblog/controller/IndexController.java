@@ -1,20 +1,19 @@
 package com.zbkblog.controller;
 
-import com.zbkblog.entity.BlogUser;
-import com.zbkblog.entity.Classify;
-import com.zbkblog.entity.Doc;
-import com.zbkblog.entity.Tag;
+import com.zbkblog.entity.*;
 import com.zbkblog.service.BlogUserService;
 import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.Paging;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -213,6 +212,39 @@ public class IndexController {
         }
         request.setAttribute("doc",doc);
         return "docPage";
+    }
+
+    /**
+     * 根据父ID查找分类列表
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findClassifyByParentId")
+    @ResponseBody
+    public List<TreeNode> findClassifyByParentId(HttpServletRequest request){
+        String parentId = request.getParameter("id");
+        //分类列表
+        List<Classify> classifyList = classifyService.findAllClassify();
+//        Map<String, Object> map = new HashedMap();
+
+        List<TreeNode> treeNodeList = new ArrayList<>();
+//        Long tId = 100L;
+        for (Classify classify: classifyList) {
+            TreeNode t = new TreeNode();
+            t.setId(classify.getClassifyId());
+            t.setText(classify.getName());
+//            List<TreeNode> tL = new ArrayList<>();
+//            TreeNode t1 = new TreeNode();
+//            t1.setId(tId);
+//            t1.setText("模拟子目录"+tId);
+//            tId++;
+//            tL.add(t1);
+//            t.setChildren(tL);
+            t.setChildren(true);
+            treeNodeList.add(t);
+        }
+//        treeNodeList.get(0).setChildren(treeNodeList);
+        return treeNodeList;
     }
 
     /**

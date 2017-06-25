@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <meta charset="utf-8">
+<link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/jsTree/themes/default/style.min.css" />
 <style rel="stylesheet">
     #tagsList {
         position: relative;
@@ -36,18 +37,23 @@
     .panel-body li>div:hover{
         background-color: #f7f7f7;
     }
+    /*#classifyListPanel ul{*/
+        /*padding-left: 0;*/
+        /*list-style: none;*/
+    /*}*/
 </style>
 <!-- 分类列表、标签列表等列表 -->
 <div class="panel panel-default">
     <div class="panel-heading">分类列表</div>
     <div class="panel-body">
-        <ul class="list-unstyled">
-            <c:forEach var="classify" varStatus="status" items="${classifyList}">
-                <li>
-                    <a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}',{});">${classify.name}</a>
-                </li>
-            </c:forEach>
-        </ul>
+        <div id="classifyListPanel"></div>
+        <%--<ul class="list-unstyled">--%>
+            <%--<c:forEach var="classify" varStatus="status" items="${classifyList}">--%>
+                <%--<li>--%>
+                    <%--<a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}',{});">${classify.name}</a>--%>
+                <%--</li>--%>
+            <%--</c:forEach>--%>
+        <%--</ul>--%>
     </div>
 </div>
 <div class="panel panel-default">
@@ -111,3 +117,23 @@
     </div>
 </div>
 <script src="<%=Web.staticLoadDomain%>/static/js/tagcloud.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jsTree/jstree.min.js"></script>
+<script>
+    $(function () {
+        $('#classifyListPanel').jstree({
+            'core' : {
+                'data' : {
+                    "url" : "/findClassifyByParentId",
+                    "dataType" : "json", // needed only if you do not supply JSON headers
+                    "data" : function (node) {
+                        return { "id" : node.id };
+                    }
+                }
+            }
+        });
+        $('#classifyListPanel').on("changed.jstree", function (e, data) {
+            console.log(data.selected);
+            loadBlogList('/findDocByClassifyId?accessType=classify&classifyId='+data.selected,{});
+        });
+    });
+</script>

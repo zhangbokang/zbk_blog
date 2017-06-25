@@ -164,7 +164,7 @@ var common = {
             deleteClassify:"/classify/deleteClassify"
         },
         tag:{
-            findAllTag:"/tag/findAllTag",
+            findAllTag:"/tag/findAllTagByPage",
             addTag:"/tag/addTag",
             updateTag:"/tag/updateTag",
             deleteTag:"/tag/deleteTag"

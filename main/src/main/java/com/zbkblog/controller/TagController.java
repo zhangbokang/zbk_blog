@@ -2,6 +2,7 @@ package com.zbkblog.controller;
 
 import com.zbkblog.entity.Tag;
 import com.zbkblog.service.TagService;
+import com.zbkblog.utils.Paging;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +43,35 @@ public class TagController {
         }
         map.put("code",1);
         map.put("data",list);
+        return map;
+    }
+
+    /**
+     * 分页查询所有标签信息
+     *  查询失败：{"code":1,"total":总记录数,"rows":标签数组}
+     *  查询成功：{"code":0,"msg":"查询出现错误"}
+     * @param request
+     *  无
+     * @return
+     */
+    @RequestMapping("/findAllTagByPage")
+    @ResponseBody
+    public Map<String,Object> findAllTagByPage(HttpServletRequest request){
+        String pageSize = request.getParameter("limit");
+        String firstResult = request.getParameter("offset");
+        pageSize = pageSize==null?"15":pageSize;
+        firstResult = firstResult==null?"0":firstResult;
+        Integer currentPage = Paging.currentPageCount(Integer.parseInt(pageSize), Integer.parseInt(firstResult));
+        Paging<Tag> tagPaging = tagService.findAllTagByPage(Integer.parseInt(pageSize),currentPage);
+        Map<String ,Object> map = new HashMap<>();
+        if (null == tagPaging){
+            map.put("code",0);
+            map.put("msg","查询出现错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("total", tagPaging.getTotalCounts());
+        map.put("rows",tagPaging.getPageList());
         return map;
     }
 

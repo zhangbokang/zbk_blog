@@ -47,7 +47,7 @@ public class ClassifyController {
 
     /**
      * 分页查询所有分类信息
-     *  查询成功：{"code":1,"data":classifyPaging}
+     *  查询成功：{"code":1,"total":总记录数,"rows":分类数组}
      *  查询失败：{"code":0,"msg":"查询出现错误"}
      * @param request
      *  无

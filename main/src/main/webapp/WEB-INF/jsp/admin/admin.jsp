@@ -59,8 +59,10 @@
 
 <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>
+<%--<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>--%>
+<%--<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>--%>
+<script src="http://<%=Web.jsLoadDomain%>/static/bootstraptable/bootstrap-table.min.js"></script>
+<script src="http://<%=Web.jsLoadDomain%>/static/bootstraptable/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="http://<%=Web.jsLoadDomain%>/static/common/common.js"></script>
 <script>
     //遮罩

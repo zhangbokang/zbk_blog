@@ -26,7 +26,7 @@
 </style>
 <div id="classifyManage">
     <div><button class="btn btn-default" onclick="isMake();$('#classifyMake').show();">新增</button>
-        <button onclick="loadClassifyTable();" class="btn btn-default">刷新</button></div><br />
+        <button onclick="$('#classifyTable').bootstrapTable('refresh',{silent: true})" class="btn btn-default">刷新</button></div><br />
     <table id="classifyTable"></table>
 </div>
 <div id="classifyMake" class="classifyMake">
@@ -43,6 +43,7 @@
 </div>
 <script>
     $(function () {
+        //添加分类
         $("#classifyMake #ok_btn").click(function () {
             var classifyName = $("#classifyMake #theName").val();
             $.ajax({
@@ -66,37 +67,15 @@
             });
             $("#classifyMake").hide();
         });
+        $('#classifyTable').bootstrapTable({
+            //url: 'data.json',
+            url:common.URL.classify.findAllClassify,
+            sidePagination:"server", //分页方式为server
+            pageList:"[10, 25, 50, 100, All]", //分页可选的每页数据条数
+            pagination:"true", //在表格底部显示分页条
+            columns:common.COLUMNS.classify,
+        });
     });
-    $('#classifyTable').bootstrapTable({
-        //url: 'data.json',
-        url:common.URL.classify.findAllClassify,
-        sidePagination:"server", //分页方式为server
-        pageList:"[10, 25, 50, 100, All]", //分页可选的每页数据条数
-        pagination:"true", //在表格底部显示分页条
-        columns:common.COLUMNS.classify,
-    });
-    //刷新表格
-//    function loadClassifyTable() {
-//        $.ajax({
-//            url:common.URL.classify.findAllClassify,
-//            type:"GET",
-//            dataType:"json",
-//            success:function (result) {
-//                if (result.code == 1){
-//                    var classifyData = result.data;
-//                    $('#classifyTable').bootstrapTable("load",classifyData);
-//                    return;
-//                }
-//                alert(result.msg);
-//            },
-//            error: function () {
-//                alert("请求出现问题！");
-//                return;
-//            }
-//        });
-//
-//    }
-//    loadClassifyTable();
 
     //删除分类确认框
     function deleteClassifyMake(id,name) {

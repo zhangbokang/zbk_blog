@@ -1,6 +1,6 @@
 package com.zbkblog.utils;
 
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -10,12 +10,13 @@ public class Web {
     static {
         Properties properties = new Properties();
         try {
-            FileInputStream fileInputStream = new FileInputStream("classpath:/properties/application.properties");
-            properties.load(fileInputStream);
+            ClassLoader classLoader = Web.class.getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream("/properties/application.properties");
+            properties.load(inputStream);
             jsLoadDomain = properties.getProperty("jsLoadDomain");
         } catch (Exception e) {
             e.printStackTrace();
-            jsLoadDomain = "localhost:8080";
+            jsLoadDomain = "localhost";
         }
     }
     //web中用的一些常量

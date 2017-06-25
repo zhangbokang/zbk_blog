@@ -26,7 +26,7 @@
 </style>
 <div id="tagManage">
     <div><button class="btn btn-default" onclick="isMake();$('#tagMake').show();">新增</button>
-        <button onclick="loadTagTable();" class="btn btn-default">刷新</button></div><br />
+        <button onclick="$('#tagTable').bootstrapTable('refresh',{silent: true})" class="btn btn-default">刷新</button></div><br />
     <table id="tagTable"></table>
 </div>
 
@@ -45,6 +45,7 @@
 
 <script>
     $(function () {
+        //添加标签
         $("#tagMake #ok_btn").click(function () {
             var tagName = $("#tagMake #theName").val();
             $.ajax({
@@ -71,30 +72,34 @@
     });
     $('#tagTable').bootstrapTable({
         //url: 'data.json',
+        url:common.URL.tag.findAllTag,
+        sidePagination:"server", //分页方式为server
+        pageList:"[10, 25, 50, 100, All]", //分页可选的每页数据条数
+        pagination:"true", //在表格底部显示分页条
         columns:common.COLUMNS.tag
     });
     //刷新表格
-    function loadTagTable() {
-        $.ajax({
-            url:common.URL.tag.findAllTag,
-            type:"GET",
-            dataType:"json",
-            success:function (result) {
-                if (result.code == 1){
-                    var tagData = result.data;
-                    $('#tagTable').bootstrapTable("load",tagData);
-                    return;
-                }
-                alert(result.msg);
-            },
-            error: function () {
-                alert("请求出现问题！");
-                return;
-            }
-        });
-
-    }
-    loadTagTable();
+//    function loadTagTable() {
+//        $.ajax({
+//            url:common.URL.tag.findAllTag,
+//            type:"GET",
+//            dataType:"json",
+//            success:function (result) {
+//                if (result.code == 1){
+//                    var tagData = result.data;
+//                    $('#tagTable').bootstrapTable("load",tagData);
+//                    return;
+//                }
+//                alert(result.msg);
+//            },
+//            error: function () {
+//                alert("请求出现问题！");
+//                return;
+//            }
+//        });
+//
+//    }
+//    loadTagTable();
 
     //删除分类确认框
     function deleteTagMake(id,name) {

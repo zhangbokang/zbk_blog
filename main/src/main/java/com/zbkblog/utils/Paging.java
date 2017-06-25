@@ -67,7 +67,7 @@ public class Paging<T> implements Serializable {
 
     public static Integer currentPageCount(Integer pageSize,Integer firstResult){
         if (pageSize ==null || firstResult==null){
-            return 0;
+            return 1;
         }
         if (pageSize<1){
             pageSize = 1;
@@ -75,7 +75,7 @@ public class Paging<T> implements Serializable {
         if (firstResult<0){
             firstResult = 0;
         }
-        return (firstResult+1)/pageSize;
+        return firstResult/pageSize+1;
     }
 
     public Integer getCurrentPage() {

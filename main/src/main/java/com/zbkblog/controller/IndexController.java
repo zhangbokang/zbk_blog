@@ -108,7 +108,7 @@ public class IndexController {
     public String blogList(HttpServletRequest request){
         String pageSize = request.getParameter("pageSize");
         String currentPage = request.getParameter("currentPage");
-        pageSize = pageSize==null?"10":pageSize;
+        pageSize = pageSize==null?"15":pageSize;
         currentPage = currentPage==null?"1":currentPage;
 
         Paging paging = docService.findAllByPage(Integer.parseInt(pageSize),Integer.parseInt(currentPage));

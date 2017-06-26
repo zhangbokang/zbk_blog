@@ -2,7 +2,7 @@
  * Created by zhangbokang on 2017/5/17.
  */
 //引入py.js，用来处理汉字添加拼音的处理
-document.write('<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/spell/py.js"></script>');
+// document.write('<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/spell/py.js"></script>');
 // document.write('<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>');
 // document.write('<script src="/static/jqueryui/jquery-ui.min.js"></script>');
 var common = {
@@ -161,13 +161,15 @@ var common = {
             findAllDoc:"/doc/findAllDocOutJsonByPage",
         },
         classify:{
-            findAllClassify:"/classify/findAllClassifyByPage",
+            findAllClassify:"/classify/findAllClassify",
+            findAllClassifyByPage:"/classify/findAllClassifyByPage",
             addClassify:"/classify/addClassify",
             updateClassify:"/classify/updateClassify",
             deleteClassify:"/classify/deleteClassify"
         },
         tag:{
-            findAllTag:"/tag/findAllTagByPage",
+            findAllTag:"/tag/findAllTag",
+            findAllTagByPage:"/tag/findAllTagByPage",
             addTag:"/tag/addTag",
             updateTag:"/tag/updateTag",
             deleteTag:"/tag/deleteTag"

@@ -68,7 +68,7 @@
             $("#classifyMake").hide();
         });
         $('#classifyTable').bootstrapTable({
-            url:common.URL.classify.findAllClassify,
+            url:common.URL.classify.findAllClassifyByPage,
             striped:true,
             sidePagination:"server", //分页方式为server
             pageList:"[15, 30, 50, 100, All]", //分页可选的每页数据条数

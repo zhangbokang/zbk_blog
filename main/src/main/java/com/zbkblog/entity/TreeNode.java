@@ -8,13 +8,13 @@ import java.util.List;
 public class TreeNode {
     private Long id;
     private String text;
-    private Object children;
+    private List<TreeNode> children; //延迟加载时设置为true，其他时候为List<TreeNode>
     private Long parentId;
 
     public TreeNode() {
     }
 
-    public TreeNode(Long id, String text, Object children, Long parentId) {
+    public TreeNode(Long id, String text, List<TreeNode> children, Long parentId) {
         this.id = id;
         this.text = text;
         this.children = children;
@@ -37,11 +37,11 @@ public class TreeNode {
         this.text = text;
     }
 
-    public Object getChildren() {
+    public List<TreeNode> getChildren() {
         return children;
     }
 
-    public void setChildren(Object children) {
+    public void setChildren(List<TreeNode> children) {
         this.children = children;
     }
 

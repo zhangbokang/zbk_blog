@@ -70,6 +70,7 @@ dependencies {
     compile 'org.springframework:spring-jms:4.2.8.RELEASE'
     compile 'org.springframework:spring-dao:2.0.8'
     compile 'org.springframework.data:spring-data-redis:1.7.3.RELEASE'
+    compile 'org.springframework:spring-test:4.2.8.RELEASE'
 
     compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
 

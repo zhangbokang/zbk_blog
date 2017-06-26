@@ -219,7 +219,7 @@ public class IndexController {
      * @param request
      * @return
      */
-    @RequestMapping("/findClassifyByParentId")
+    /*@RequestMapping("/findClassifyByParentId")
     @ResponseBody
     public List<TreeNode> findClassifyByParentId(HttpServletRequest request){
         String parentId = request.getParameter("id");
@@ -245,7 +245,7 @@ public class IndexController {
         }
 //        treeNodeList.get(0).setChildren(treeNodeList);
         return treeNodeList;
-    }
+    }*/
 
     /**
      * 填充标签列表

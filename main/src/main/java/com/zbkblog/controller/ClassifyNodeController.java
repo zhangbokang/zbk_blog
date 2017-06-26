@@ -98,6 +98,8 @@ public class ClassifyNodeController {
      * 失败 {code:0,msg:失败消息}
      * 成功{code:1,data:保存成功后的classifyNode对象}
      */
+    @RequestMapping("/deleteClassifyNode")
+    @ResponseBody
     public Map<String, Object> deleteClassifyNode(HttpServletRequest request) {
         String id = request.getParameter("classifyNodeId");
         //是否强制删除（删除后如果有子节点，所有子节点成为root节点）
@@ -110,7 +112,7 @@ public class ClassifyNodeController {
         }
         ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(id));
         //如果没有子节点就直接删除
-        if (Byte.parseByte("1") != classifyNode.getChildren()) {
+        if (null == classifyNode.getChildren()) {
             classifyNodeService.deleteClassifyNode(classifyNode);
             map.put("code", 1);
             map.put("data", classifyNode);

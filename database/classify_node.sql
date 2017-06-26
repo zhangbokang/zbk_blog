@@ -14,3 +14,5 @@ create table classify_node
 );
 
 alter table classify_node comment '分类Node表';
+
+ALTER TABLE zbk_blog.classify_node CHANGE children children_byte TINYINT(1) COMMENT '子节点';

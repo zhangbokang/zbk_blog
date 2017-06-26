@@ -46,7 +46,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
             sqlWhere = " parent_id=" + parentId;
         }
 
-        String sql = "SELECT * FROM classify_node WHERE"+sqlWhere;
+        String sql = "SELECT id ,text,children_byte,parent_id,update_time FROM classify_node WHERE"+sqlWhere;
         return hibernateTemplate.execute(new HibernateCallback<List<ClassifyNode>>() {
             @Override
             public List<ClassifyNode> doInHibernate(Session session) throws HibernateException {
@@ -120,7 +120,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
      */
     @Override
     public void deleteClassifyNode(ClassifyNode classifyNode) {
-        if (classifyNode.getChildren() == Byte.parseByte("1")){
+        if (null != classifyNode.getChildren() && classifyNode.getChildrenByte() == Byte.parseByte("1")){
             hibernateTemplate.execute(new HibernateCallback<Object>() {
                 @Override
                 public Object doInHibernate(Session session) throws HibernateException {
@@ -156,7 +156,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
         ClassifyNode childrenClassifyNode = hibernateTemplate.load(ClassifyNode.class,childrenId);
         //设置父节点
         //添加有子节点的标识
-        parentClassifyNode.setChildren(Byte.parseByte("1"));
+        parentClassifyNode.setChildrenByte(Byte.parseByte("1"));
         //设置子节点
         //添加子节点的父节点ID
         childrenClassifyNode.setParentId(parentClassifyNode.getId());

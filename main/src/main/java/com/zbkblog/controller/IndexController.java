@@ -1,10 +1,7 @@
 package com.zbkblog.controller;
 
 import com.zbkblog.entity.*;
-import com.zbkblog.service.BlogUserService;
-import com.zbkblog.service.ClassifyService;
-import com.zbkblog.service.DocService;
-import com.zbkblog.service.TagService;
+import com.zbkblog.service.*;
 import com.zbkblog.utils.Paging;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
@@ -31,6 +28,8 @@ public class IndexController {
     private TagService tagService;
     @Resource
     private BlogUserService blogUserService;
+    @Resource
+    private ClassifyNodeService classifyNodeService;
 
     @RequestMapping("")
     public String all(HttpServletRequest request){
@@ -169,12 +168,6 @@ public class IndexController {
         return "bloglist";
     }
 
-
-
-
-
-
-
     /**
      * 查看具体的文章
      * @param request
@@ -246,6 +239,24 @@ public class IndexController {
 //        treeNodeList.get(0).setChildren(treeNodeList);
         return treeNodeList;
     }*/
+
+    /**
+     * 根据父ID查找节点列表
+     * @param request
+     * @return
+     * 失败 {code:0,msg:失败消息}
+     * 成功{code:1,data:节点列表}
+     */
+    @RequestMapping("/findClassifyByParentId")
+    @ResponseBody
+    public List<ClassifyNode> findClassifyByParentId(HttpServletRequest request) {
+        String parentIdStr = request.getParameter("id");
+        Long parentId = null;
+        if ((null != parentIdStr || !"#".equals(parentIdStr)) && parentIdStr.matches("[0-9]{13}")) {
+            parentId = Long.parseLong(parentIdStr);
+        }
+        return classifyNodeService.findClassifyNodeListByParentId(parentId);
+    }
 
     /**
      * 填充标签列表

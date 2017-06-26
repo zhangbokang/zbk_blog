@@ -13,8 +13,8 @@
         <property name="text">
             <column name="text" sql-type="varchar(50)" length="50"/>
         </property>
-        <property name="children">
-            <column name="children" sql-type="tinyint(1)" />
+        <property name="childrenByte">
+            <column name="children_byte" sql-type="tinyint(1)" />
         </property>
         <property name="parentId">
             <column name="parent_id" sql-type="bigint(13)" />

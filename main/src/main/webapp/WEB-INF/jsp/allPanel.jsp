@@ -126,13 +126,15 @@
                     "url" : "/findClassifyByParentId",
                     "dataType" : "json", // needed only if you do not supply JSON headers
                     "data" : function (node) {
-                        return { "id" : node.id };
+//                        return { "id" : node.id };
+//                        console.log(node);
+                        return node;
                     }
                 }
             }
         });
         $('#classifyListPanel').on("changed.jstree", function (e, data) {
-            console.log(data.selected);
+//            console.log(data.selected);
             loadBlogList('/findDocByClassifyId?accessType=classify&classifyId='+data.selected,{});
         });
     });

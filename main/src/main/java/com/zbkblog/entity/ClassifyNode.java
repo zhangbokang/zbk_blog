@@ -6,17 +6,18 @@ import java.io.Serializable;
  * Created by zhangbokang on 2017/6/26.
  */
 public class ClassifyNode implements Serializable {
-    private Long id;
+    private long id;
     private String text;
-    private Byte children; //1表示有子节点，0或null表示无子节点
+    private Byte childrenByte; //1表示有子节点，0或null表示无子节点
+    private Boolean children;
     private Long parentId;
     private Long updateTime;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -28,12 +29,30 @@ public class ClassifyNode implements Serializable {
         this.text = text;
     }
 
-    public Byte getChildren() {
+    public Byte getChildrenByte() {
+        return childrenByte;
+    }
+
+    public void setChildrenByte(Byte childrenByte) {
+        this.childrenByte = childrenByte;
+        if (null != childrenByte && "1".equals(childrenByte.toString())) {
+            this.children = true;
+        } else {
+            this.children = false;
+        }
+    }
+
+    public Boolean getChildren() {
         return children;
     }
 
-    public void setChildren(Byte children) {
+    public void setChildren(Boolean children) {
         this.children = children;
+        if (null != children && children) {
+            this.childrenByte = Byte.parseByte("1");
+        } else {
+            this.childrenByte = null;
+        }
     }
 
     public Long getParentId() {
@@ -61,7 +80,7 @@ public class ClassifyNode implements Serializable {
 
         if (id != that.id) return false;
         if (text != null ? !text.equals(that.text) : that.text != null) return false;
-        if (children != null ? !children.equals(that.children) : that.children != null) return false;
+        if (childrenByte != null ? !childrenByte.equals(that.childrenByte) : that.childrenByte != null) return false;
         if (parentId != null ? !parentId.equals(that.parentId) : that.parentId != null) return false;
         if (updateTime != null ? !updateTime.equals(that.updateTime) : that.updateTime != null) return false;
 
@@ -72,20 +91,9 @@ public class ClassifyNode implements Serializable {
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (text != null ? text.hashCode() : 0);
-        result = 31 * result + (children != null ? children.hashCode() : 0);
+        result = 31 * result + (childrenByte != null ? childrenByte.hashCode() : 0);
         result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "ClassifyNode{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", children=" + children +
-                ", parentId=" + parentId +
-                ", updateTime=" + updateTime +
-                '}';
     }
 }

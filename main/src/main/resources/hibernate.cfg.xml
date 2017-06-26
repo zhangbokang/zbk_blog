@@ -19,6 +19,7 @@
       <mapping resource="com/zbkblog/hbm/Doc.hbm.xml"/>
       <mapping resource="com/zbkblog/hbm/Tag.hbm.xml"/>
       <mapping resource="com/zbkblog/hbm/ClassifyNode.hbm.xml"/>
+      <mapping resource="com/zbkblog/entity/ClassifyNode.hbm.xml"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

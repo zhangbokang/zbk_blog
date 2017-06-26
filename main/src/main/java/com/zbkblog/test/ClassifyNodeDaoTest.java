@@ -20,7 +20,7 @@ public class ClassifyNodeDaoTest extends AbstractJUnit4SpringContextTests {
     private ClassifyNodeDao classifyNodeDao;
 
     @Test
-    public void testSave() {
+    public void testSave() throws InterruptedException {
         for (int i=0;i<20;i++){
             ClassifyNode classifyNode = new ClassifyNode();
 //        classifyNode.setId(100L);
@@ -28,6 +28,7 @@ public class ClassifyNodeDaoTest extends AbstractJUnit4SpringContextTests {
             classifyNode.setUpdateTime(System.currentTimeMillis());
             Long classifyNodeId = classifyNodeDao.saveClassifyNode(classifyNode);
             System.out.println(classifyNodeId);
+            Thread.sleep(20L);
         }
     }
 
@@ -39,9 +40,9 @@ public class ClassifyNodeDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testUpdate() {
-        ClassifyNode classifyNode = classifyNodeDao.findClassifyNodeById(1498464243854L);
+        ClassifyNode classifyNode = classifyNodeDao.findClassifyNodeById(1498487698011L);
         classifyNode.setText("cNode1");
-        classifyNode.setChildren(Byte.parseByte("1"));
+        classifyNode.setChildrenByte(Byte.parseByte("1"));
         classifyNode.setUpdateTime(System.currentTimeMillis());
         classifyNodeDao.updateClassifyNode(classifyNode);
     }

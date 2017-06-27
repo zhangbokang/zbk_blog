@@ -45,6 +45,7 @@
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a onclick="$('#loadDiv').load('/admin/docManage');">文章管理</a></li>
             <li><a onclick="$('#loadDiv').load('/admin/classifyManage');">分类管理</a></li>
+            <li><a onclick="$('#loadDiv').load('/admin/classifyNodeManage');">分类节点管理</a></li>
             <li><a onclick="$('#loadDiv').load('/admin/tagManage');">标签管理</a></li>
             <li><a onclick="$('#loadDiv').load('/admin/commentManage');">评论管理</a></li>
         </ul>
@@ -64,6 +65,7 @@
 <script src="<%=Web.staticLoadDomain%>/static/bootstraptable/bootstrap-table.min.js"></script>
 <script src="<%=Web.staticLoadDomain%>/static/bootstraptable/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jsTree/jstree.min.js"></script>
 <script>
     //遮罩
     function isMake() {

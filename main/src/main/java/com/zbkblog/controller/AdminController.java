@@ -22,6 +22,11 @@ public class AdminController {
         return "admin/classifyManage";
     }
 
+    @RequestMapping("/classifyNodeManage")
+    public String classifyNodeManage(HttpServletRequest request) {
+        return "admin/classifyNodeManage";
+    }
+
     @RequestMapping("/commentManage")
     public String commentManage(HttpServletRequest request){
         return "admin/commentManage";

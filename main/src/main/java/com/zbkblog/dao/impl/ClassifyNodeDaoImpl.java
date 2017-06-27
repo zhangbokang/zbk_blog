@@ -120,7 +120,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
      */
     @Override
     public void deleteClassifyNode(ClassifyNode classifyNode) {
-        if (null != classifyNode.getChildren() && classifyNode.getChildrenByte() == Byte.parseByte("1")){
+        if (null != classifyNode.getChildrenByte() && classifyNode.getChildrenByte() == Byte.parseByte("1")){
             hibernateTemplate.execute(new HibernateCallback<Object>() {
                 @Override
                 public Object doInHibernate(Session session) throws HibernateException {

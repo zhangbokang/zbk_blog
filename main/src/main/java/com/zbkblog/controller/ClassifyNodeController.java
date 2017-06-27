@@ -112,7 +112,7 @@ public class ClassifyNodeController {
         }
         ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(id));
         //如果没有子节点就直接删除
-        if (null == classifyNode.getChildren()) {
+        if (null == classifyNode.getChildren() || !classifyNode.getChildren()) {
             classifyNodeService.deleteClassifyNode(classifyNode);
             map.put("code", 1);
             map.put("data", classifyNode);
@@ -120,8 +120,8 @@ public class ClassifyNodeController {
         }
         //如果有子节点，但没有确认强制删除，则不执行删除
         if (null == deleteOk || "".equals(deleteOk) || "false".equals(deleteOk)) {
-            map.put("code", 0);
-            map.put("msg", "未执行删除！");
+            map.put("code", 1);
+            map.put("data", "no_deleteOk");
             return map;
         }
         if (Boolean.parseBoolean(deleteOk)) {

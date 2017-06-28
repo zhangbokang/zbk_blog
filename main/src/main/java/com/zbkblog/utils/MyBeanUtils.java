@@ -12,9 +12,6 @@ import java.util.Set;
  */
 public class MyBeanUtils {
     /**
-     * @author 郑明亮
-     * @Email zhengmingliang911@gmail.com
-     * @Time 2017年2月14日 下午5:14:25
      * @Description <p>获取到对象中属性为null的属性名  </P>
      * @param source 要拷贝的对象
      * @return
@@ -34,9 +31,6 @@ public class MyBeanUtils {
     }
 
     /**
-     * @author 郑明亮
-     * @Email zhengmingliang911@gmail.com
-     * @Time 2017年2月14日 下午5:15:30
      * @Description <p> 拷贝非空对象属性值 </P>
      * @param source 源对象
      * @param target 目标对象

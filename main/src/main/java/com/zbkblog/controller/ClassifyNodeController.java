@@ -135,4 +135,36 @@ public class ClassifyNodeController {
         return map;
     }
 
+    @RequestMapping("/appendToParentClassifyNode")
+    @ResponseBody
+    public Map<String, Object> appendToParentClassifyNode(HttpServletRequest request) {
+        String text = request.getParameter("classifyNodeText");
+        String parentId = request.getParameter("parentClassifyNodeId");
+        Map<String, Object> map = new HashMap<>();
+        if (null == parentId || "".equals(parentId) || !parentId.matches("[0-9]{13}")) {
+            map.put("code", 0);
+            map.put("msg", "父分类ID不能为空且必须是数字！");
+            return map;
+        }
+        if (null == text || "".equals(text)) {
+            map.put("code", 0);
+            map.put("msg", "分类名称不能为空！");
+            return map;
+        }
+        ClassifyNode classifyNode = new ClassifyNode();
+        classifyNode.setText(text);
+        //先保存子节点并获取节点ID
+        Long classifyNodeId = classifyNodeService.saveClassifyNode(classifyNode);
+        if (null == classifyNode || classifyNodeId==0L){
+            map.put("code", 0);
+            map.put("msg", "保存子节点失败！");
+            return map;
+        }
+        //添加父子节点关系
+        classifyNodeService.addChildrenNode(Long.parseLong(parentId),classifyNodeId);
+        map.put("code", 1);
+        map.put("data", classifyNode);
+        return map;
+    }
+
 }

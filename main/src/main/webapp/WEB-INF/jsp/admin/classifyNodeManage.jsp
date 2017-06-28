@@ -141,6 +141,10 @@
                     alert("创建失败！");
                 }
             });
+            if (typeof defaultNode.id =="undefined"){
+                alert("创建节点失败");
+                return ;
+            }
             //创建默认节点end
             if (!sel.length) {
                 sel = ref.create_node("#",defaultNode);
@@ -151,7 +155,7 @@
                         });
                     });
                 }
-                return false;
+                return;
             }
             sel = sel[0];
             sel = ref.create_node(sel, defaultNode);

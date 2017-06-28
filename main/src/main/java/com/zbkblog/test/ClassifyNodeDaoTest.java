@@ -57,7 +57,7 @@ public class ClassifyNodeDaoTest extends AbstractJUnit4SpringContextTests {
     public void teseDelete() {
 //        classifyNodeDao.deleteClassifyNode(1498464243854L);
 //        classifyNodeDao.deleteClassifyNode(1498464243854L);
-        ClassifyNode classifyNode = classifyNodeDao.findClassifyNodeById(1498464243854L);
+        ClassifyNode classifyNode = classifyNodeDao.findClassifyNodeById(1498491301814L);
         classifyNodeDao.deleteClassifyNode(classifyNode);
     }
 

@@ -46,7 +46,12 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      */
     @Override
     public List<ClassifyNode> findAllClassify() {
-        return classifyNodeDao.findAllClassify();
+        try {
+            return classifyNodeDao.findAllClassify();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -58,7 +63,12 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      */
     @Override
     public Paging<ClassifyNode> findAllClassifyByPage(Integer pageSize, Integer currentPage) {
-        return classifyNodeDao.findAllClassifyByPage(pageSize, currentPage);
+        try {
+            return classifyNodeDao.findAllClassifyByPage(pageSize, currentPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -66,6 +76,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *
      * @param classifyNode
      * @return
+     *  成功则返回节点ID，失败返回0
      */
     @Override
     public Long saveClassifyNode(ClassifyNode classifyNode) {
@@ -85,19 +96,33 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @param classifyNode
      */
     @Override
-    public void deleteClassifyNode(ClassifyNode classifyNode) {
-        classifyNodeDao.deleteClassifyNode(classifyNode);
+    public Boolean deleteClassifyNode(ClassifyNode classifyNode) {
+        try{
+            classifyNodeDao.deleteClassifyNode(classifyNode);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
      * 更新节点
      *
      * @param classifyNode
+     * @return
+     *  成功返回true,失败返回false
      */
     @Override
-    public void updateClassifyNode(ClassifyNode classifyNode) {
+    public Boolean updateClassifyNode(ClassifyNode classifyNode) {
         classifyNode.setUpdateTime(System.currentTimeMillis());
-        classifyNodeDao.updateClassifyNode(classifyNode);
+        try {
+            classifyNodeDao.updateClassifyNode(classifyNode);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -105,9 +130,17 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *
      * @param parentId
      * @param childrenId
+     * @return
+     *  成功返回true,失败返回false
      */
     @Override
-    public void addChildrenNode(Long parentId, Long childrenId) {
-        classifyNodeDao.addChildrenNode(parentId, childrenId);
+    public Boolean addChildrenNode(Long parentId, Long childrenId) {
+        try {
+            classifyNodeDao.addChildrenNode(parentId, childrenId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

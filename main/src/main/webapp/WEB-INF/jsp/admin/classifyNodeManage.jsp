@@ -80,10 +80,10 @@
 //                "conditionalselect"
             ]
         });
-        $('#classifyNodeList').on("changed.jstree", function (e, data) {//changed.jstree表示所有事件
-            console.log(data.selected);
+//        $('#classifyNodeList').on("changed.jstree", function (e, data) {//changed.jstree表示所有事件
+//            console.log(data.selected);
 //            loadBlogList('/findDocByClassifyId?accessType=classify&classifyId='+data.selected,{});
-        });
+//        });
         //刷新目录树
         $("#refresh_classifyNode").on("click", function () {
             $('#classifyNodeList').jstree(true).refresh();
@@ -115,6 +115,76 @@
                 }
             });
         });
+
+        //移动节点
+        $("#move_classifyNode").on("click", function () {
+            var $mcinput = $("#move_classifyNode_input");
+            var ref = $('#classifyNodeList').jstree(true),
+                    sel = ref.get_selected();
+            if (!sel.length) {
+                alert("请选择分类节点！");
+                return;
+            }
+            var nodeId = $mcinput.val();
+            console.log("nodeId:"+nodeId+","+sel[0]);
+            if (!$.trim(nodeId)) {
+                console.log("nodeId"+nodeId)
+                $mcinput.val(sel[0]);
+                alert("请选择要添加到那个节点后再点击移动。");
+                return;
+            }
+            if (nodeId == sel[0]) {
+                alert("请选择自己以外的节点！");
+                return;
+            }
+            console.log("xx");
+            appendNodeTo(ref, sel[0], nodeId, function () {});
+            console.log("aa");
+            ref.refresh();
+            $mcinput.val("");
+        });
+
+        /**
+         * 添加节点到其他节点
+         *
+         * @param ref
+         * @param parentId
+         * @param cId
+         * @param call 失败后的回调函数
+         */
+        function appendNodeTo(ref,parentId,cId,call) {
+            var data = {};
+            data.parentClassifyNodeId = parentId;
+            data.classifyNodeId = cId;
+            $.ajax({
+                url: "/classifyNode/appendToParentClassifyNode",
+                type: "POST",
+                async:false,
+                dataType: "json",
+                data: data,
+                success: function (result) {
+                    if (result.code == 1) {
+                        return;
+                    }
+                    if (typeof call == "function") {
+                        call();
+                    }else {
+                        del_node(ref, cId);
+                    }
+                    alert(result.msg);
+                    return ;
+                },
+                error: function () {
+                    if (typeof call == "function") {
+                        call();
+                    }else {
+                        del_node(ref, cId);
+                    }
+                    alert("添加子节点失败");
+                    return ;
+                }
+            });
+        }
         //新增节点
         $("#add_classifyNode").on("click", function () {
             var ref = $('#classifyNodeList').jstree(true),
@@ -125,6 +195,7 @@
                 url: "/classifyNode/addClassifyNode",
                 data: {classifyNodeText: "新建节点"},
                 type: "POST",
+                async:false,
                 dataType: "json",
                 success: function (result) {
                     if (result.code == 1) {
@@ -143,23 +214,25 @@
             });
             //创建默认节点end
             if (!sel.length) {
-                sel = ref.create_node("#",defaultNode);
+                sel = ref.create_node("#",defaultNode,"first");
                 if (sel) {
                     ref.edit(sel, sel.text, function (node) {
-                        edit_node(ref, node, function () {
+                        edit_node(ref, node, function () {//重写失败时的回调
                             del_node(ref, node.id);
                         });
                     });
                 }
-                return false;
+                return ;
             }
             sel = sel[0];
-            sel = ref.create_node(sel, defaultNode);
-            var falg;
+            sel = ref.create_node(sel, defaultNode,"first",function () {
+                appendNodeTo(ref,sel, defaultNode.id);
+            });
+            console.log(sel);
             if (sel) {
                 ref.edit(sel,sel.text,function (node) {
                     edit_node(ref,node,function () {
-                        
+                        del_node(ref, sel);
                     });
                 });
             }

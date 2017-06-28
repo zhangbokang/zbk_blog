@@ -145,7 +145,11 @@
             if (!sel.length) {
                 sel = ref.create_node("#",defaultNode);
                 if (sel) {
-                    ref.edit(sel)
+                    ref.edit(sel, sel.text, function (node) {
+                        edit_node(ref, node, function () {
+                            del_node(ref, node.id);
+                        });
+                    });
                 }
                 return false;
             }
@@ -174,7 +178,7 @@
             });
         });
         /**
-         * 修改节点的回调函数
+         * 修改节点的函数
          * @param ref jsTree对象
          * @param node 回调传的节点
          * @param call 失败时的回调，默认刷新jsTree
@@ -219,11 +223,16 @@
             }
 
             for (var i=0;i<sel.length;i++){
-
+                del_node(ref,sel[i]);
             }
 
         });
-        function del_node(nodeId) {
+        /**
+         * 删除节点的函数
+         * @param ref jsTree对象
+         * @param nodeId 要删除的节点的Id
+         */
+        function del_node(ref,nodeId) {
             var tmpSel = [];
             $.ajax({
                 url: "/classifyNode/deleteClassifyNode",
@@ -238,6 +247,7 @@
                             return;
                         }
                         tmpSel.push(nodeId);
+                        ref.delete_node(tmpSel);
                         return;
                     }
                     if (result.code == 0) {
@@ -249,7 +259,6 @@
                     alert(nodeId+"删除失败！");
                 }
             });
-            ref.delete_node(tmpSel);
         }
     });
 

@@ -60,7 +60,6 @@
                     "dataType" : "json", // needed only if you do not supply JSON headers
                     "data" : function (node) {
 //                        return { "id" : node.id };
-//                        console.log(node);
                         return node;
                     }
                 }
@@ -126,9 +125,7 @@
                 return;
             }
             var nodeId = $mcinput.val();
-            console.log("nodeId:"+nodeId+","+sel[0]);
             if (!$.trim(nodeId)) {
-                console.log("nodeId"+nodeId)
                 $mcinput.val(sel[0]);
                 alert("请选择要添加到那个节点后再点击移动。");
                 return;
@@ -137,9 +134,7 @@
                 alert("请选择自己以外的节点！");
                 return;
             }
-            console.log("xx");
             appendNodeTo(ref, sel[0], nodeId, function () {});
-            console.log("aa");
             ref.refresh();
             $mcinput.val("");
         });
@@ -228,7 +223,6 @@
             sel = ref.create_node(sel, defaultNode,"first",function () {
                 appendNodeTo(ref,sel, defaultNode.id);
             });
-            console.log(sel);
             if (sel) {
                 ref.edit(sel,sel.text,function (node) {
                     edit_node(ref,node,function () {

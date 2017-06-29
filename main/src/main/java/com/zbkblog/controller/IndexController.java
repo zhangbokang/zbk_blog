@@ -175,7 +175,7 @@ public class IndexController {
     public String docPage(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
-        if (docId == null || !docId.matches("[0-9]{13}")){
+        if (docId == null || !docId.matches("[0-9]+")){
             request.setAttribute("errorInfo","没有该文章。");
             return "errorPage";
         }
@@ -245,12 +245,12 @@ public class IndexController {
      * 失败 {code:0,msg:失败消息}
      * 成功{code:1,data:节点列表}
      */
-    @RequestMapping("/findClassifyByParentId")
+    @RequestMapping("/findClassifyNodeByParentId")
     @ResponseBody
-    public List<ClassifyNode> findClassifyByParentId(HttpServletRequest request) {
+    public List<ClassifyNode> findClassifyNodeByParentId(HttpServletRequest request) {
         String parentIdStr = request.getParameter("id");
         Long parentId = null;
-        if ((null != parentIdStr || !"#".equals(parentIdStr)) && parentIdStr.matches("[0-9]{13}")) {
+        if ((null != parentIdStr || !"#".equals(parentIdStr)) && parentIdStr.matches("[0-9]+")) {
             parentId = Long.parseLong(parentIdStr);
         }
         return classifyNodeService.findClassifyNodeListByParentId(parentId);

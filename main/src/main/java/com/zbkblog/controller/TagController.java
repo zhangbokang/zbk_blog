@@ -121,7 +121,7 @@ public class TagController {
             map.put("msg","标签名称不能为空");
             return map;
         }
-        if (null == tagId || !tagId.matches("[0-9]{13}")){
+        if (null == tagId || !tagId.matches("[0-9]+")){
             map.put("code",0);
             map.put("msg","标签ID不能为空，且必须是数字");
             return map;
@@ -148,7 +148,7 @@ public class TagController {
     public Map<String,Object> deleteTag(HttpServletRequest request){
         String tagId = request.getParameter("tagId");
         Map<String ,Object> map = new HashMap<>();
-        if (null == tagId || !tagId.matches("[0-9]{13}")){
+        if (null == tagId || !tagId.matches("[0-9]+")){
             map.put("code",0);
             map.put("msg","标签ID不能为空，且必须是数字");
             return map;

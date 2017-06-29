@@ -65,7 +65,7 @@ public class ClassifyNodeController {
         String id = request.getParameter("classifyNodeId");
         String text = request.getParameter("classifyNodeText");
         Map<String, Object> map = new HashMap<>();
-        if (null == id || "".equals(id) || !id.matches("[0-9]{13}")) {
+        if (null == id || "".equals(id) || !id.matches("[0-9]+")) {
             map.put("code", 0);
             map.put("msg", "分类ID不能为空且必须是数字！");
             return map;
@@ -105,7 +105,7 @@ public class ClassifyNodeController {
         //是否强制删除（删除后如果有子节点，所有子节点成为root节点）
         String deleteOk = request.getParameter("deleteOk");
         Map<String, Object> map = new HashMap<>();
-        if (null == id || "".equals(id) || !id.matches("[0-9]{13}")) {
+        if (null == id || "".equals(id) || !id.matches("[0-9]+")) {
             map.put("code", 0);
             map.put("msg", "分类ID不能为空且必须是数字！");
             return map;
@@ -150,13 +150,13 @@ public class ClassifyNodeController {
         String text = request.getParameter("classifyNodeText");
         String parentId = request.getParameter("parentClassifyNodeId");
         Map<String, Object> map = new HashMap<>();
-        if (null == parentId || "".equals(parentId) || (!parentId.matches("[0-9]{13}") && !"#".equals(parentId))) {
+        if (null == parentId || "".equals(parentId) || (!parentId.matches("[0-9]") && !"#".equals(parentId))) {
             map.put("code", 0);
             map.put("msg", "父分类ID不能为空且必须是数字或“#”！");
             return map;
         }
 
-        if (null != id && id.matches("[0-9]{13}")) {
+        if (null != id && id.matches("[0-9]+")) {
             Long parentIdLong = null;
             if (!"#".equals(parentId)) {
                 parentIdLong = Long.parseLong(parentId);

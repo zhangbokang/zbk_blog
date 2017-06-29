@@ -161,11 +161,11 @@ var common = {
             findAllDoc:"/doc/findAllDocOutJsonByPage",
         },
         classifyNode:{
-            findAllClassifyNode:"/classify/findAllClassifyNode",
-            findAllClassifyNodeByPage:"/classify/findAllClassifyNodeByPage",
-            addClassifyNode:"/classify/addClassifyNode",
-            updateClassifyNode:"/classify/updateClassifyNode",
-            deleteClassifyNode:"/classify/deleteClassifyNode"
+            findAllClassifyNode:"/classifyNode/findAllClassifyNode",
+            findAllClassifyNodeByPage:"/classifyNode/findAllClassifyNodeByPage",
+            addClassifyNode:"/classifyNode/addClassifyNode",
+            updateClassifyNode:"/classifyNode/updateClassifyNode",
+            deleteClassifyNode:"/classifyNode/deleteClassifyNode"
         },
         tag:{
             findAllTag:"/tag/findAllTag",

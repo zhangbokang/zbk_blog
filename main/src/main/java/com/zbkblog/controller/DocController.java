@@ -142,7 +142,7 @@ public class DocController {
         doc.setTag(tag);
 
         //保存的逻辑
-        if (null != docId && docId.matches("[0-9]{13}")) {
+        if (null != docId && docId.matches("[0-9]+")) {
             Doc doc1 = docService.findById(Long.parseLong(docId));
             if (doc1 != null){
                 //将doc中的非空属性值复制到doc1

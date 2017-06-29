@@ -55,7 +55,7 @@
                 "check_callback": true, //启用所有修改，可以增删改
 //                "themes": {"stripes": true},
                 'data' : {
-                    "url" : "/findClassifyByParentId",
+                    "url" : "/findClassifyNodeByParentId",
                     "dataType" : "json", // needed only if you do not supply JSON headers
                     "data" : function (node) {
 //                        return { "id" : node.id };

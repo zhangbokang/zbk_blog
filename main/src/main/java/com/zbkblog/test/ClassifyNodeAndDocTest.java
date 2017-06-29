@@ -25,10 +25,10 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void testDocAddClassifyNode() {
         Doc doc1 = new Doc();
-        doc1.setTitle("xxx1");
+        doc1.setTitle("doc1");
         doc1.setDocMd("abc1");
         Doc doc2 = new Doc();
-        doc2.setTitle("xxx2");
+        doc2.setTitle("doc2");
         doc2.setDocMd("abc2");
         ClassifyNode classifyNode1 = new ClassifyNode();
         classifyNode1.setText("xxx1");
@@ -47,7 +47,7 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testRemoveDoc() {
-        Long docId = 92444972023809L;
+        Long docId = 92446664687620L;
 //        Long classifyNodeId = 1498709692439L;
 //        System.out.println(classifyNode.getId());
 //        System.out.println(classifyNode);
@@ -63,7 +63,7 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testRemoveClassifyNode() {
-        Long classifyNodeId = 92444972023810L;
+        Long classifyNodeId = 92446664687619L;
         ClassifyNode classifyNode = classifyNodeDao.findClassifyNodeById(classifyNodeId);
         classifyNodeDao.deleteClassifyNode(classifyNode);
     }

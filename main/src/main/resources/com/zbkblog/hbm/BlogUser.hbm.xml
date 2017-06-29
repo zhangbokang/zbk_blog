@@ -6,7 +6,7 @@
 
     <class name="com.zbkblog.entity.BlogUser" table="blog_user" schema="zbk_blog" lazy="false">
         <id name="userId" column="user_id">
-            <generator class="com.zbkblog.utils.GeneratorNumberId"/>
+            <generator class="com.zbkblog.utils.IDWorker"/>
         </id>
         <property name="userName" column="user_name"/>
         <property name="password" column="password"/>

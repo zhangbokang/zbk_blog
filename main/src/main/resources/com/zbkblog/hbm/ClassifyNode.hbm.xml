@@ -7,7 +7,7 @@
     <class name="com.zbkblog.entity.ClassifyNode" table="classify_node" schema="zbk_blog" lazy="false">
         <id name="id">
             <column name="id" sql-type="bigint(13)"/>
-            <generator class="com.zbkblog.utils.GeneratorNumberId">
+            <generator class="com.zbkblog.utils.IDWorker">
             </generator>
         </id>
         <property name="text">

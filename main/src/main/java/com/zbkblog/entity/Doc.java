@@ -3,6 +3,8 @@ package com.zbkblog.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by zhangbokang on 2017/5/14.
@@ -21,8 +23,19 @@ public class Doc implements Serializable {
     private Long updateTime;
     private Long favorNumber;
     private Long openNumber;
-    private Classify classify;
+//    private Classify classify;
     private Tag tag;
+
+    //多对多关系映射
+    private Set<ClassifyNode> classifyNodes = new HashSet<>();
+
+    public Set<ClassifyNode> getClassifyNodes() {
+        return classifyNodes;
+    }
+
+    public void setClassifyNodes(Set<ClassifyNode> classifyNodes) {
+        this.classifyNodes = classifyNodes;
+    }
 
     public Tag getTag() {
         return tag;
@@ -32,13 +45,13 @@ public class Doc implements Serializable {
         this.tag = tag;
     }
 
-    public Classify getClassify() {
-        return classify;
-    }
+//    public Classify getClassify() {
+//        return classify;
+//    }
 
-    public void setClassify(Classify classify) {
-        this.classify = classify;
-    }
+//    public void setClassify(Classify classify) {
+//        this.classify = classify;
+//    }
 
     public Long getDocId() {
         return docId;
@@ -101,7 +114,7 @@ public class Doc implements Serializable {
         if (updateTime != null ? !updateTime.equals(doc.updateTime) : doc.updateTime != null) return false;
         if (favorNumber != null ? !favorNumber.equals(doc.favorNumber) : doc.favorNumber != null) return false;
         if (openNumber != null ? !openNumber.equals(doc.openNumber) : doc.openNumber != null) return false;
-        if (classify != null ? !classify.equals(doc.classify) : doc.classify != null) return false;
+//        if (classify != null ? !classify.equals(doc.classify) : doc.classify != null) return false;
         if (tag != null ? !tag.equals(doc.tag) : doc.tag != null) return false;
 
         return true;
@@ -115,7 +128,7 @@ public class Doc implements Serializable {
         result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
         result = 31 * result + (favorNumber != null ? favorNumber.hashCode() : 0);
         result = 31 * result + (openNumber != null ? openNumber.hashCode() : 0);
-        result = 31 * result + (classify != null ? classify.hashCode() : 0);
+//        result = 31 * result + (classify != null ? classify.hashCode() : 0);
         result = 31 * result + (tag != null ? tag.hashCode() : 0);
         return result;
     }

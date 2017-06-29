@@ -137,7 +137,7 @@ public class DocController {
         Doc doc = new Doc();
         doc.setTitle(title);
         doc.setDocMd(docMd);
-        doc.setClassify(classify);
+//        doc.setClassify(classify);
         doc.setTag(tag);
 
         //保存的逻辑

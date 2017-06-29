@@ -13,7 +13,11 @@
         <property name="updateTime" column="update_time"/>
         <property name="favorNumber" column="favor_number"/>
         <property name="openNumber" column="open_number"/>
-        <many-to-one name="classify" class="com.zbkblog.entity.Classify" column="classify_id" />
+        <!--<many-to-one name="classify" class="com.zbkblog.entity.Classify" column="classify_id" />-->
         <many-to-one name="tag" class="com.zbkblog.entity.Tag" column="tag_id" />
+        <set name="classifyNodes" table="classify_node_doc_map">
+            <key column="doc_id"/>
+            <many-to-many column="id" class="com.zbkblog.entity.ClassifyNode"/>
+        </set>
     </class>
 </hibernate-mapping>

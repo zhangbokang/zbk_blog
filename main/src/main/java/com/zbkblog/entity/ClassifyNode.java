@@ -1,6 +1,8 @@
 package com.zbkblog.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by zhangbokang on 2017/6/26.
@@ -12,6 +14,17 @@ public class ClassifyNode implements Serializable {
     private Boolean children;
     private Long parentId;
     private Long updateTime;
+
+    //多对多关联映射
+    private Set<Doc> docs = new HashSet<>();
+
+    public Set<Doc> getDocs() {
+        return docs;
+    }
+
+    public void setDocs(Set<Doc> docs) {
+        this.docs = docs;
+    }
 
     public long getId() {
         return id;

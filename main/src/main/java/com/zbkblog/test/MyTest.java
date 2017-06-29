@@ -84,7 +84,7 @@ public class MyTest {
         for (Doc doc:list) {
             System.out.println("Title:"+doc.getTitle());
             System.out.println("DocMd:"+doc.getDocMd());
-            System.out.println("ClassifyId:"+doc.getClassify().getClassifyId());
+//            System.out.println("ClassifyId:"+doc.getClassify().getClassifyId());
             System.out.println("TagId:"+doc.getTag().getTagId());
         }
 

@@ -120,7 +120,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
      */
     @Override
     public void deleteClassifyNode(ClassifyNode classifyNode) {
-        if (null != classifyNode.getChildrenByte() && classifyNode.getChildrenByte() == Byte.parseByte("1")){
+        if (classifyNode.getChildren()){
             hibernateTemplate.execute(new HibernateCallback<Object>() {
                 @Override
                 public Object doInHibernate(Session session) throws HibernateException {
@@ -130,8 +130,26 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
                     return query.executeUpdate();
                 }
             });
+//            ClassifyNode parentClassifyNode = this.findClassifyNodeById(classifyNode.getParentId());
+
         }
+        Long parentId = classifyNode.getParentId();
         hibernateTemplate.delete(classifyNode);
+        Integer i = hibernateTemplate.execute(new HibernateCallback<Integer>() {
+            @Override
+            public Integer doInHibernate(Session session) throws HibernateException {
+//                String hql = "from ClassifyNode where parentId=:parentId";
+                String sql = "SELECT COUNT(1) FROM `classify_node` WHERE parent_id=:parentId";
+                Query query = session.createSQLQuery(sql);
+//                Query query = session.createQuery(hql);
+                query.setParameter("parentId", parentId);
+                return ((Number)query.uniqueResult()).intValue();
+            }
+        });
+        if (i==1){
+            ClassifyNode classifyNode1 =  hibernateTemplate.load(ClassifyNode.class, classifyNode.getParentId());
+            classifyNode1.setChildrenByte(null);
+        }
     }
 
     /**

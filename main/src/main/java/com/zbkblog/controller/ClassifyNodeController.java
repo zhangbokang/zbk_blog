@@ -135,9 +135,18 @@ public class ClassifyNodeController {
         return map;
     }
 
+    /**
+     * 添加节点到另一个节点
+     *
+     * @param request
+     * @return
+     * 失败 {code:0,msg:失败消息}
+     * 成功{code:1,data:保存成功后的classifyNode对象}
+     */
     @RequestMapping("/appendToParentClassifyNode")
     @ResponseBody
     public Map<String, Object> appendToParentClassifyNode(HttpServletRequest request) {
+        String id = request.getParameter("classifyNodeId");
         String text = request.getParameter("classifyNodeText");
         String parentId = request.getParameter("parentClassifyNodeId");
         Map<String, Object> map = new HashMap<>();
@@ -146,9 +155,21 @@ public class ClassifyNodeController {
             map.put("msg", "父分类ID不能为空且必须是数字！");
             return map;
         }
+
+        if (null != id && id.matches("[0-9]{13}")) {
+            Boolean falg = classifyNodeService.addChildrenNode(Long.parseLong(parentId),Long.parseLong(id));
+            if (!falg) {
+                map.put("code", 0);
+                map.put("msg", "添加子节点失败！");
+                return map;
+            }
+            map.put("code", 1);
+            map.put("data", "{'parentId':" + parentId + ",'id':" + id + "}");
+            return map;
+        }
         if (null == text || "".equals(text)) {
             map.put("code", 0);
-            map.put("msg", "分类名称不能为空！");
+            map.put("msg", "未选择子节点，且分类名称为空！");
             return map;
         }
         ClassifyNode classifyNode = new ClassifyNode();
@@ -161,9 +182,14 @@ public class ClassifyNodeController {
             return map;
         }
         //添加父子节点关系
-        classifyNodeService.addChildrenNode(Long.parseLong(parentId),classifyNodeId);
+        Boolean falg = classifyNodeService.addChildrenNode(Long.parseLong(parentId),classifyNodeId);
+        if (!falg) {
+            map.put("code", 0);
+            map.put("msg", "添加子节点失败！");
+            return map;
+        }
         map.put("code", 1);
-        map.put("data", classifyNode);
+        map.put("data", "{'parentId':" + parentId + ",'id':" + classifyNode.getId() + "}");
         return map;
     }
 

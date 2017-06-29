@@ -49,19 +49,21 @@ public interface ClassifyNodeService {
      *   如果有子节点，将子节点设置为root节点（删除父节点），然后删除本节点
      *
      * @param classifyNode
+     * @return
+     *  成功返回true，失败返回false
      */
-    void deleteClassifyNode(ClassifyNode classifyNode);
+    Boolean deleteClassifyNode(ClassifyNode classifyNode);
 
     /**
      * 更新节点
      * @param classifyNode
      */
-    void updateClassifyNode(ClassifyNode classifyNode);
+    Boolean updateClassifyNode(ClassifyNode classifyNode);
 
     /**
      * 为一个节点添加子节点
      * @param parentId
      * @param childrenId
      */
-    void addChildrenNode(Long parentId, Long childrenId);
+    Boolean addChildrenNode(Long parentId, Long childrenId);
 }

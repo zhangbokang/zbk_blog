@@ -23,8 +23,6 @@ public class IndexController {
     @Resource
     private DocService docService;
     @Resource
-    private ClassifyService classifyService;
-    @Resource
     private TagService tagService;
     @Resource
     private BlogUserService blogUserService;
@@ -120,11 +118,11 @@ public class IndexController {
         return "bloglist";
     }
 
-    @RequestMapping("findDocByClassifyId")
-    public String findDocByClassifyId(HttpServletRequest request){
+    @RequestMapping("findDocByclassifyNodeId")
+    public String findDocByclassifyNodeId(HttpServletRequest request){
         //根据分类ID查询文章
-        String classifyId = request.getParameter("classifyId");
-        if (classifyId == null){
+        String classifyNodeId = request.getParameter("classifyNodeId");
+        if (classifyNodeId == null){
             request.setAttribute("errorInfo","分类ID不能为空！");
             return "errorPage";
         }
@@ -133,7 +131,7 @@ public class IndexController {
         String currentPage = request.getParameter("currentPage");
         pageSize = pageSize==null?"10":pageSize;
         currentPage = currentPage==null?"1":currentPage;
-        Paging paging = docService.findByClassifyIdOfPage(Long.parseLong(classifyId),Integer.parseInt(pageSize),Integer.parseInt(currentPage));
+        Paging paging = docService.findByClassifyNodeIdOfPage(Long.parseLong(classifyNodeId),Integer.parseInt(pageSize),Integer.parseInt(currentPage));
         //防止零条记录时分页出错
         if(paging.getTotalCounts()==0){
             request.setAttribute("errorInfo","<b>未查询到记录，该分类暂无文章！</b>");
@@ -141,7 +139,7 @@ public class IndexController {
         }
         request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
-        request.setAttribute("classifyId",classifyId);
+        request.setAttribute("classifyNodeId",classifyNodeId);
         return "bloglist";
     }
     @RequestMapping("findDocByTagId")
@@ -267,8 +265,8 @@ public class IndexController {
         List<Tag> tagList = tagService.findAllTag();
         request.setAttribute("tagList",tagList);
         //分类列表
-        List<Classify> classifyList = classifyService.findAllClassify();
-        request.setAttribute("classifyList",classifyList);
+//        List<Classify> classifyList = classifyService.findAllClassify();
+//        request.setAttribute("classifyList",classifyList);
 
         //点赞排行列表查询
         List<Doc> dzph = docService.findByFavorNumberOfTopX(10);

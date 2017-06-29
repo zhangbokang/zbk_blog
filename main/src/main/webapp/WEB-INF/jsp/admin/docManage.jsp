@@ -23,7 +23,10 @@
         responseHandler:function (res) {//加载服务器数据之前的处理程序，可以用来格式化数据
             var rows = res.rows;
             for (var i in rows){
-                rows[i].classifyName = rows[i]["classify"]["name"];
+                rows[i].classifyNodeName = "";
+                for(var x in rows[i].classifyNodes){
+                    rows[i].classifyNodeName = rows[i].classifyNodeName + x["text"] + "  ";
+                }
                 rows[i].tagName = rows[i]["tag"]["name"];
             }
             res.rows = rows;

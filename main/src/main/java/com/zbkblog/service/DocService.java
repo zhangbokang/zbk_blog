@@ -79,19 +79,19 @@ public interface DocService {
 
     /**
      * 根据分类ID查询文章列表
-     * @param classifyId
+     * @param classifyNodeId
      * @return
      */
-    List<Doc> findByClassifyId(Long classifyId);
+    List<Doc> findByClassifyNodeId(Long classifyNodeId);
 
     /**
      * 根据分类ID查询并分页
-     * @param classifyId
+     * @param classifyNodeId
      * @param pageSize
      * @param currentPage
      * @return
      */
-    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Integer pageSize,Integer currentPage);
+    Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId,Integer pageSize,Integer currentPage);
 
     /**
      * 根据标签ID查询文章列表

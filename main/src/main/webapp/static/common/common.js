@@ -7,17 +7,17 @@
 // document.write('<script src="/static/jqueryui/jquery-ui.min.js"></script>');
 var common = {
     COLUMNS:{
-        classify:
+        classifyNode:
             [{
-                field: 'classifyId',
+                field: 'id',
                 title: '分类ID',
                 width:"20%"
             }, {
-                field: 'name',
+                field: 'text',
                 title: '分类名称',
                 width:"40%"
             }, {
-                field: 'createTime',
+                field: 'updateTime',
                 title: '最后更新时间',
                 width:"20%",
                 formatter:function(value,row,index){
@@ -38,7 +38,7 @@ var common = {
                 width:"20%",
                 formatter:function(value,row,index){
                     return ["<button class='btn btn-default' onclick='deleteClassifyMake("
-                    +row.classifyId+",\""+row.name+"\")'>删除</button>"
+                    +row.id+",\""+row.text+"\")'>删除</button>"
                     ].join("");
                 }
             }],
@@ -120,7 +120,7 @@ var common = {
                 title: '文章标题',
                 width:"25%"
             },{
-                field: 'classifyName',
+                field: 'classifyNodeName',
                 title: '文章分类',
                 width:"15%"
             },{
@@ -160,12 +160,12 @@ var common = {
         doc:{
             findAllDoc:"/doc/findAllDocOutJsonByPage",
         },
-        classify:{
-            findAllClassify:"/classify/findAllClassify",
-            findAllClassifyByPage:"/classify/findAllClassifyByPage",
-            addClassify:"/classify/addClassify",
-            updateClassify:"/classify/updateClassify",
-            deleteClassify:"/classify/deleteClassify"
+        classifyNode:{
+            findAllClassifyNode:"/classify/findAllClassifyNode",
+            findAllClassifyNodeByPage:"/classify/findAllClassifyNodeByPage",
+            addClassifyNode:"/classify/addClassifyNode",
+            updateClassifyNode:"/classify/updateClassifyNode",
+            deleteClassifyNode:"/classify/deleteClassifyNode"
         },
         tag:{
             findAllTag:"/tag/findAllTag",
@@ -177,7 +177,7 @@ var common = {
     },
     Data:{
         cache:{
-            classify:[],
+            classifyNode:[],
             tag:[]
         }
         // classifyCache:[],

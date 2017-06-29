@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>myblog - ${doc.title}</title>
@@ -55,9 +56,10 @@
                     <div class="h1">${doc.title}</div>
                     <div class="row" id="classRow">
                         <div class="col-sm-4">
-                            <%--分类：<a--%>
-                            分类：${doc.classify.name}
-                                <%--href="/findDocByClassifyId?classifyId=${doc.classify.classifyId}">${doc.classify.name}</a>--%>
+                            分类：
+                                <c:forEach items="${doc.classifyNodes}" var="classifyNode">
+                                    ${classifyNode.text}&nbsp;&nbsp;
+                                </c:forEach>
                         </div>
                         <div class="col-sm-8">
                             <%--标签：<a href="/findDocByTagId?tagId=${doc.tag.tagId}">${doc.tag.name}</a>--%>

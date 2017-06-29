@@ -2,10 +2,8 @@ package com.zbkblog.test;
 
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.BlogUser;
-import com.zbkblog.entity.Classify;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.BlogUserService;
-import com.zbkblog.service.ClassifyService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.HibernateSessionUtil;
 import com.zbkblog.utils.MyBeanUtils;
@@ -13,8 +11,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projection;
-import org.hibernate.criterion.Projections;
 import org.hibernate.type.LongType;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -106,33 +102,6 @@ public class MyTest {
         }
         session.close();
 
-    }
-
-    @Test
-    public void testclassifyService(){
-        ClassPathXmlApplicationContext context =
-                new ClassPathXmlApplicationContext("classpath:spring.xml");
-        ClassifyService classifyService = context.getBean("classifyService", ClassifyService.class);
-        Classify classify = new Classify();
-        classify.setName("测试标题");
-        //classifyService.save(classify);
-        List<Classify> list = classifyService.findAllClassify();
-        for (Classify c:list
-             ) {
-            System.out.println("className:"+c.getName());
-        }
-    }
-
-    @Test
-    public void testclassifyServiceDelete(){
-        ClassPathXmlApplicationContext context =
-                new ClassPathXmlApplicationContext("classpath:spring.xml");
-        ClassifyService classifyService = context.getBean("classifyService", ClassifyService.class);
-        Classify classify = new Classify();
-        classify.setClassifyId(new Long(1494857755));
-        System.out.println(classify.getClassifyId() + ":" + classify.getName());
-        classifyService.delete(classify);
-        System.out.println(classify.getClassifyId() + ":" + classify.getName());
     }
 
     @Test

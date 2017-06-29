@@ -1,9 +1,9 @@
 package com.zbkblog.controller;
 
-import com.zbkblog.entity.Classify;
+import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.entity.Tag;
-import com.zbkblog.service.ClassifyService;
+import com.zbkblog.service.ClassifyNodeService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.MyBeanUtils;
@@ -35,7 +35,7 @@ public class DocController {
     @Resource
     private TagService tagService;
     @Resource
-    private ClassifyService classifyService;
+    private ClassifyNodeService classifyNodeService;
 
     /**
      * 查询所有文档，并以json字符串形式返回
@@ -96,7 +96,7 @@ public class DocController {
         String docId = request.getParameter("docId");
         String title = request.getParameter("title");
         String  docMd = request.getParameter("docMd");
-        String classifyId = request.getParameter("classifyId");
+        String classifyNodeIds = request.getParameter("classifyNodeId");
         String tagId = request.getParameter("tagId");
         //返回信息的Map
         Map<String,Object> map = new HashMap();
@@ -111,15 +111,9 @@ public class DocController {
             map.put("msg","保存失败，文章内容为空。");
             return map;
         }
-        if (classifyId == null || classifyId == ""){
+        if (classifyNodeIds == null || classifyNodeIds == ""){
             map.put("code",0);
             map.put("msg","保存失败，分类为空");
-            return map;
-        }
-        Classify classify = classifyService.findClassifyById(Long.parseLong(classifyId));
-        if (null == classify){
-            map.put("code",0);
-            map.put("msg","保存失败，未查询到该分类");
             return map;
         }
         if (tagId == null || tagId == ""){
@@ -135,9 +129,16 @@ public class DocController {
         }
         //封装成对象
         Doc doc = new Doc();
+        String[] classifyNodeIdArr = classifyNodeIds.split(",");
+        for (String classifyNodeId: classifyNodeIdArr) {
+            ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(classifyNodeId));
+            if (null == classifyNode){
+                continue;
+            }
+            doc.getClassifyNodes().add(classifyNode);
+        }
         doc.setTitle(title);
         doc.setDocMd(docMd);
-//        doc.setClassify(classify);
         doc.setTag(tag);
 
         //保存的逻辑

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
@@ -35,8 +36,8 @@
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="classify" class="control-label">分类：</label>
-                    <input type="text" class="form-control" id="classify" autocomplete="off" placeholder="请输入分类">
+                    <label for="classifyNode" class="control-label">分类：</label>
+                    <input type="text" class="form-control" id="classifyNode" autocomplete="off" placeholder="请输入分类">
                     <%--<select id="blogClass" name="blogClass" class="form-control">--%>
                         <%--<option checked>请选择分类</option>--%>
                         <%--<option value="aa">AA</option>--%>
@@ -78,7 +79,7 @@
     <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">
         //设置分类和标签为自动完成按钮
-        common.Fn.autoCompleteByDomId("classify",common.URL.classify.findAllClassify);
+        common.Fn.autoCompleteByDomId("classifyNode",common.URL.classifyNode.findAllclassifyNode);
         common.Fn.autoCompleteByDomId("tag",common.URL.tag.findAllTag);
         //点击保存按钮提交表单
         function submitForm(formId) {
@@ -88,9 +89,9 @@
                 alert("请填写标题");
                 return ;
             }
-            formData.classifyId = $(formId).find("#classify").attr("classifyId");
-            if (!$.trim(formData.classifyId)){
-                $(formId).find("#classify").focus();
+            formData.classifyNodeId = $(formId).find("#classifyNode").attr("classifyNodeId");
+            if (!$.trim(formData.classifyNodeId)){
+                $(formId).find("#classifyNode").focus();
                 alert("请填写分类");
                 return ;
             }
@@ -135,12 +136,14 @@
         }
 
         //回显分类和标签
-        var currClassifyId = "${doc.classify.classifyId}";
+        var currclassifyNodeId = "<c:forEach items="${doc.classifyNodes}" var="classifyNode">
+            ${classifyNode.id},
+        </c:forEach>";
         var currTag = "${doc.tag.tagId}";
-        if ($.trim(currClassifyId)){
+        if ($.trim(currclassifyNodeId)){
             common.Fn.searchData(function (data) {
-                common.Fn.setAttr("classify",data[0])
-            },common.Data.cache["classify"],currClassifyId,"classifyId");
+                common.Fn.setAttr("classifyNode",data[0])
+            },common.Data.cache["classifyNode"],currclassifyNodeId,"classifyNodeId");
         }
         if ($.trim(currTag)){
             common.Fn.searchData(function (data) {

@@ -86,14 +86,14 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-    public List<Doc> findByClassifyId(Long classifyId) {
-        return docDao.findByClassifyId(classifyId);
+    public List<Doc> findByClassifyNodeId(Long classifyNodeId) {
+        return docDao.findByClassifyNodeId(classifyNodeId);
     }
 
     @Override
     @Cacheable("docCache")
-    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Integer pageSize,Integer currentPage) {
-        return docDao.findByClassifyIdOfPage(classifyId,pageSize,currentPage);
+    public Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId, Integer pageSize,Integer currentPage) {
+        return docDao.findByClassifyNodeIdOfPage(classifyNodeId,pageSize,currentPage);
     }
 
     @Override

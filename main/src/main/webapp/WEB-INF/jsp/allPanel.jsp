@@ -46,7 +46,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">分类列表</div>
     <div class="panel-body">
-        <div id="classifyListPanel"></div>
+        <div id="classifyNodeListPanel"></div>
         <%--<ul class="list-unstyled">--%>
             <%--<c:forEach var="classify" varStatus="status" items="${classifyList}">--%>
                 <%--<li>--%>
@@ -120,10 +120,10 @@
 <script src="<%=Web.staticLoadDomain%>/static/jsTree/jstree.min.js"></script>
 <script>
     $(function () {
-        $('#classifyListPanel').jstree({
+        $('#classifyNodeListPanel').jstree({
             'core' : {
                 'data' : {
-                    "url" : "/findClassifyByParentId",
+                    "url" : "/findClassifyNodeByParentId",
                     "dataType" : "json", // needed only if you do not supply JSON headers
                     "data" : function (node) {
 //                        return { "id" : node.id };
@@ -133,9 +133,9 @@
                 }
             }
         });
-        $('#classifyListPanel').on("changed.jstree", function (e, data) {
+        $('#classifyNodeListPanel').on("changed.jstree", function (e, data) {
 //            console.log(data.selected);
-            loadBlogList('/findDocByClassifyId?accessType=classify&classifyId='+data.selected,{});
+            loadBlogList('/findDocByclassifyNodeId?accessType=classifyNode&classifyNodeId='+data.selected,{});
         });
     });
 </script>

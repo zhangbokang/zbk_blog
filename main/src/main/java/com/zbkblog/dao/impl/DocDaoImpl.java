@@ -117,39 +117,36 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public List<Doc> findByClassifyId(Long classifyId) {
-        String hql = "from Doc where classify.classifyId = ? order by updateTime desc";
-        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+    public List<Doc> findByClassifyNodeId(Long classifyNodeId) {
+        String sql = "select * from doc JOIN classify_node_doc_map ON classify_node_doc_map.id=:classifyNodeId  order by doc.update_time desc";
+        return (List<Doc>)hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
             @Override
-            public List doInHibernate(Session session) throws HibernateException {
-                Query query = session.createQuery(hql);
+            public List<Doc> doInHibernate(Session session) throws HibernateException {
+                Query query = session.createSQLQuery(sql).addEntity(Doc.class);
 //              query.setFirstResult(0);
 //              query.setMaxResults(top);
-                query.setParameter(0,classifyId);
+                query.setParameter("classifyNodeId",classifyNodeId);
                 return query.list();
             }
         }) ;
     }
 
     @Override
-    public Paging<Doc> findByClassifyIdOfPage(Long classifyId, Integer pageSize,Integer currentPage) {
-        Paging paging1 = new Paging();
-        paging1.setPageSize(pageSize);
-        paging1.setCurrentPage(currentPage);
-        String hql = "from Doc Where classify.classifyId = ? order by updateTime desc";
+    public Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId, Integer pageSize,Integer currentPage) {
+        Paging paging = new Paging();
+        paging.setPageSize(pageSize);
+        paging.setCurrentPage(currentPage);
+        String sql = "select * from doc JOIN classify_node_doc_map ON classify_node_doc_map.id=:classifyNodeId  order by doc.update_time desc";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
-                String chql = "select count(1) from Doc where classify.classifyId=:classifyId";
-                Query q1 = session.createQuery(chql);
-                q1.setParameter("classifyId",classifyId);
-                paging1.setTotalCounts(((Number)q1.uniqueResult()).intValue());
-                Query query = session.createQuery(hql);
+                Query query = session.createSQLQuery(sql).addEntity(Doc.class);
+                query.setParameter("classifyNodeId",classifyNodeId);
+                paging.setTotalCounts(((Number)query.uniqueResult()).intValue());
                 query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
                 query.setMaxResults(pageSize);
-                query.setParameter(0,classifyId);
-                paging1.setPageList(query.list());
-                return paging1;
+                paging.setPageList(query.list());
+                return paging;
             }
         });
     }

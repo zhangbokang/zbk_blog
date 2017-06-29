@@ -130,24 +130,12 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
                     return query.executeUpdate();
                 }
             });
-//            ClassifyNode parentClassifyNode = this.findClassifyNodeById(classifyNode.getParentId());
-
         }
         Long parentId = classifyNode.getParentId();
         hibernateTemplate.delete(classifyNode);
-        Integer i = hibernateTemplate.execute(new HibernateCallback<Integer>() {
-            @Override
-            public Integer doInHibernate(Session session) throws HibernateException {
-//                String hql = "from ClassifyNode where parentId=:parentId";
-                String sql = "SELECT COUNT(1) FROM `classify_node` WHERE parent_id=:parentId";
-                Query query = session.createSQLQuery(sql);
-//                Query query = session.createQuery(hql);
-                query.setParameter("parentId", parentId);
-                return ((Number)query.uniqueResult()).intValue();
-            }
-        });
+        Integer i = this.countChildrenNumber(parentId);
         if (i==1){
-            ClassifyNode classifyNode1 =  hibernateTemplate.load(ClassifyNode.class, classifyNode.getParentId());
+            ClassifyNode classifyNode1 =  hibernateTemplate.load(ClassifyNode.class, parentId);
             classifyNode1.setChildrenByte(null);
         }
     }
@@ -165,21 +153,52 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
     /**
      * 为一个节点添加子节点
      *
-     * @param parentId
-     * @param childrenId
+     * @param parentId 父节点ID，要添加到根节点传null
+     * @param childrenId 子节点ID
      */
     @Override
     public void addChildrenNode(Long parentId, Long childrenId) {
-        ClassifyNode parentClassifyNode = hibernateTemplate.load(ClassifyNode.class,parentId);
+        if (null != parentId) {
+            ClassifyNode parentClassifyNode = hibernateTemplate.load(ClassifyNode.class, parentId);
+            //设置父节点
+            //添加有子节点的标识
+            parentClassifyNode.setChildrenByte(Byte.parseByte("1"));
+            //保存
+            hibernateTemplate.update(parentClassifyNode);
+        }
+
         ClassifyNode childrenClassifyNode = hibernateTemplate.load(ClassifyNode.class,childrenId);
-        //设置父节点
-        //添加有子节点的标识
-        parentClassifyNode.setChildrenByte(Byte.parseByte("1"));
+        //如果子节点原来的父节点只有它一个子节点，那么就标记为已没有子节点了
+        Integer i = this.countChildrenNumber(childrenClassifyNode.getParentId());
+        if (i==1){
+            ClassifyNode classifyNode1 =  hibernateTemplate.load(ClassifyNode.class, childrenClassifyNode.getParentId());
+            classifyNode1.setChildrenByte(null);
+        }
+
         //设置子节点
         //添加子节点的父节点ID
-        childrenClassifyNode.setParentId(parentClassifyNode.getId());
+        childrenClassifyNode.setParentId(parentId);
         //保存
-        hibernateTemplate.update(parentClassifyNode);
         hibernateTemplate.update(childrenClassifyNode);
     }
+
+    /**
+     * 根据父节点ID查询它的子节点数量
+     *
+     * @param parentId
+     * @return
+     */
+    @Override
+    public Integer countChildrenNumber(Long parentId) {
+        return hibernateTemplate.execute(new HibernateCallback<Integer>() {
+            @Override
+            public Integer doInHibernate(Session session) throws HibernateException {
+                String sql = "SELECT COUNT(1) FROM `classify_node` WHERE parent_id=:parentId";
+                Query query = session.createSQLQuery(sql);
+                query.setParameter("parentId", parentId);
+                return ((Number)query.uniqueResult()).intValue();
+            }
+        });
+    }
+
 }

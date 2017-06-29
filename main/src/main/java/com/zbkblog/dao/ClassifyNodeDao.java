@@ -63,4 +63,11 @@ public interface ClassifyNodeDao {
      * @param childrenId
      */
     void addChildrenNode(Long parentId, Long childrenId);
+
+    /**
+     * 根据父节点ID查询它的子节点数量
+     * @param parentId
+     * @return
+     */
+    Integer countChildrenNumber(Long parentId);
 }

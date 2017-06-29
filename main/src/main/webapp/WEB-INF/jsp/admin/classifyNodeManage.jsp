@@ -14,15 +14,14 @@
     }
 </style>
 <div id="classifyNodeOption">
-    <div class="row">
-        <input type="hidden" id="classifyNodeId"/>
-        <label for="classifyNodeText">分类节点名称：</label>
-        <input type="text" id="classifyNodeText" class="form-control">
-    </div>
-    <div class="row">
-        <button class="btn btn-success" id="addRoot_classifyNode">创建根节点</button>
-        <button class="btn btn-warning" id="toParent_classifyNode">添加到选择节点</button>
-    </div>
+    <%--<div class="row">--%>
+        <%--<input type="hidden" id="classifyNodeId"/>--%>
+        <%--<label for="classifyNodeText">分类节点名称：</label>--%>
+        <%--<input type="text" id="classifyNodeText" class="form-control">--%>
+    <%--</div>--%>
+    <%--<div class="row">--%>
+        <%--<button class="btn btn-success" id="addRoot_classifyNode">创建根节点</button>--%>
+    <%--</div>--%>
     <div class="row">
         <button class="btn btn-success" id="refresh_classifyNode">
             <i class="glyphicon glyphicon-refresh"></i>刷新</button>
@@ -80,6 +79,7 @@
             ]
         });
 //        $('#classifyNodeList').on("changed.jstree", function (e, data) {//changed.jstree表示所有事件
+//        $('#classifyNodeList').on("select_node.jstree", function (e, data) {
 //            console.log(data.selected);
 //            loadBlogList('/findDocByClassifyId?accessType=classify&classifyId='+data.selected,{});
 //        });
@@ -88,32 +88,32 @@
             $('#classifyNodeList').jstree(true).refresh();
         });
         //新增根节点
-        $("#addRoot_classifyNode").on("click",function () {
-            var $classifyNodeText = $("#classifyNodeText");
-            var classifyNodeText = $classifyNodeText.val();
-            if (!$.trim(classifyNodeText)){
-                $classifyNodeText.focus();
-                alert("请输入分类节点名称");
-                return;
-            }
-            $.ajax({
-                url: "/classifyNode/addClassifyNode",
-                data: {classifyNodeText: classifyNodeText},
-                type: "POST",
-                dataType: "json",
-                success: function (result) {
-                    if (result.code == 1) {
-                        $('#classifyNodeList').jstree(true).refresh();
-                        $classifyNodeText.val("");
-                        return;
-                    }
-                    if (result.code == 0) {
-                        alert(result.msg);
-                        return;
-                    }
-                }
-            });
-        });
+//        $("#addRoot_classifyNode").on("click",function () {
+//            var $classifyNodeText = $("#classifyNodeText");
+//            var classifyNodeText = $classifyNodeText.val();
+//            if (!$.trim(classifyNodeText)){
+//                $classifyNodeText.focus();
+//                alert("请输入分类节点名称");
+//                return;
+//            }
+//            $.ajax({
+//                url: "/classifyNode/addClassifyNode",
+//                data: {classifyNodeText: classifyNodeText},
+//                type: "POST",
+//                dataType: "json",
+//                success: function (result) {
+//                    if (result.code == 1) {
+//                        $('#classifyNodeList').jstree(true).refresh();
+//                        $classifyNodeText.val("");
+//                        return;
+//                    }
+//                    if (result.code == 0) {
+//                        alert(result.msg);
+//                        return;
+//                    }
+//                }
+//            });
+//        });
 
         //移动节点
         $("#move_classifyNode").on("click", function () {
@@ -127,14 +127,31 @@
             var nodeId = $mcinput.val();
             if (!$.trim(nodeId)) {
                 $mcinput.val(sel[0]);
-                alert("请选择要添加到那个节点后再点击移动。");
+//                alert("请选择要添加到那个节点后再点击移动。");
                 return;
             }
             if (nodeId == sel[0]) {
-                alert("请选择自己以外的节点！");
+                var falg = confirm("要移动该节点到根节点吗？");
+                if (falg){
+                    appendNodeTo(ref, "#", nodeId, function () {});
+                    ref.refresh();
+                    $mcinput.val("");
+                }
+//                alert("请选择自己以外的节点！");
                 return;
             }
-            appendNodeTo(ref, sel[0], nodeId, function () {});
+        });
+        //配合移动按钮移动节点
+        $('#classifyNodeList').on("select_node.jstree", function (e, data) {
+            console.log(data.selected[0]);
+            var parentId = data.selected[0];
+            var $mcinput = $("#move_classifyNode_input");
+            var nodeId = $mcinput.val();
+            if (!$.trim(nodeId) || nodeId == parentId){
+                return;
+            }
+            var ref = $('#classifyNodeList').jstree(true);
+            appendNodeTo(ref, parentId, nodeId, function () {});
             ref.refresh();
             $mcinput.val("");
         });

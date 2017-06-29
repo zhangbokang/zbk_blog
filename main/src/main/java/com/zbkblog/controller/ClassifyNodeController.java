@@ -150,14 +150,18 @@ public class ClassifyNodeController {
         String text = request.getParameter("classifyNodeText");
         String parentId = request.getParameter("parentClassifyNodeId");
         Map<String, Object> map = new HashMap<>();
-        if (null == parentId || "".equals(parentId) || !parentId.matches("[0-9]{13}")) {
+        if (null == parentId || "".equals(parentId) || (!parentId.matches("[0-9]{13}") && !"#".equals(parentId))) {
             map.put("code", 0);
-            map.put("msg", "父分类ID不能为空且必须是数字！");
+            map.put("msg", "父分类ID不能为空且必须是数字或“#”！");
             return map;
         }
 
         if (null != id && id.matches("[0-9]{13}")) {
-            Boolean falg = classifyNodeService.addChildrenNode(Long.parseLong(parentId),Long.parseLong(id));
+            Long parentIdLong = null;
+            if (!"#".equals(parentId)) {
+                parentIdLong = Long.parseLong(parentId);
+            }
+            Boolean falg = classifyNodeService.addChildrenNode(parentIdLong,Long.parseLong(id));
             if (!falg) {
                 map.put("code", 0);
                 map.put("msg", "添加子节点失败！");

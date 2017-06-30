@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class ClassifyNode implements Serializable {
-    private long id;
+    private Long id;
     private String text;
     private Byte childrenByte; //1表示有子节点，0或null表示无子节点
     private Boolean children;
@@ -35,11 +35,11 @@ public class ClassifyNode implements Serializable {
         this.docs = docs;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

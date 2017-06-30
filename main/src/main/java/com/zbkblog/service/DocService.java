@@ -19,8 +19,9 @@ public interface DocService {
      * 添加一个节点到一个文档
      * @param docId
      * @param classifyNodeId
+     * @return
      */
-    void addClassifyNodeToDoc(Long docId, Long classifyNodeId);
+    Doc addClassifyNodesToDoc(Long docId, List<Long> classifyNodeId);
 
     /**
      * 分页查询所有
@@ -48,8 +49,9 @@ public interface DocService {
     /**
      * 根据ID删除
      * @param doc
+     * @return
      */
-    void delete(Doc doc);
+    Boolean delete(Doc doc);
 
     /**
      * 查找所有

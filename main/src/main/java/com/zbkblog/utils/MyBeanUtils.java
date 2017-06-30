@@ -52,13 +52,14 @@ public class MyBeanUtils {
         Doc tmpDoc = new Doc();
         BeanUtils.copyProperties(doc,tmpDoc,"classifyNodes");
         Set<ClassifyNode> classifyNodes = doc.getClassifyNodes();
-        Set<ClassifyNode> tmpClassifyNodes = new HashSet<>();
+//        Set<ClassifyNode> tmpClassifyNodes = new HashSet<>();
         for (ClassifyNode classifyNode : classifyNodes) {
             ClassifyNode tmpClassifyNode = new ClassifyNode();
             BeanUtils.copyProperties(classifyNode,tmpClassifyNode,"docs");
-            tmpClassifyNodes.add(tmpClassifyNode);
+            tmpDoc.getClassifyNodes().add(tmpClassifyNode);
+//            tmpClassifyNodes.add(tmpClassifyNode);
         }
-        tmpDoc.setClassifyNodes(tmpClassifyNodes);
+//        tmpDoc.setClassifyNodes(tmpClassifyNodes);
         return tmpDoc;
     }
 

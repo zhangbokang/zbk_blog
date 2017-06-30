@@ -71,8 +71,9 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void testaddClassifyNodeToDoc() {
         Long docId = 92449177665540L;
-        Long classifyNodeId = 92449177600003L;
-        docDao.addClassifyNodeToDoc(docId,classifyNodeId);
+        List<Long> classifyNodeId = new ArrayList<>();
+        classifyNodeId.add(92449177600002L);
+        docDao.addClassifyNodesToDoc(docDao.findById(docId),classifyNodeId);
     }
 
     @Test
@@ -125,11 +126,12 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void test1() {
-        ClassifyNode classifyNode = new ClassifyNode();
-        classifyNode.setText("ceshi1");
-        classifyNode.setUpdateTime(System.currentTimeMillis());
-        Long classifyNodeId = classifyNodeService.saveClassifyNode(classifyNode);
-        System.out.println(classifyNodeId);
+        for (int i = 0;i<10;i++) {
+            ClassifyNode classifyNode = new ClassifyNode();
+            classifyNode.setText("ceshi"+i);
+            Long classifyNodeId = classifyNodeService.saveClassifyNode(classifyNode);
+            System.out.println(classifyNodeId);
+        }
     }
 
     @Test
@@ -144,7 +146,7 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void test3() {
         ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(92451909992449L);
-        Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode.getId());
+        Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode);
         System.out.println(falg);
     }
 
@@ -173,4 +175,75 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
         Paging<ClassifyNode> classifyNodePaging = classifyNodeService.findAllClassifyNodeByPage(10, 1);
         System.out.println(JSON.toJSON(classifyNodePaging));
     }
+
+    //testDocService
+
+    @Test
+    public void dtest1() {
+        for(int i=0;i<10;i++) {
+            Doc doc = new Doc();
+            doc.setTitle("abc"+i);
+            doc.setDocMd("md"+i);
+            docService.save(doc);
+            System.out.println(JSON.toJSON(doc));
+        }
+    }
+
+    @Test
+    public void dtest2() {
+        List<Long> classifyNodeIdList = new ArrayList<>();
+        classifyNodeIdList.add(92452814848001L);
+        classifyNodeIdList.add(92452814848002L);
+        Doc doc = docService.addClassifyNodesToDoc(92452815699970L, classifyNodeIdList);
+        System.out.println(JSON.toJSON(doc));
+    }
+
+    @Test
+    public void dtest3() {
+        Paging<Doc> paging = docService.findAllByPage(10, 1);
+        System.out.println(JSON.toJSON(paging));
+    }
+
+    @Test
+    public void dtest4() {
+        Paging<Doc> paging = docService.searchDocByKeywork("md", 10, 1);
+        System.out.println(JSON.toJSON(paging));
+    }
+
+    @Test
+    public void dtest5() {
+        Doc doc = docService.findById(92452815765514L);
+        doc.setTitle("hahaha");
+        doc.setDocMd("#abc");
+        doc = docService.update(doc,true);
+        System.out.println(JSON.toJSON(doc));
+    }
+
+    @Test
+    public void dtest6() {
+        Doc doc = docService.findById(92452338335745L);
+        Boolean falg = docService.delete(doc);
+        System.out.println(falg);
+    }
+
+    @Test
+    public void dtest7() {
+        List<Doc> docList = docService.findAll();
+        System.out.println(JSON.toJSON(docList));
+        Doc doc = docService.findById(92452815765514L);
+        System.out.println(JSON.toJSON(doc));
+        List<Doc> docList1 = docService.findByUpdateOfTopX(10);
+        System.out.println(JSON.toJSON(docList1));
+        List<Doc> docList2 = docService.findByOpenNumberOfTopX(10);
+        System.out.println(JSON.toJSON(docList2));
+        List<Doc> docList3 = docService.findByFavorNumberOfTopX(10);
+        System.out.println(JSON.toJSON(docList3));
+        List<Doc> docList4 = docService.findByClassifyNodeId(92452814848001L);
+        System.out.println(JSON.toJSON(docList4));
+        Paging<Doc> paging = docService.findByClassifyNodeIdOfPage(92452814848001L, 15, 1);
+        System.out.println(JSON.toJSON(paging));
+//        List<Doc> docList5 = docService.findByTagId()
+    }
+//    List<Doc> findByTagId(Long tagId);
+//    Paging<Doc> findByTagIdOfPage(Long tagId,Integer pageSize,Integer currentPage);
 }

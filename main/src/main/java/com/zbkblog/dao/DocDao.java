@@ -52,10 +52,10 @@ public interface DocDao {
 
     /**
      * 添加一个节点到一个文档
-     * @param docId
-     * @param classifyNodeId
+     * @param doc
+     * @param classifyNodeIds
      */
-    void addClassifyNodeToDoc(Long docId, Long classifyNodeId);
+    void addClassifyNodesToDoc(Doc doc, List<Long> classifyNodeIds);
 
     /**
      * 更新

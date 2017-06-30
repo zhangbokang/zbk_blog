@@ -118,10 +118,12 @@ public class ClassifyNodeController {
         }
         //如果没有子节点就直接删除
         if (null == classifyNode.getChildren() || !classifyNode.getChildren()) {
-            classifyNodeService.deleteClassifyNode(classifyNode.getId());
-            map.put("code", 1);
-            map.put("data", classifyNode);
-            return map;
+            Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode);
+            if (falg) {
+                map.put("code", 1);
+                map.put("data", classifyNode);
+                return map;
+            }
         }
         //如果有子节点，但没有确认强制删除，则不执行删除
         if (null == deleteOk || "".equals(deleteOk) || "false".equals(deleteOk)) {
@@ -130,10 +132,12 @@ public class ClassifyNodeController {
             return map;
         }
         if (Boolean.parseBoolean(deleteOk)) {
-            classifyNodeService.deleteClassifyNode(classifyNode.getId());
-            map.put("code", 1);
-            map.put("data", classifyNode);
-            return map;
+            Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode);
+            if (falg) {
+                map.put("code", 1);
+                map.put("data", classifyNode);
+                return map;
+            }
         }
         map.put("code", 0);
         map.put("msg", "未执行删除！");

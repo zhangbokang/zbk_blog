@@ -124,46 +124,55 @@ public class DocController {
             map.put("msg","保存失败，未查询到该标签");
             return map;
         }
-        //封装成对象
-        Doc doc = new Doc();
-        doc.setTitle(title);
-        doc.setDocMd(docMd);
-        doc.setTag(tag);
+
+        //处理分类Id
+        String[] classifyNodeIdStrArr = classifyNodeIds.split(",");
+        List<Long> classifyNodeIdList = new ArrayList<>();
+        for (String c : classifyNodeIdStrArr) {
+            if (c != null && c.matches("[0-9]+")) {
+                classifyNodeIdList.add(Long.parseLong(c));
+            }
+        }
 
         //保存的逻辑
         if (null != docId && docId.matches("[0-9]+")) {
-            Doc doc1 = docService.findById(Long.parseLong(docId));
-            if (doc1 != null){
-                //将doc中的非空属性值复制到doc1
-                MyBeanUtils.copyPropertiesIgnoreNull(doc,doc1);
-                doc = docService.update(doc1,true);
+            Doc doc = docService.findById(Long.parseLong(docId));
+            if (doc != null){
+                //更新属性
+                doc.setTitle(title);
+                doc.setDocMd(docMd);
+                doc.setTag(tag);
+
+                doc = docService.update(doc,true);
                 map.put("code",1);
                 map.put("data",doc);
                 return map;
             }
-        }
-        doc = docService.save(doc);
+        }else {
+            //封装成对象
+            Doc doc = new Doc();
+            doc.setTitle(title);
+            doc.setDocMd(docMd);
+            doc.setTag(tag);
 
-        if (null == doc) {
-            map.put("code",0);
-            map.put("msg", "保存失败");
-            return map;
+            doc = docService.save(doc);
+
+            if (null == doc) {
+                map.put("code", 0);
+                map.put("msg", "保存失败");
+                return map;
+            }
         }
 
         //添加关联
-        String[] classifyNodeIdStrArr = classifyNodeIds.split(",");
-        for (String c : classifyNodeIdStrArr) {
-            if (c != null && c.matches("[0-9]+")) {
-                ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(c));
-                if (null == classifyNode){
-                    continue;
-                }
-                docService.addClassifyNodeToDoc(doc.getDocId(),classifyNode.getId());
-                doc.getClassifyNodes().add(classifyNode);
-            }
+        Doc doc = docService.addClassifyNodesToDoc(Long.parseLong(docId),classifyNodeIdList);
+        if (null != doc){
+            map.put("code",1);
+            map.put("data",doc);
+            return map;
         }
-        map.put("code",1);
-        map.put("data",doc);
+        map.put("code",0);
+        map.put("msg","添加分类节点到文档失败");
         return map;
     }
 

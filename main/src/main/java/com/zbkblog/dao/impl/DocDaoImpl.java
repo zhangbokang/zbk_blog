@@ -1,6 +1,7 @@
 package com.zbkblog.dao.impl;
 
 import com.zbkblog.dao.DocDao;
+import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
@@ -12,8 +13,10 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -66,41 +69,33 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public void save(Doc doc) {
+        doc.setUpdateTime(System.currentTimeMillis());
         hibernateTemplate.save(doc);
     }
 
     /**
      * 添加一个节点到一个文档
      *
-     * @param docId
-     * @param classifyNodeId
+     * @param doc
+     * @param classifyNodeIds
      */
     @Override
-    public void addClassifyNodeToDoc(Long docId, Long classifyNodeId) {
-        String sql = "INSERT INTO classify_node_doc_map(id, doc_id) VALUES (:classifyNodeId,:docId)";
-        Integer i = hibernateTemplate.execute(new HibernateCallback<Integer>() {
-            String sql = "SELECT COUNT(1) from classify_node_doc_map WHERE id=:classifyNodeId AND doc_id=:docId";
-            @Override
-            public Integer doInHibernate(Session session) throws HibernateException {
-                Query query = session.createSQLQuery(sql);
-                query.setParameter("classifyNodeId", classifyNodeId);
-                query.setParameter("docId", docId);
-                return ((Number) query.uniqueResult()).intValue();
+    public void addClassifyNodesToDoc(Doc doc, List<Long> classifyNodeIds) {
+//        Doc doc = hibernateTemplate.load(Doc.class,docId);
+        Set<ClassifyNode> classifyNodes = doc.getClassifyNodes();
+        for (Long classifyNodeId : classifyNodeIds) {
+            Boolean falg = true;
+            for (ClassifyNode classifyNode : classifyNodes) {
+                if (classifyNode.getId() == classifyNodeId) {
+                    falg = false;
+                    break;
+                }
             }
-        });
-        if (i > 0) {
-            return;
+            if (falg) {
+                doc.getClassifyNodes().add(hibernateTemplate.load(ClassifyNode.class, classifyNodeId));
+            }
         }
-        hibernateTemplate.execute(new HibernateCallback<Object>() {
-            @Override
-            public Object doInHibernate(Session session) throws HibernateException {
-                Query query = session.createSQLQuery(sql);
-                query.setParameter("classifyNodeId", classifyNodeId);
-                query.setParameter("docId", docId);
-                query.executeUpdate();
-                return null;
-            }
-        });
+        hibernateTemplate.update(doc);
     }
 
     @Override
@@ -174,9 +169,12 @@ public class DocDaoImpl implements DocDao {
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
+                String sqlCount = "select COUNT(1) from doc JOIN classify_node_doc_map ON classify_node_doc_map.id=:classifyNodeId  order by doc.update_time desc";
+                Query queryCount = session.createSQLQuery(sqlCount);
+                queryCount.setParameter("classifyNodeId",classifyNodeId);
+                paging.setTotalCounts(((Number)queryCount.uniqueResult()).intValue());
                 Query query = session.createSQLQuery(sql).addEntity(Doc.class);
                 query.setParameter("classifyNodeId",classifyNodeId);
-                paging.setTotalCounts(((Number)query.uniqueResult()).intValue());
                 query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
                 query.setMaxResults(pageSize);
                 paging.setPageList(query.list());

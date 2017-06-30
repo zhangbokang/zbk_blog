@@ -43,6 +43,49 @@ public class MyBeanUtils {
         BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
     }
 
+    /**
+     * 将Doc中的classifyNodes中的docs置空
+     * @param doc
+     * @return
+     */
+    public static Doc copyDoc(Doc doc) {
+        Doc tmpDoc = new Doc();
+        BeanUtils.copyProperties(doc,tmpDoc,"classifyNodes");
+        Set<ClassifyNode> classifyNodes = doc.getClassifyNodes();
+        Set<ClassifyNode> tmpClassifyNodes = new HashSet<>();
+        for (ClassifyNode classifyNode : classifyNodes) {
+            ClassifyNode tmpClassifyNode = new ClassifyNode();
+            BeanUtils.copyProperties(classifyNode,tmpClassifyNode,"docs");
+            tmpClassifyNodes.add(tmpClassifyNode);
+        }
+        tmpDoc.setClassifyNodes(tmpClassifyNodes);
+        return tmpDoc;
+    }
+
+    /**
+     * 将classifyNode中的docs中的classifyNodes置空
+     * @param classifyNode
+     * @return
+     */
+    public static ClassifyNode copyClassifyNode(ClassifyNode classifyNode) {
+        ClassifyNode tmpClassifyNode = new ClassifyNode();
+        BeanUtils.copyProperties(classifyNode,tmpClassifyNode,"docs");
+        Set<Doc> docs = classifyNode.getDocs();
+        Set<Doc> tmpDocs = new HashSet<>();
+        for (Doc doc : docs) {
+            Doc tmpDoc = new Doc();
+            BeanUtils.copyProperties(doc,tmpDoc,"classifyNodes");
+            tmpDocs.add(tmpDoc);
+        }
+        tmpClassifyNode.setDocs(tmpDocs);
+        return tmpClassifyNode;
+    }
+
+    /**
+     * 将doc中的classifyNodes替换为docs为null的classifyNodes，防止无限循环导致堆栈溢出
+     * @param docs
+     * @return
+     */
     public static List<Doc> copyDocList(List<Doc> docs) {
         List<Doc> docList = new ArrayList<>();
         for (Doc doc : docs) {
@@ -61,6 +104,11 @@ public class MyBeanUtils {
         return docList;
     }
 
+    /**
+     * 将classifyNode中的docs替换为classifyNodes为null的classifyNode，防止无限循环导致堆栈溢出
+     * @param classifyNodes
+     * @return
+     */
     public static List<ClassifyNode> copyClassifyNodeList(List<ClassifyNode> classifyNodes) {
         List<ClassifyNode> classifyNodeList = new ArrayList<>();
         for (ClassifyNode classifyNode : classifyNodes) {
@@ -79,12 +127,26 @@ public class MyBeanUtils {
         return classifyNodeList;
     }
 
-    public static Paging copyPagingOfDocOrClassifyNode(Paging paging, Class clazz) {
-        if (clazz == Doc.class) {
-
-        } else if (clazz == ClassifyNode.class) {
-
+    /**
+     * 将paging中的列表中的元素替换，避免无线嵌套
+     * @param paging
+     * @return
+     */
+    public static Paging copyPagingOfDocOrClassifyNode(Paging paging) {
+        List pageList = paging.getPageList();
+        if (null == pageList || pageList.size() == 0) {
+            return paging;
         }
-        return null;
+        Class clazz = pageList.get(0).getClass();
+        if (clazz == Doc.class) {
+            System.out.println("doc.class:"+Doc.class.toString());
+            paging.setPageList(MyBeanUtils.copyDocList(paging.getPageList()));
+            return paging;
+        } else if (clazz == ClassifyNode.class) {
+            System.out.println("classifyNode.class:"+ClassifyNode.class.toString());
+            paging.setPageList(MyBeanUtils.copyClassifyNodeList(paging.getPageList()));
+            return paging;
+        }
+        return paging;
     }
 }

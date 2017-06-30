@@ -66,10 +66,10 @@ public interface ClassifyNodeDao {
 
     /**
      * 为一个节点添加子节点
-     * @param parentId
-     * @param childrenId
+     * @param parentNode
+     * @param childrenNode
      */
-    void addChildrenNode(Long parentId, Long childrenId);
+    void addChildrenNode(ClassifyNode parentNode, ClassifyNode childrenNode);
 
     /**
      * 根据父节点ID查询它的子节点数量

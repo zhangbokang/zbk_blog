@@ -3,7 +3,9 @@ package com.zbkblog.service.impl;
 import com.zbkblog.dao.ClassifyNodeDao;
 import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.service.ClassifyNodeService;
+import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,7 +28,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
     @Override
     public ClassifyNode findClassifyNodeById(Long id) {
         try {
-            return classifyNodeDao.findClassifyNodeById(id);
+            return MyBeanUtils.copyClassifyNode(classifyNodeDao.findClassifyNodeById(id));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -41,7 +43,12 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      */
     @Override
     public List<ClassifyNode> findClassifyNodeByDocId(Long docId) {
-        return classifyNodeDao.findClassifyNodeByDocId(docId);
+        try {
+            return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findClassifyNodeByDocId(docId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -52,7 +59,12 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      */
     @Override
     public List<ClassifyNode> findClassifyNodeListByParentId(Long parentId) {
-        return classifyNodeDao.findClassifyNodeListByParentId(parentId);
+        try {
+            return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findClassifyNodeListByParentId(parentId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -63,7 +75,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
     @Override
     public List<ClassifyNode> findAllClassifyNode() {
         try {
-            return classifyNodeDao.findAllClassifyNode();
+            return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findAllClassifyNode());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -80,7 +92,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
     @Override
     public Paging<ClassifyNode> findAllClassifyNodeByPage(Integer pageSize, Integer currentPage) {
         try {
-            return classifyNodeDao.findAllClassifyNodeByPage(pageSize, currentPage);
+            return MyBeanUtils.copyPagingOfDocOrClassifyNode(classifyNodeDao.findAllClassifyNodeByPage(pageSize, currentPage));
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -96,7 +108,6 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      */
     @Override
     public Long saveClassifyNode(ClassifyNode classifyNode) {
-        classifyNode.setUpdateTime(System.currentTimeMillis());
         try {
             return classifyNodeDao.saveClassifyNode(classifyNode);
         }catch (Exception e){
@@ -109,12 +120,12 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * 删除节点
      *   如果有子节点，将子节点设置为root节点（删除父节点），然后删除本节点
      *
-     * @param classifyNode
+     * @param classifyNodeId
      */
     @Override
-    public Boolean deleteClassifyNode(ClassifyNode classifyNode) {
+    public Boolean deleteClassifyNode(Long classifyNodeId) {
         try{
-            classifyNodeDao.deleteClassifyNode(classifyNode);
+            classifyNodeDao.deleteClassifyNode(classifyNodeDao.findClassifyNodeById(classifyNodeId));
             return true;
         }catch (Exception e){
             e.printStackTrace();
@@ -130,14 +141,16 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *  成功返回true,失败返回false
      */
     @Override
-    public Boolean updateClassifyNode(ClassifyNode classifyNode) {
+    public ClassifyNode updateClassifyNode(ClassifyNode classifyNode) {
         classifyNode.setUpdateTime(System.currentTimeMillis());
         try {
-            classifyNodeDao.updateClassifyNode(classifyNode);
-            return true;
+            ClassifyNode tmpClassifyNode = classifyNodeDao.findClassifyNodeById(classifyNode.getId());
+            BeanUtils.copyProperties(classifyNode,tmpClassifyNode,"docs");
+            classifyNodeDao.updateClassifyNode(tmpClassifyNode);
+            return MyBeanUtils.copyClassifyNode(tmpClassifyNode);
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -152,9 +165,11 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
     @Override
     public ClassifyNode addChildrenNode(Long parentId, Long childrenId, String childrenText) {
         try {
+            ClassifyNode parentClassifyNode = classifyNodeDao.findClassifyNodeById(parentId);
             if (null != childrenId && childrenId != 0L) {
-                classifyNodeDao.addChildrenNode(parentId, childrenId);
-                return classifyNodeDao.findClassifyNodeById(childrenId);
+                ClassifyNode childrenClassifyNode = classifyNodeDao.findClassifyNodeById(childrenId);
+                classifyNodeDao.addChildrenNode(parentClassifyNode, childrenClassifyNode);
+                return MyBeanUtils.copyClassifyNode(childrenClassifyNode);
             }
             if (null == childrenText || "".equals(childrenText)){
                 return null;
@@ -163,11 +178,11 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
             classifyNode.setText(childrenText);
             //先保存子节点并获取节点ID
             Long classifyNodeId = classifyNodeDao.saveClassifyNode(classifyNode);
-            if (null == classifyNode || classifyNodeId==0L){
+            if (null == classifyNodeId || classifyNodeId==0L){
                 return null;
             }
-            classifyNodeDao.addChildrenNode(parentId, childrenId);
-            return classifyNode;
+            classifyNodeDao.addChildrenNode(parentClassifyNode, classifyNode);
+            return MyBeanUtils.copyClassifyNode(classifyNode);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

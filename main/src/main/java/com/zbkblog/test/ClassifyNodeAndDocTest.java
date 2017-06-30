@@ -5,6 +5,8 @@ import com.zbkblog.dao.ClassifyNodeDao;
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
+import com.zbkblog.service.ClassifyNodeService;
+import com.zbkblog.service.DocService;
 import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
 import org.junit.Test;
@@ -29,6 +31,12 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Resource
     private ClassifyNodeDao classifyNodeDao;
+
+    @Resource
+    private ClassifyNodeService classifyNodeService;
+
+    @Resource
+    private DocService docService;
 
     @Test
     public void testDocAddClassifyNode() {
@@ -109,8 +117,60 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void testFindAllDocByPage() {
         Paging<Doc> paging = docDao.findAllByPage(10,1);
-        List<Doc> docList = paging.getPageList();
-        List<Doc> tmpDocList = MyBeanUtils.copyDocList(docList);
-        System.out.println(JSON.toJSON(tmpDocList));
+        paging = MyBeanUtils.copyPagingOfDocOrClassifyNode(paging);
+        System.out.println(JSON.toJSON(paging));
+    }
+
+    //TestClassifyNodeService
+
+    @Test
+    public void test1() {
+        ClassifyNode classifyNode = new ClassifyNode();
+        classifyNode.setText("ceshi1");
+        classifyNode.setUpdateTime(System.currentTimeMillis());
+        Long classifyNodeId = classifyNodeService.saveClassifyNode(classifyNode);
+        System.out.println(classifyNodeId);
+    }
+
+    @Test
+    public void test2() {
+        ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(92451909992449L);
+        classifyNode.setText("UpdateNode");
+        classifyNode.setUpdateTime(System.currentTimeMillis());
+        classifyNode = classifyNodeService.updateClassifyNode(classifyNode);
+        System.out.println(JSON.toJSON(classifyNode));
+    }
+
+    @Test
+    public void test3() {
+        ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(92451909992449L);
+        Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode.getId());
+        System.out.println(falg);
+    }
+
+    @Test
+    public void test4() {
+        ClassifyNode classifyNode = classifyNodeService.addChildrenNode(92451909992449L, null, "testzijiedian");
+        System.out.println(JSON.toJSON(classifyNode));
+    }
+
+    @Test
+    public void test5() {
+        List<ClassifyNode> classifyNodeList = classifyNodeService.findClassifyNodeListByParentId(92451909992449L);
+        System.out.println(JSON.toJSON(classifyNodeList));
+    }
+
+    @Test
+    public void test6() {
+        List<ClassifyNode> classifyNodeList = classifyNodeService.findClassifyNodeByDocId(92446664622081L);
+        System.out.println(JSON.toJSON(classifyNodeList));
+    }
+
+    @Test
+    public void test7() {
+        List<ClassifyNode> classifyNodeList = classifyNodeService.findAllClassifyNode();
+        System.out.println(JSON.toJSON(classifyNodeList));
+        Paging<ClassifyNode> classifyNodePaging = classifyNodeService.findAllClassifyNodeByPage(10, 1);
+        System.out.println(JSON.toJSON(classifyNodePaging));
     }
 }

@@ -49,8 +49,8 @@ public class ClassifyNodeDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testAddChilren() {
-        classifyNodeDao.addChildrenNode(1498464244149L,1498464243994L);
-        classifyNodeDao.addChildrenNode(1498464244149L,1498464244103L);
+//        classifyNodeDao.addChildrenNode(1498464244149L,1498464243994L);
+//        classifyNodeDao.addChildrenNode(1498464244149L,1498464244103L);
     }
 
     @Test

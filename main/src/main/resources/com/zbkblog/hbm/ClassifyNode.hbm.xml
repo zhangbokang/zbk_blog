@@ -22,9 +22,9 @@
         <property name="updateTime">
             <column name="update_time" sql-type="bigint(13)" />
         </property>
-        <!--<set name="docs" table="classify_node_doc_map" cascade="save-update">-->
-            <!--<key column="id"/>-->
-            <!--<many-to-many column="doc_id" class="com.zbkblog.entity.Doc"/>-->
-        <!--</set>-->
+        <set name="docs" table="classify_node_doc_map" cascade="save-update" lazy="false">
+            <key column="id"/>
+            <many-to-many column="doc_id" class="com.zbkblog.entity.Doc"/>
+        </set>
     </class>
 </hibernate-mapping>

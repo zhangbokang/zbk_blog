@@ -1,10 +1,14 @@
 package com.zbkblog.utils;
 
+import com.zbkblog.entity.ClassifyNode;
+import com.zbkblog.entity.Doc;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,5 +41,50 @@ public class MyBeanUtils {
      */
     public static void copyPropertiesIgnoreNull(Object source, Object target) {
         BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
+    }
+
+    public static List<Doc> copyDocList(List<Doc> docs) {
+        List<Doc> docList = new ArrayList<>();
+        for (Doc doc : docs) {
+            Doc tmpDoc = new Doc();
+            BeanUtils.copyProperties(doc,tmpDoc,"classifyNodes");
+            Set<ClassifyNode> classifyNodes = doc.getClassifyNodes();
+            Set<ClassifyNode> tmpClassifyNodes = new HashSet<>();
+            for (ClassifyNode classifyNode : classifyNodes) {
+                ClassifyNode tmpClassifyNode = new ClassifyNode();
+                BeanUtils.copyProperties(classifyNode,tmpClassifyNode,"docs");
+                tmpClassifyNodes.add(tmpClassifyNode);
+            }
+            tmpDoc.setClassifyNodes(tmpClassifyNodes);
+            docList.add(tmpDoc);
+        }
+        return docList;
+    }
+
+    public static List<ClassifyNode> copyClassifyNodeList(List<ClassifyNode> classifyNodes) {
+        List<ClassifyNode> classifyNodeList = new ArrayList<>();
+        for (ClassifyNode classifyNode : classifyNodes) {
+            ClassifyNode tmpClassifyNode = new ClassifyNode();
+            BeanUtils.copyProperties(classifyNode,tmpClassifyNode,"docs");
+            Set<Doc> docs = classifyNode.getDocs();
+            Set<Doc> tmpDocs = new HashSet<>();
+            for (Doc doc : docs) {
+                Doc tmpDoc = new Doc();
+                BeanUtils.copyProperties(doc,tmpDoc,"classifyNodes");
+                tmpDocs.add(tmpDoc);
+            }
+            tmpClassifyNode.setDocs(tmpDocs);
+            classifyNodeList.add(tmpClassifyNode);
+        }
+        return classifyNodeList;
+    }
+
+    public static Paging copyPagingOfDocOrClassifyNode(Paging paging, Class clazz) {
+        if (clazz == Doc.class) {
+
+        } else if (clazz == ClassifyNode.class) {
+
+        }
+        return null;
     }
 }

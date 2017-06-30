@@ -1,16 +1,22 @@
 package com.zbkblog.service.impl;
 
 import com.zbkblog.dao.DocDao;
+import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
+import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -74,8 +80,9 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
+    @Cacheable("docCache")
     public List<Doc> findAll() {
-        return docDao.findAll();
+        return MyBeanUtils.copyDocList(docDao.findAll());
     }
 
     @Override
@@ -103,6 +110,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
+    @Cacheable("docCache")
     public List<Doc> findByClassifyNodeId(Long classifyNodeId) {
         return docDao.findByClassifyNodeId(classifyNodeId);
     }
@@ -114,6 +122,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
+    @Cacheable("docCache")
     public List<Doc> findByTagId(Long tagId) {
         return docDao.findByTagId(tagId);
     }

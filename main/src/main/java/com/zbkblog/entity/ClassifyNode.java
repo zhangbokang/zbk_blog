@@ -25,15 +25,15 @@ public class ClassifyNode implements Serializable {
     private Long updateTime;
 
     //多对多关联映射，这里手动控制
-//    private Set<Doc> docs = new HashSet<>();
+    private Set<Doc> docs = new HashSet<>();
 
-//    public Set<Doc> getDocs() {
-//        return docs;
-//    }
+    public Set<Doc> getDocs() {
+        return docs;
+    }
 
-//    public void setDocs(Set<Doc> docs) {
-//        this.docs = docs;
-//    }
+    public void setDocs(Set<Doc> docs) {
+        this.docs = docs;
+    }
 
     public long getId() {
         return id;

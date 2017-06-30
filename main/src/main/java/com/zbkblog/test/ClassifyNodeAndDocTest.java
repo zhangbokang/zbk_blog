@@ -5,11 +5,16 @@ import com.zbkblog.dao.ClassifyNodeDao;
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
+import com.zbkblog.utils.MyBeanUtils;
+import com.zbkblog.utils.Paging;
 import org.junit.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,10 +44,10 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
         classifyNode2.setText("xxx2");
 
         //doc1中有c1、c2
-//        doc1.getClassifyNodes().add(classifyNode1);
-//        doc1.getClassifyNodes().add(classifyNode2);
+        doc1.getClassifyNodes().add(classifyNode1);
+        doc1.getClassifyNodes().add(classifyNode2);
         //doc2中有c1
-//        doc2.getClassifyNodes().add(classifyNode1);
+        doc2.getClassifyNodes().add(classifyNode1);
 
         docDao.save(doc1);
         docDao.save(doc2);
@@ -50,7 +55,7 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testFindClassifyNodeByDocId() {
-        Long docId = 92449177600001L;
+        Long docId = 92450929770497L;
         List<ClassifyNode> classifyNodeList = classifyNodeDao.findClassifyNodeByDocId(docId);
         System.out.println(JSON.toJSON(classifyNodeList));
     }
@@ -95,14 +100,17 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
     //testDocDao
 
     @Test
-    public void testFind() {
+    public void testFindAllDoc() {
         List<Doc> docList = docDao.findAll();
-        for (Doc doc : docList) {
-            Set<ClassifyNode> classifyNodes = doc.getClassifyNodes();
-            for (ClassifyNode classifyNode : classifyNodes) {
-                System.out.println(classifyNode.getId());
-            }
-        }
-        System.out.println(JSON.toJSON(docList));
+        List<Doc> tmpDocList =  MyBeanUtils.copyDocList(docList);
+        System.out.println(JSON.toJSON(tmpDocList));
+    }
+
+    @Test
+    public void testFindAllDocByPage() {
+        Paging<Doc> paging = docDao.findAllByPage(10,1);
+        List<Doc> docList = paging.getPageList();
+        List<Doc> tmpDocList = MyBeanUtils.copyDocList(docList);
+        System.out.println(JSON.toJSON(tmpDocList));
     }
 }

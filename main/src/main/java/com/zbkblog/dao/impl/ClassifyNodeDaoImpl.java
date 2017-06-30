@@ -33,6 +33,19 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
         return hibernateTemplate.load(ClassifyNode.class,id);
     }
 
+    @Override
+    public List<ClassifyNode> findClassifyNodeByDocId(Long docId) {
+        String sql = "SELECT * FROM classify_node AS cn JOIN classify_node_doc_map AS cnmap ON cn.id = cnmap.id WHERE cnmap.doc_id = :docId  order by cn.update_time desc";
+        return hibernateTemplate.execute(new HibernateCallback<List<ClassifyNode>>() {
+            @Override
+            public List<ClassifyNode> doInHibernate(Session session) throws HibernateException {
+                Query query = session.createSQLQuery(sql).addEntity(ClassifyNode.class);
+                query.setParameter("docId", docId);
+                return query.list();
+            }
+        });
+    }
+
     /**
      * 根据父ID查找列表，id为空则查找root列表
      *
@@ -62,7 +75,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
      * @return
      */
     @Override
-    public List<ClassifyNode> findAllClassify() {
+    public List<ClassifyNode> findAllClassifyNode() {
         String hql = "from ClassifyNode ";
         return hibernateTemplate.execute(new HibernateCallback<List<ClassifyNode>>() {
             @Override
@@ -81,7 +94,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
      * @return
      */
     @Override
-    public Paging<ClassifyNode> findAllClassifyByPage(Integer pageSize, Integer currentPage) {
+    public Paging<ClassifyNode> findAllClassifyNodeByPage(Integer pageSize, Integer currentPage) {
         String hql = "from ClassifyNode ";
         Paging<ClassifyNode> classifyNodePaging = new Paging<>();
         classifyNodePaging.setPageSize(pageSize);

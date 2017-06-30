@@ -1,5 +1,7 @@
 package com.zbkblog.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +9,13 @@ import java.util.Set;
 /**
  * Created by zhangbokang on 2017/6/26.
  */
+/*
+在使用SpringMVC+Hibernate环境中返回JSON数据有时会出现对象属性不能序列化，
+这是因为你需要序列化对象有一个属性是一类类型，
+而你使用了Hibernate的延迟加载所以这里是个Hibernate的代理对象。
+该代理对象有些属性不能被序列化所以会报错。
+ */
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class ClassifyNode implements Serializable {
     private long id;
     private String text;
@@ -15,16 +24,16 @@ public class ClassifyNode implements Serializable {
     private Long parentId;
     private Long updateTime;
 
-    //多对多关联映射
-    private Set<Doc> docs = new HashSet<>();
+    //多对多关联映射，这里手动控制
+//    private Set<Doc> docs = new HashSet<>();
 
-    public Set<Doc> getDocs() {
-        return docs;
-    }
+//    public Set<Doc> getDocs() {
+//        return docs;
+//    }
 
-    public void setDocs(Set<Doc> docs) {
-        this.docs = docs;
-    }
+//    public void setDocs(Set<Doc> docs) {
+//        this.docs = docs;
+//    }
 
     public long getId() {
         return id;

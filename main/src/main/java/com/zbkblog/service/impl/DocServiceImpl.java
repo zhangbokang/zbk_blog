@@ -25,8 +25,25 @@ public class DocServiceImpl implements DocService {
     @CacheEvict(value = {"docCache"},allEntries = true)
     public Doc save(Doc doc) {
         doc.setUpdateTime(System.currentTimeMillis());
-        docDao.save(doc);
-        return doc;
+        try {
+            docDao.save(doc);
+            return doc;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 添加一个节点到一个文档
+     *
+     * @param docId
+     * @param classifyNodeId
+     */
+    @Override
+    @CacheEvict(value = {"docCache"},allEntries = true)
+    public void addClassifyNodeToDoc(Long docId, Long classifyNodeId) {
+        docDao.addClassifyNodeToDoc(docId, classifyNodeId);
     }
 
     @Override

@@ -51,6 +51,13 @@ public interface DocDao {
     void save(Doc doc);
 
     /**
+     * 添加一个节点到一个文档
+     * @param docId
+     * @param classifyNodeId
+     */
+    void addClassifyNodeToDoc(Long docId, Long classifyNodeId);
+
+    /**
      * 更新
      * @param doc
      */

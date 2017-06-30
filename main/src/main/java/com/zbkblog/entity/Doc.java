@@ -26,7 +26,7 @@ public class Doc implements Serializable {
 //    private Classify classify;
     private Tag tag;
 
-    //多对多关系映射
+    //多对多关系映射，这里手动控制
     private Set<ClassifyNode> classifyNodes = new HashSet<>();
 
     public Set<ClassifyNode> getClassifyNodes() {

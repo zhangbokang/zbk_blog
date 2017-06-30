@@ -17,6 +17,13 @@ public interface ClassifyNodeService {
     ClassifyNode findClassifyNodeById(Long id);
 
     /**
+     * 根据docId查询分类节点列表
+     * @param docId
+     * @return
+     */
+    List<ClassifyNode> findClassifyNodeByDocId(Long docId);
+
+    /**
      * 根据父ID查找列表，id为空则查找root列表
      * @param parentId
      * @return
@@ -27,7 +34,7 @@ public interface ClassifyNodeService {
      * 查找所有分类节点
      * @return
      */
-    List<ClassifyNode> findAllClassify();
+    List<ClassifyNode> findAllClassifyNode();
 
     /**
      * 分页查找所有分类节点
@@ -35,7 +42,7 @@ public interface ClassifyNodeService {
      * @param currentPage
      * @return
      */
-    Paging<ClassifyNode> findAllClassifyByPage(Integer pageSize, Integer currentPage);
+    Paging<ClassifyNode> findAllClassifyNodeByPage(Integer pageSize, Integer currentPage);
 
     /**
      * 新增节点，成功后返回节点ID
@@ -65,5 +72,5 @@ public interface ClassifyNodeService {
      * @param parentId
      * @param childrenId
      */
-    Boolean addChildrenNode(Long parentId, Long childrenId);
+    ClassifyNode addChildrenNode(Long parentId, Long childrenId, String childrenText);
 }

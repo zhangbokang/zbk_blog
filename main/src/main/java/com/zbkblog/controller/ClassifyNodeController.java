@@ -105,12 +105,17 @@ public class ClassifyNodeController {
         //是否强制删除（删除后如果有子节点，所有子节点成为root节点）
         String deleteOk = request.getParameter("deleteOk");
         Map<String, Object> map = new HashMap<>();
-        if (null == id || "".equals(id) || !id.matches("[0-9]+")) {
+        if (null == id || !id.matches("[0-9]+")) {
             map.put("code", 0);
             map.put("msg", "分类ID不能为空且必须是数字！");
             return map;
         }
         ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(id));
+        if (null == classifyNode) {
+            map.put("code", 0);
+            map.put("msg", "未查询到该分类！");
+            return map;
+        }
         //如果没有子节点就直接删除
         if (null == classifyNode.getChildren() || !classifyNode.getChildren()) {
             classifyNodeService.deleteClassifyNode(classifyNode);
@@ -150,50 +155,56 @@ public class ClassifyNodeController {
         String text = request.getParameter("classifyNodeText");
         String parentId = request.getParameter("parentClassifyNodeId");
         Map<String, Object> map = new HashMap<>();
-        if (null == parentId || "".equals(parentId) || (!parentId.matches("[0-9]") && !"#".equals(parentId))) {
+        //验证传参
+        if (null == parentId || "".equals(parentId) || (!parentId.matches("[0-9]+") && !"#".equals(parentId))) {
             map.put("code", 0);
             map.put("msg", "父分类ID不能为空且必须是数字或“#”！");
             return map;
         }
-
-        if (null != id && id.matches("[0-9]+")) {
-            Long parentIdLong = null;
-            if (!"#".equals(parentId)) {
-                parentIdLong = Long.parseLong(parentId);
-            }
-            Boolean falg = classifyNodeService.addChildrenNode(parentIdLong,Long.parseLong(id));
-            if (!falg) {
-                map.put("code", 0);
-                map.put("msg", "添加子节点失败！");
-                return map;
-            }
-            map.put("code", 1);
-            map.put("data", "{'parentId':" + parentId + ",'id':" + id + "}");
-            return map;
-        }
-        if (null == text || "".equals(text)) {
+        if ((null == id || !id.matches("[0-9]+")) && (null == text || "".equals(text))) {
             map.put("code", 0);
-            map.put("msg", "未选择子节点，且分类名称为空！");
+            map.put("msg", "无子分类节点！");
             return map;
         }
-        ClassifyNode classifyNode = new ClassifyNode();
-        classifyNode.setText(text);
-        //先保存子节点并获取节点ID
-        Long classifyNodeId = classifyNodeService.saveClassifyNode(classifyNode);
-        if (null == classifyNode || classifyNodeId==0L){
-            map.put("code", 0);
-            map.put("msg", "保存子节点失败！");
-            return map;
+        //处理父分类Id
+        Long parentIdLong = null;
+        if (!"#".equals(parentId)) {
+            parentIdLong = Long.parseLong(parentId);
         }
-        //添加父子节点关系
-        Boolean falg = classifyNodeService.addChildrenNode(Long.parseLong(parentId),classifyNodeId);
-        if (!falg) {
+        //处理子分类ID
+        Long idLong = null;
+        if (id.matches("[0-9]+")) {
+            idLong = Long.parseLong(id);
+        }
+        //保存关系
+        ClassifyNode childrenClassifyNode = classifyNodeService.addChildrenNode(parentIdLong, idLong, text);
+        if (null == childrenClassifyNode) {
             map.put("code", 0);
             map.put("msg", "添加子节点失败！");
             return map;
         }
         map.put("code", 1);
-        map.put("data", "{'parentId':" + parentId + ",'id':" + classifyNode.getId() + "}");
+        map.put("data", "{'parentId':" + parentId + ",'childrenId':" + childrenClassifyNode.getId() + "}");
+        return map;
+    }
+
+    /**
+     * 查询所有分类节点
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findAllClassifyNode")
+    @ResponseBody
+    public Map<String,Object> findAllClassifyNode(HttpServletRequest request) {
+        List<ClassifyNode> classifyNodeList = classifyNodeService.findAllClassifyNode();
+        Map<String, Object> map = new HashMap<>();
+        if (null == classifyNodeList) {
+            map.put("code", 0);
+            map.put("msg", "查询失败");
+            return map;
+        }
+        map.put("code", 1);
+        map.put("data", classifyNodeList);
         return map;
     }
 

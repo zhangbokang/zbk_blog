@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -99,7 +96,7 @@ public class DocController {
         String classifyNodeIds = request.getParameter("classifyNodeId");
         String tagId = request.getParameter("tagId");
         //返回信息的Map
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         //验证信息
         if (title == null || title == ""){
             map.put("code",0);
@@ -129,14 +126,6 @@ public class DocController {
         }
         //封装成对象
         Doc doc = new Doc();
-        String[] classifyNodeIdArr = classifyNodeIds.split(",");
-        for (String classifyNodeId: classifyNodeIdArr) {
-            ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(classifyNodeId));
-            if (null == classifyNode){
-                continue;
-            }
-            doc.getClassifyNodes().add(classifyNode);
-        }
         doc.setTitle(title);
         doc.setDocMd(docMd);
         doc.setTag(tag);
@@ -154,6 +143,25 @@ public class DocController {
             }
         }
         doc = docService.save(doc);
+
+        if (null == doc) {
+            map.put("code",0);
+            map.put("msg", "保存失败");
+            return map;
+        }
+
+        //添加关联
+        String[] classifyNodeIdStrArr = classifyNodeIds.split(",");
+        for (String c : classifyNodeIdStrArr) {
+            if (c != null && c.matches("[0-9]+")) {
+                ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(c));
+                if (null == classifyNode){
+                    continue;
+                }
+                docService.addClassifyNodeToDoc(doc.getDocId(),classifyNode.getId());
+                doc.getClassifyNodes().add(classifyNode);
+            }
+        }
         map.put("code",1);
         map.put("data",doc);
         return map;

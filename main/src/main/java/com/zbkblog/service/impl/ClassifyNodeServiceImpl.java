@@ -25,7 +25,23 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      */
     @Override
     public ClassifyNode findClassifyNodeById(Long id) {
-        return classifyNodeDao.findClassifyNodeById(id);
+        try {
+            return classifyNodeDao.findClassifyNodeById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 根据docId查询分类节点列表
+     *
+     * @param docId
+     * @return
+     */
+    @Override
+    public List<ClassifyNode> findClassifyNodeByDocId(Long docId) {
+        return classifyNodeDao.findClassifyNodeByDocId(docId);
     }
 
     /**
@@ -45,9 +61,9 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
-    public List<ClassifyNode> findAllClassify() {
+    public List<ClassifyNode> findAllClassifyNode() {
         try {
-            return classifyNodeDao.findAllClassify();
+            return classifyNodeDao.findAllClassifyNode();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -62,9 +78,9 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
-    public Paging<ClassifyNode> findAllClassifyByPage(Integer pageSize, Integer currentPage) {
+    public Paging<ClassifyNode> findAllClassifyNodeByPage(Integer pageSize, Integer currentPage) {
         try {
-            return classifyNodeDao.findAllClassifyByPage(pageSize, currentPage);
+            return classifyNodeDao.findAllClassifyNodeByPage(pageSize, currentPage);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -134,13 +150,27 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *  成功返回true,失败返回false
      */
     @Override
-    public Boolean addChildrenNode(Long parentId, Long childrenId) {
+    public ClassifyNode addChildrenNode(Long parentId, Long childrenId, String childrenText) {
         try {
+            if (null != childrenId && childrenId != 0L) {
+                classifyNodeDao.addChildrenNode(parentId, childrenId);
+                return classifyNodeDao.findClassifyNodeById(childrenId);
+            }
+            if (null == childrenText || "".equals(childrenText)){
+                return null;
+            }
+            ClassifyNode classifyNode = new ClassifyNode();
+            classifyNode.setText(childrenText);
+            //先保存子节点并获取节点ID
+            Long classifyNodeId = classifyNodeDao.saveClassifyNode(classifyNode);
+            if (null == classifyNode || classifyNodeId==0L){
+                return null;
+            }
             classifyNodeDao.addChildrenNode(parentId, childrenId);
-            return true;
+            return classifyNode;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 }

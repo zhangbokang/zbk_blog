@@ -16,6 +16,13 @@ public interface DocService {
     Doc save(Doc doc);
 
     /**
+     * 添加一个节点到一个文档
+     * @param docId
+     * @param classifyNodeId
+     */
+    void addClassifyNodeToDoc(Long docId, Long classifyNodeId);
+
+    /**
      * 分页查询所有
      * @return
      */

@@ -31,9 +31,9 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public Paging<Doc> findAllByPage(Integer pageSize,Integer currentPage) {
-        Paging paging1 = new Paging();
-        paging1.setPageSize(pageSize);
-        paging1.setCurrentPage(currentPage);
+        Paging paging = new Paging();
+        paging.setPageSize(pageSize);
+        paging.setCurrentPage(currentPage);
         String hql = "from Doc order by updateTime desc";
         return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
@@ -41,15 +41,15 @@ public class DocDaoImpl implements DocDao {
                 //查询总记录数
                 Query queryCount = session.createQuery("select count(1) from Doc");
                 Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
-                paging1.setTotalCounts(totalCounts);
+                paging.setTotalCounts(totalCounts);
                 Query query = session.createQuery(hql);
                 //设置每页显示多少个，设置多大结果。
                 query.setMaxResults(pageSize);
                 //设置起点
                 query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
                 List<Doc> docList =  query.list();
-                paging1.setPageList(docList);
-                return paging1;
+                paging.setPageList(docList);
+                return paging;
             }
         });
     }
@@ -67,6 +67,40 @@ public class DocDaoImpl implements DocDao {
     @Override
     public void save(Doc doc) {
         hibernateTemplate.save(doc);
+    }
+
+    /**
+     * 添加一个节点到一个文档
+     *
+     * @param docId
+     * @param classifyNodeId
+     */
+    @Override
+    public void addClassifyNodeToDoc(Long docId, Long classifyNodeId) {
+        String sql = "INSERT INTO classify_node_doc_map(id, doc_id) VALUES (:classifyNodeId,:docId)";
+        Integer i = hibernateTemplate.execute(new HibernateCallback<Integer>() {
+            String sql = "SELECT COUNT(1) from classify_node_doc_map WHERE id=:classifyNodeId AND doc_id=:docId";
+            @Override
+            public Integer doInHibernate(Session session) throws HibernateException {
+                Query query = session.createSQLQuery(sql);
+                query.setParameter("classifyNodeId", classifyNodeId);
+                query.setParameter("docId", docId);
+                return ((Number) query.uniqueResult()).intValue();
+            }
+        });
+        if (i > 0) {
+            return;
+        }
+        hibernateTemplate.execute(new HibernateCallback<Object>() {
+            @Override
+            public Object doInHibernate(Session session) throws HibernateException {
+                Query query = session.createSQLQuery(sql);
+                query.setParameter("classifyNodeId", classifyNodeId);
+                query.setParameter("docId", docId);
+                query.executeUpdate();
+                return null;
+            }
+        });
     }
 
     @Override
@@ -118,7 +152,7 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public List<Doc> findByClassifyNodeId(Long classifyNodeId) {
-        String sql = "select * from doc JOIN classify_node_doc_map ON classify_node_doc_map.id=:classifyNodeId  order by doc.update_time desc";
+        String sql = "select * from doc as d JOIN classify_node_doc_map as cmap ON d.doc_id=cmap.doc_id where cmap.id=:classifyNodeId  order by d.update_time desc";
         return (List<Doc>)hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
             @Override
             public List<Doc> doInHibernate(Session session) throws HibernateException {

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.zbkblog.entity.DocX" table="doc_x" schema="zbk_blog">
+        <id name="docId">
+            <column name="doc_id" sql-type="bigint(13)"/>
+        </id>
+        <property name="title">
+            <column name="title" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="docMd">
+            <column name="doc_md" sql-type="text"/>
+        </property>
+        <property name="classifyId">
+            <column name="classify_id" sql-type="bigint(13)" not-null="true"/>
+        </property>
+        <property name="tagId">
+            <column name="tag_id" sql-type="bigint(13)"/>
+        </property>
+        <property name="updateTime">
+            <column name="update_time" sql-type="bigint(13)"/>
+        </property>
+        <property name="favorNumber">
+            <column name="favor_number" sql-type="bigint(8)"/>
+        </property>
+        <property name="openNumber">
+            <column name="open_number" sql-type="bigint(8)"/>
+        </property>
+    </class>
+</hibernate-mapping>

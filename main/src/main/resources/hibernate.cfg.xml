@@ -7,7 +7,7 @@
     <property name="connection.url">jdbc:mysql://localhost:3306/zbk_blog</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
-      <mapping resource="com/zbkblog/hbm/BlogUser.hbm.xml"/>
+    <mapping resource="com/zbkblog/hbm/BlogUser.hbm.xml"/>
     <mapping class="com.zbkblog.entity.BlogUser"/>
       <mapping resource="com/zbkblog/hbm/Comment.hbm.xml"/>
     <mapping class="com.zbkblog.entity.Comment"/>
@@ -17,7 +17,8 @@
     <mapping class="com.zbkblog.entity.Tag"/>
       <mapping resource="com/zbkblog/hbm/ClassifyNode.hbm.xml"/>
     <mapping class="com.zbkblog.entity.ClassifyNode"/>
-      <!-- DB schema will be updated if needed -->
+    <mapping resource="com/zbkblog/hbm/DocX.hbm.xml"/>
+    <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

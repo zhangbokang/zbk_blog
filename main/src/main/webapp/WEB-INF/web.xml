@@ -30,7 +30,7 @@
         <filter-name>authFilter</filter-name>
         <url-pattern>/admin/*</url-pattern>
         <url-pattern>/tag/*</url-pattern>
-        <url-pattern>/classify/*</url-pattern>
+        <url-pattern>/classifyNode/*</url-pattern>
         <url-pattern>/doc/*</url-pattern>
     </filter-mapping>
 

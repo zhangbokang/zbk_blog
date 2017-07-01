@@ -74,8 +74,8 @@
     <script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/editormd/editormd.min.js"></script>
-    <script src="/static/jqueryserializejson/jquery.serializejson.min.js"></script>
-    <script src="/static/jqueryui/jquery-ui.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jqueryserializejson/jquery.serializejson.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jqueryui/jquery-ui.min.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/spell/py.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">

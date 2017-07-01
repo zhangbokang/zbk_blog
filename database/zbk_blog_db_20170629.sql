@@ -23,7 +23,7 @@ create table blog_user
 (
    user_id              bigint(20) not null comment '用户ID',
    user_name            varchar(20) binary not null comment '用户名',
-   password             varchar(20) binary comment '用户密码',
+   password             varchar(32) binary comment '用户密码',
    status               varchar(1) not null comment '用户状态：0 禁用，1 启用',
    primary key (user_id)
 );

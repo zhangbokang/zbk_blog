@@ -51,10 +51,25 @@ public interface DocDao {
     void save(Doc doc);
 
     /**
+     * 添加一个节点到一个文档
+     * @param doc
+     * @param classifyNodeIds
+     */
+    void addClassifyNodesToDoc(Doc doc, List<Long> classifyNodeIds);
+
+    /**
      * 更新
      * @param doc
      */
     void update(Doc doc);
+
+    /**
+     * 根据hql和top数查询排行列表
+     * @param hql
+     * @param top
+     * @return
+     */
+    List<Doc> findTopByHql(String hql, Integer top);
 
     /**
      * 查询topX的文章
@@ -79,19 +94,19 @@ public interface DocDao {
 
     /**
      * 根据分类ID查询文章列表
-     * @param classifyId
+     * @param classifyNodeId
      * @return
      */
-    List<Doc> findByClassifyId(Long classifyId);
+    List<Doc> findByClassifyNodeId(Long classifyNodeId);
 
     /**
      * 根据分类ID查询并分页
-     * @param classifyId
+     * @param classifyNodeId
      * @param pageSize
      * @param currentPage
      * @return
      */
-    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Integer pageSize,Integer currentPage);
+    Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId,Integer pageSize,Integer currentPage);
 
     /**
      * 根据标签ID查询文章列表

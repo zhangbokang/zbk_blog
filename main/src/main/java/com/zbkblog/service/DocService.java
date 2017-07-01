@@ -16,6 +16,14 @@ public interface DocService {
     Doc save(Doc doc);
 
     /**
+     * 添加一个节点到一个文档
+     * @param docId
+     * @param classifyNodeId
+     * @return
+     */
+    Doc addClassifyNodesToDoc(Long docId, List<Long> classifyNodeId);
+
+    /**
      * 分页查询所有
      * @return
      */
@@ -33,14 +41,17 @@ public interface DocService {
     /**
      * 修改
      * @param doc
+     * @param upTime 是否更新修改时间
+     * @return
      */
-    Doc update(Doc doc);
+    Doc update(Doc doc,Boolean upTime);
 
     /**
      * 根据ID删除
      * @param doc
+     * @return
      */
-    void delete(Doc doc);
+    Boolean delete(Doc doc);
 
     /**
      * 查找所有
@@ -77,19 +88,19 @@ public interface DocService {
 
     /**
      * 根据分类ID查询文章列表
-     * @param classifyId
+     * @param classifyNodeId
      * @return
      */
-    List<Doc> findByClassifyId(Long classifyId);
+    List<Doc> findByClassifyNodeId(Long classifyNodeId);
 
     /**
      * 根据分类ID查询并分页
-     * @param classifyId
+     * @param classifyNodeId
      * @param pageSize
      * @param currentPage
      * @return
      */
-    Paging<Doc> findByClassifyIdOfPage(Long classifyId,Integer pageSize,Integer currentPage);
+    Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId,Integer pageSize,Integer currentPage);
 
     /**
      * 根据标签ID查询文章列表

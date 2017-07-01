@@ -1,20 +1,16 @@
 package com.zbkblog.controller;
 
-import com.zbkblog.entity.BlogUser;
-import com.zbkblog.entity.Classify;
-import com.zbkblog.entity.Doc;
-import com.zbkblog.entity.Tag;
-import com.zbkblog.service.BlogUserService;
-import com.zbkblog.service.ClassifyService;
-import com.zbkblog.service.DocService;
-import com.zbkblog.service.TagService;
+import com.zbkblog.entity.*;
+import com.zbkblog.service.*;
 import com.zbkblog.utils.Paging;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,11 +23,11 @@ public class IndexController {
     @Resource
     private DocService docService;
     @Resource
-    private ClassifyService classifyService;
-    @Resource
     private TagService tagService;
     @Resource
     private BlogUserService blogUserService;
+    @Resource
+    private ClassifyNodeService classifyNodeService;
 
     @RequestMapping("")
     public String all(HttpServletRequest request){
@@ -108,7 +104,7 @@ public class IndexController {
     public String blogList(HttpServletRequest request){
         String pageSize = request.getParameter("pageSize");
         String currentPage = request.getParameter("currentPage");
-        pageSize = pageSize==null?"10":pageSize;
+        pageSize = pageSize==null?"15":pageSize;
         currentPage = currentPage==null?"1":currentPage;
 
         Paging paging = docService.findAllByPage(Integer.parseInt(pageSize),Integer.parseInt(currentPage));
@@ -122,11 +118,11 @@ public class IndexController {
         return "bloglist";
     }
 
-    @RequestMapping("findDocByClassifyId")
-    public String findDocByClassifyId(HttpServletRequest request){
+    @RequestMapping("findDocByclassifyNodeId")
+    public String findDocByclassifyNodeId(HttpServletRequest request){
         //根据分类ID查询文章
-        String classifyId = request.getParameter("classifyId");
-        if (classifyId == null){
+        String classifyNodeId = request.getParameter("classifyNodeId");
+        if (classifyNodeId == null){
             request.setAttribute("errorInfo","分类ID不能为空！");
             return "errorPage";
         }
@@ -135,7 +131,7 @@ public class IndexController {
         String currentPage = request.getParameter("currentPage");
         pageSize = pageSize==null?"10":pageSize;
         currentPage = currentPage==null?"1":currentPage;
-        Paging paging = docService.findByClassifyIdOfPage(Long.parseLong(classifyId),Integer.parseInt(pageSize),Integer.parseInt(currentPage));
+        Paging paging = docService.findByClassifyNodeIdOfPage(Long.parseLong(classifyNodeId),Integer.parseInt(pageSize),Integer.parseInt(currentPage));
         //防止零条记录时分页出错
         if(paging.getTotalCounts()==0){
             request.setAttribute("errorInfo","<b>未查询到记录，该分类暂无文章！</b>");
@@ -143,7 +139,7 @@ public class IndexController {
         }
         request.setAttribute("docPaging",paging);
         request.setAttribute("accessType",request.getParameter("accessType"));
-        request.setAttribute("classifyId",classifyId);
+        request.setAttribute("classifyNodeId",classifyNodeId);
         return "bloglist";
     }
     @RequestMapping("findDocByTagId")
@@ -170,12 +166,6 @@ public class IndexController {
         return "bloglist";
     }
 
-
-
-
-
-
-
     /**
      * 查看具体的文章
      * @param request
@@ -185,7 +175,7 @@ public class IndexController {
     public String docPage(HttpServletRequest request){
         //编辑文章的ID
         String docId = request.getParameter("docId");
-        if (docId == null || !docId.matches("[0-9]{13}")){
+        if (docId == null || !docId.matches("[0-9]+")){
             request.setAttribute("errorInfo","没有该文章。");
             return "errorPage";
         }
@@ -209,10 +199,61 @@ public class IndexController {
         //设置更新文章的条件，点击x次才更新，避免频繁刷新缓存
         if (openNumber%10==0){
             doc.setOpenNumber(++openNumber);
-            docService.update(doc);
+            docService.update(doc,false);
         }
         request.setAttribute("doc",doc);
         return "docPage";
+    }
+
+    /**
+     * 根据父ID查找分类列表
+     * @param request
+     * @return
+     */
+    /*@RequestMapping("/findClassifyByParentId")
+    @ResponseBody
+    public List<TreeNode> findClassifyByParentId(HttpServletRequest request){
+        String parentId = request.getParameter("id");
+        //分类列表
+        List<Classify> classifyList = classifyService.findAllClassify();
+//        Map<String, Object> map = new HashedMap();
+
+        List<TreeNode> treeNodeList = new ArrayList<>();
+//        Long tId = 100L;
+        for (Classify classify: classifyList) {
+            TreeNode t = new TreeNode();
+            t.setId(classify.getClassifyId());
+            t.setText(classify.getName());
+//            List<TreeNode> tL = new ArrayList<>();
+//            TreeNode t1 = new TreeNode();
+//            t1.setId(tId);
+//            t1.setText("模拟子目录"+tId);
+//            tId++;
+//            tL.add(t1);
+//            t.setChildren(tL);
+            t.setChildren(true);
+            treeNodeList.add(t);
+        }
+//        treeNodeList.get(0).setChildren(treeNodeList);
+        return treeNodeList;
+    }*/
+
+    /**
+     * 根据父ID查找节点列表
+     * @param request
+     * @return
+     * 失败 {code:0,msg:失败消息}
+     * 成功{code:1,data:节点列表}
+     */
+    @RequestMapping("/findClassifyNodeByParentId")
+    @ResponseBody
+    public List<ClassifyNode> findClassifyNodeByParentId(HttpServletRequest request) {
+        String parentIdStr = request.getParameter("id");
+        Long parentId = null;
+        if ((null != parentIdStr || !"#".equals(parentIdStr)) && parentIdStr.matches("[0-9]+")) {
+            parentId = Long.parseLong(parentIdStr);
+        }
+        return classifyNodeService.findClassifyNodeListByParentId(parentId);
     }
 
     /**
@@ -224,8 +265,8 @@ public class IndexController {
         List<Tag> tagList = tagService.findAllTag();
         request.setAttribute("tagList",tagList);
         //分类列表
-        List<Classify> classifyList = classifyService.findAllClassify();
-        request.setAttribute("classifyList",classifyList);
+//        List<Classify> classifyList = classifyService.findAllClassify();
+//        request.setAttribute("classifyList",classifyList);
 
         //点赞排行列表查询
         List<Doc> dzph = docService.findByFavorNumberOfTopX(10);

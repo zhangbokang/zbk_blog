@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/5/5
@@ -7,15 +7,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>myblog - ${doc.title}</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/css/editormd.min.css"/>
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">--%>
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/blogpage.css">
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/common.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/editormd/css/editormd.min.css"/>
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/blogpage.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/common.css">
     <style>
         #wrapper {
             overflow: hidden;
@@ -55,9 +55,10 @@
                     <div class="h1">${doc.title}</div>
                     <div class="row" id="classRow">
                         <div class="col-sm-4">
-                            <%--分类：<a--%>
-                            分类：${doc.classify.name}
-                                <%--href="/findDocByClassifyId?classifyId=${doc.classify.classifyId}">${doc.classify.name}</a>--%>
+                            分类：
+                                <c:forEach items="${doc.classifyNodes}" var="classifyNode">
+                                    ${classifyNode.text}&nbsp;&nbsp;
+                                </c:forEach>
                         </div>
                         <div class="col-sm-8">
                             <%--标签：<a href="/findDocByTagId?tagId=${doc.tag.tagId}">${doc.tag.name}</a>--%>
@@ -87,18 +88,17 @@
 </div>
 <jsp:include page="footer.jsp"/>
 
-<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
-<%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
-<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/editormd.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/marked.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/prettify.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/raphael.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/underscore.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/sequence-diagram.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/flowchart.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/jquery.flowchart.min.js"></script>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/portamento-1.1.1/portamento-min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/editormd.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/marked.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/prettify.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/raphael.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/underscore.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/sequence-diagram.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/flowchart.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/editormd/lib/jquery.flowchart.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/portamento-1.1.1/portamento-min.js"></script>
 <script type="text/javascript">
 
     $('#sidebar').portamento();

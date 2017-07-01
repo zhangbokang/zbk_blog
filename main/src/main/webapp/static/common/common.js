@@ -2,22 +2,22 @@
  * Created by zhangbokang on 2017/5/17.
  */
 //引入py.js，用来处理汉字添加拼音的处理
-document.write('<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/spell/py.js"></script>');
+// document.write('<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/spell/py.js"></script>');
 // document.write('<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>');
 // document.write('<script src="/static/jqueryui/jquery-ui.min.js"></script>');
 var common = {
     COLUMNS:{
-        classify:
+        classifyNode:
             [{
-                field: 'classifyId',
+                field: 'id',
                 title: '分类ID',
                 width:"20%"
             }, {
-                field: 'name',
+                field: 'text',
                 title: '分类名称',
                 width:"40%"
             }, {
-                field: 'createTime',
+                field: 'updateTime',
                 title: '最后更新时间',
                 width:"20%",
                 formatter:function(value,row,index){
@@ -38,7 +38,7 @@ var common = {
                 width:"20%",
                 formatter:function(value,row,index){
                     return ["<button class='btn btn-default' onclick='deleteClassifyMake("
-                    +row.classifyId+",\""+row.name+"\")'>删除</button>"
+                    +row.id+",\""+row.text+"\")'>删除</button>"
                     ].join("");
                 }
             }],
@@ -120,7 +120,7 @@ var common = {
                 title: '文章标题',
                 width:"25%"
             },{
-                field: 'classifyName',
+                field: 'classifyNodeName',
                 title: '文章分类',
                 width:"15%"
             },{
@@ -157,14 +157,19 @@ var common = {
             }],
     },
     URL:{
-        classify:{
-            findAllClassify:"/classify/findAllClassify",
-            addClassify:"/classify/addClassify",
-            updateClassify:"/classify/updateClassify",
-            deleteClassify:"/classify/deleteClassify"
+        doc:{
+            findAllDoc:"/doc/findAllDocOutJsonByPage",
+        },
+        classifyNode:{
+            findAllClassifyNode:"/classifyNode/findAllClassifyNode",
+            findAllClassifyNodeByPage:"/classifyNode/findAllClassifyNodeByPage",
+            addClassifyNode:"/classifyNode/addClassifyNode",
+            updateClassifyNode:"/classifyNode/updateClassifyNode",
+            deleteClassifyNode:"/classifyNode/deleteClassifyNode"
         },
         tag:{
             findAllTag:"/tag/findAllTag",
+            findAllTagByPage:"/tag/findAllTagByPage",
             addTag:"/tag/addTag",
             updateTag:"/tag/updateTag",
             deleteTag:"/tag/deleteTag"
@@ -172,7 +177,7 @@ var common = {
     },
     Data:{
         cache:{
-            classify:[],
+            classifyNode:[],
             tag:[]
         }
         // classifyCache:[],
@@ -250,6 +255,112 @@ var common = {
             // }
         },
         /**
+         * 根据输入去服务器请求数据
+         * @param url 请求数据的地址
+         * @param param 请求数据的附加参数
+         * @returns {*} 返回请求得到的数据
+         */
+        queryDataOfClassifyNode:function (url,param) {
+            if (param == undefined){
+                param ={}
+            }
+            // if (label == undefined){
+            //     label = "text";
+            // }
+            // if(cache == undefined) {
+                var cache;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: param,
+                    async: false, //同步请求，避免数据延迟产生错误
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.code == 1) {
+                            cache = $.map(result.data, function (item) {
+                                var obj = {};
+                                for (var i in item) {
+                                    var v = item[i];
+                                    if (i == "text") {
+                                        i = "label";
+                                    }
+                                    if (i != "id") {
+                                        obj[i] = v;
+                                        continue;
+                                    }
+                                    obj["classifyNodeId"] = v;
+                                }
+                                return obj;
+                            });
+                            common.Fn.addSpell(cache, "label");
+                            return;
+                        }
+                        alert(result.msg);
+                    },
+                    error: function () {
+                        alert("“" + url + "”请求出现问题！");
+                        return;
+                    }
+                });
+                return cache;
+            // }
+        },
+        /**
+         * 根据domId给分类输入框添加自动完成功能
+         * 注意：domId不带#号
+         * @param domId
+         */
+        autoCompleteOfClassifyNode:function (domId,url) {
+            var $dom = $("#"+domId);
+
+            //如果数据没有则从服务器获取一下
+            common.Data.cache[domId] = common.Fn.queryDataOfClassifyNode(url);
+            var cache = common.Data.cache[domId];
+
+            $dom.autocomplete({
+                minLength:0,//输入多少字后显示列表，0表示不输入也显示
+                source: function (request, response) {
+                    var key = request.term.trim().toUpperCase();
+                    //如果没有输入任何数据，则返回全部数据
+                    if (!$.trim(key)){
+                        response(cache);
+                        return;
+                    }
+                    common.Fn.searchData(function (data) {
+                        response(data);
+                    },cache,key);
+                },
+                create: function () {
+                    $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        return $("<li>")
+                            .append($("<div>").text(item.label))
+                            .appendTo(ul);
+                    };
+                },
+                select: function (event, ui) {
+                    var item = ui.item;
+                    var falg = true;
+                    for(var i=0;i<classifyNodeIds.length;i++) {
+                        if (classifyNodeIds[i] == item.classifyNodeId) {
+                            falg = false;
+                            break;
+                        }
+                    }
+                    if (falg) {
+                        classifyNodeIds.push(item.classifyNodeId);
+                        $("#classifyNodeText").append(item.label);
+                    }
+                    event.preventDefault();
+                    $(this).val("");
+                    $(this).blur();
+                }
+            }).focus(function (){
+                // $(this).val("");//清除属性
+                // Util.removeAttributes($(this));
+                $(this).autocomplete("search");
+            });
+        },
+        /**
          * 根据domId给输入框添加自动完成功能
          * 注意：domId不带#号
          * @param domId
@@ -311,6 +422,7 @@ var common = {
          */
         addSpell:function(data,label) {
             $.each(data,function (n,value) {
+                console.log(value[label]);
                 value['spell']=pinyin.getCamelChars(value[label]);
                 value['fullSpelling']=pinyin.getFullChars(value[label]).toUpperCase();
             });

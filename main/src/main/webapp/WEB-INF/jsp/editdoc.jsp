@@ -1,4 +1,5 @@
-<%--
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/5/4
@@ -9,11 +10,10 @@
 <html>
 <head>
     <title>文章编辑</title>
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/css/editormd.min.css" />
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/bootstrap/css/bootstrap.css">--%>
-    <link rel="stylesheet" href="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.css">
-    <link rel="stylesheet" href="http://zhishi01-1253216462.costj.myqcloud.com/static/css/editblog.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/editormd/css/editormd.min.css" />
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/editblog.css">
     <meta charset="utf-8">
 </head>
 <body>
@@ -27,16 +27,20 @@
     <form method="post" id="docForm">
         <input type="hidden" name="docId" id="docId" value="${doc.docId}">
         <div class="row" id="blogTitleArea">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="title" class="control-label">标题：</label>
                     <input type="text" name="title" value="${doc.title}" id="title" class="form-control" placeholder="请输入标题">
                 </div>
             </div>
+            <div class="col-sm-2">
+                <%--存放分类名称--%>
+                <div id="classifyNodeText"></div>
+            </div>
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label for="classify" class="control-label">分类：</label>
-                    <input type="text" class="form-control" id="classify" autocomplete="off" placeholder="请输入分类">
+                    <label for="classifyNode" class="control-label">分类：</label>
+                    <input type="text" class="form-control" id="classifyNode" autocomplete="off" placeholder="请输入分类">
                     <%--<select id="blogClass" name="blogClass" class="form-control">--%>
                         <%--<option checked>请选择分类</option>--%>
                         <%--<option value="aa">AA</option>--%>
@@ -44,7 +48,7 @@
                     <%--</select>--%>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="tag" class="control-label">标签：</label>
                     <input type="text" id="tag" autocomplete="off" class="form-control" placeholder="请输入标签">
@@ -67,18 +71,16 @@
 
 
 
-    <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
-    <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/editormd.min.js"></script>
-    <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
-    <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
-    <script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>
-    <%--<script src="/static/js/editblog.js"></script>--%>
-    <script src="http://zhishi01-1253216462.costj.myqcloud.com/static/common/common.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/editormd/editormd.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jqueryserializejson/jquery.serializejson.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jqueryui/jquery-ui.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/spell/py.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">
         //设置分类和标签为自动完成按钮
-        common.Fn.autoCompleteByDomId("classify",common.URL.classify.findAllClassify);
+        common.Fn.autoCompleteOfClassifyNode("classifyNode",common.URL.classifyNode.findAllClassifyNode);
         common.Fn.autoCompleteByDomId("tag",common.URL.tag.findAllTag);
         //点击保存按钮提交表单
         function submitForm(formId) {
@@ -88,9 +90,9 @@
                 alert("请填写标题");
                 return ;
             }
-            formData.classifyId = $(formId).find("#classify").attr("classifyId");
-            if (!$.trim(formData.classifyId)){
-                $(formId).find("#classify").focus();
+            formData.classifyNodeId = classifyNodeIds.join(",");
+            if (!$.trim(formData.classifyNodeId)){
+                $(formId).find("#classifyNode").focus();
                 alert("请填写分类");
                 return ;
             }
@@ -121,6 +123,7 @@
                         $msg.text("保存成功，现在可以");
                         var $a = $("<a>");//.text(查看)
                         $a.attr('href','/docPage?docId='+result.data.docId);
+                        $a.attr("target", "view_window");
                         $a.text("查看");
                         $a.css("color","blue");
                         $msg.css("color","#0F0");
@@ -133,14 +136,15 @@
             });
         }
 
+        //分类id保存的数组
+        var classifyNodeIds = [];
         //回显分类和标签
-        var currClassifyId = "${doc.classify.classifyId}";
+        <c:forEach items="${doc.classifyNodes}" var="classifyNode">
+            $("#classifyNodeText").append("${classifyNode.text}");
+            classifyNodeIds.push(${classifyNode.id});
+        </c:forEach>
+
         var currTag = "${doc.tag.tagId}";
-        if ($.trim(currClassifyId)){
-            common.Fn.searchData(function (data) {
-                common.Fn.setAttr("classify",data[0])
-            },common.Data.cache["classify"],currClassifyId,"classifyId");
-        }
         if ($.trim(currTag)){
             common.Fn.searchData(function (data) {
                 common.Fn.setAttr("tag",data[0])
@@ -154,7 +158,7 @@
                 testEditor = editormd("editormd", {
                     //width: "90%",
                     //height: 550,
-                    path : 'http://zhishi01-1253216462.costj.myqcloud.com/static/editormd/lib/',
+                    path : '<%=Web.staticLoadDomain%>/static/editormd/lib/',
                     theme : "dark",
                     //previewTheme : "dark",
                     editorTheme : "pastel-on-dark",

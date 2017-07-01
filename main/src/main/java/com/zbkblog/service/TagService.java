@@ -1,6 +1,7 @@
 package com.zbkblog.service;
 
 import com.zbkblog.entity.Tag;
+import com.zbkblog.utils.Paging;
 
 import java.util.List;
 
@@ -31,6 +32,14 @@ public interface TagService {
      * @return
      */
     List<Tag> findAllTag();
+
+    /**
+     * 分页查找所有标签
+     * @param pageSize
+     * @param currentPage
+     * @return
+     */
+    Paging<Tag> findAllTagByPage(Integer pageSize, Integer currentPage);
 
     /**
      * 根据id查找标签

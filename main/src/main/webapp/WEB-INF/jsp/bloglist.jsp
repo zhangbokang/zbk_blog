@@ -23,7 +23,11 @@
                     <p>${docMdStrR} ...</p>
                 </a>
                 <div class="row">
-                    <div class="col-sm-5">分类：${doc.classify.name}</div>
+                    <div class="col-sm-5">分类：
+                        <c:forEach items="${doc.classifyNodes}" var="classifyNode">
+                            ${classifyNode.text}&nbsp;&nbsp;
+                        </c:forEach>
+                    </div>
                     <div class="col-sm-7">标签：${doc.tag.name}</div>
                 </div>
                 <div class="row">
@@ -82,8 +86,8 @@
                 <c:when test="${accessType=='tag'}">
                 '/findDocByTagId?accessType=tag&tagId=${tagId}'
                 </c:when>
-                <c:when test="${accessType=='classify'}">
-                '/findDocByClassifyId?accessType=classify&classifyId=${classifyId}'
+                <c:when test="${accessType=='classifyNode'}">
+                '/findDocByclassifyNodeId?accessType=classifyNode&classifyNodeId=${classifyNodeId}'
                         </c:when>
                         </c:choose>
                         , {

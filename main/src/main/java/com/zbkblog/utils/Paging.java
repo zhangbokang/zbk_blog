@@ -17,16 +17,19 @@ public class Paging<T> implements Serializable {
     private List<T> pageList;
     //记录开始数
     private Integer firstResult;
+    //排序方式
+    private String orderBy;
 
     public Paging() {
     }
 
-    public Paging(Integer totalCounts, Integer pageSize, Integer currentPage, List<T> pageList, Integer firstResult) {
+    public Paging(Integer totalCounts, Integer pageSize, Integer currentPage, List<T> pageList, Integer firstResult, String orderBy) {
         this.totalCounts = totalCounts;
         this.pageSize = pageSize;
         this.currentPage = currentPage;
         this.pageList = pageList;
         this.firstResult = firstResult;
+        this.orderBy = orderBy;
     }
 
     public Integer getTotalCounts() {
@@ -62,6 +65,19 @@ public class Paging<T> implements Serializable {
         return (currentPage-1)*pageSize;
     }
 
+    public static Integer currentPageCount(Integer pageSize,Integer firstResult){
+        if (pageSize ==null || firstResult==null){
+            return 1;
+        }
+        if (pageSize<1){
+            pageSize = 1;
+        }
+        if (firstResult<0){
+            firstResult = 0;
+        }
+        return firstResult/pageSize+1;
+    }
+
     public Integer getCurrentPage() {
         return currentPage;
     }
@@ -88,5 +104,13 @@ public class Paging<T> implements Serializable {
 
     public void setFirstResult(Integer firstResult) {
         this.firstResult = firstResult;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
     }
 }

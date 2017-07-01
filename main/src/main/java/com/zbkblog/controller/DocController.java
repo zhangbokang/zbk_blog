@@ -1,12 +1,13 @@
 package com.zbkblog.controller;
 
-import com.zbkblog.entity.Classify;
+import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.entity.Tag;
-import com.zbkblog.service.ClassifyService;
+import com.zbkblog.service.ClassifyNodeService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
 import com.zbkblog.utils.MyBeanUtils;
+import com.zbkblog.utils.Paging;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -18,10 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -34,7 +32,7 @@ public class DocController {
     @Resource
     private TagService tagService;
     @Resource
-    private ClassifyService classifyService;
+    private ClassifyNodeService classifyNodeService;
 
     /**
      * 查询所有文档，并以json字符串形式返回
@@ -43,7 +41,7 @@ public class DocController {
      */
     @RequestMapping("/findAllDocOutJson")
     @ResponseBody
-    public Map<String,Object> findAllDoc(HttpServletRequest request){
+    public Map<String,Object> findAllDocOutJson(HttpServletRequest request){
         Map<String,Object> map = new HashMap<>();
         List<Doc> docList = docService.findAll();
         if (null == docList){
@@ -58,6 +56,33 @@ public class DocController {
     }
 
     /**
+     * 查询所有文档，并以json字符串形式返回
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findAllDocOutJsonByPage")
+    @ResponseBody
+    public Map<String,Object> findAllDocOutJsonByPage(HttpServletRequest request){
+        String pageSize = request.getParameter("limit");
+        String firstResult = request.getParameter("offset");
+        pageSize = pageSize==null?"15":pageSize;
+        firstResult = firstResult==null?"0":firstResult;
+        Integer currentPage = Paging.currentPageCount(Integer.parseInt(pageSize), Integer.parseInt(firstResult));
+        Paging<Doc> docPaging = docService.findAllByPage(Integer.parseInt(pageSize),currentPage);
+
+        Map<String,Object> map = new HashMap<>();
+        if (null == docPaging){
+            map.put("code",0);
+            map.put("msg","查询发生错误");
+            return map;
+        }
+        map.put("code",1);
+        map.put("total", docPaging.getTotalCounts());
+        map.put("rows",docPaging.getPageList());
+        return map;
+    }
+
+    /**
      * 保存或更新文档
      * @param request
      * @return
@@ -68,10 +93,10 @@ public class DocController {
         String docId = request.getParameter("docId");
         String title = request.getParameter("title");
         String  docMd = request.getParameter("docMd");
-        String classifyId = request.getParameter("classifyId");
+        String classifyNodeIds = request.getParameter("classifyNodeId");
         String tagId = request.getParameter("tagId");
         //返回信息的Map
-        Map<String,Object> map = new HashMap();
+        Map<String,Object> map = new HashMap<>();
         //验证信息
         if (title == null || title == ""){
             map.put("code",0);
@@ -83,15 +108,9 @@ public class DocController {
             map.put("msg","保存失败，文章内容为空。");
             return map;
         }
-        if (classifyId == null || classifyId == ""){
+        if (classifyNodeIds == null || classifyNodeIds == ""){
             map.put("code",0);
             map.put("msg","保存失败，分类为空");
-            return map;
-        }
-        Classify classify = classifyService.findClassifyById(Long.parseLong(classifyId));
-        if (null == classify){
-            map.put("code",0);
-            map.put("msg","保存失败，未查询到该分类");
             return map;
         }
         if (tagId == null || tagId == ""){
@@ -105,28 +124,58 @@ public class DocController {
             map.put("msg","保存失败，未查询到该标签");
             return map;
         }
-        //封装成对象
-        Doc doc = new Doc();
-        doc.setTitle(title);
-        doc.setDocMd(docMd);
-        doc.setClassify(classify);
-        doc.setTag(tag);
 
+        //处理分类Id
+        String[] classifyNodeIdStrArr = classifyNodeIds.split(",");
+        List<Long> classifyNodeIdList = new ArrayList<>();
+        for (String c : classifyNodeIdStrArr) {
+            if (c != null && c.matches("[0-9]+")) {
+                classifyNodeIdList.add(Long.parseLong(c));
+            }
+        }
+
+        Doc doc;
         //保存的逻辑
-        if (null != docId && docId.matches("[0-9]{13}")) {
-            Doc doc1 = docService.findById(Long.parseLong(docId));
-            if (doc1 != null){
-                //将doc中的非空属性值复制到doc1
-                MyBeanUtils.copyPropertiesIgnoreNull(doc,doc1);
-                doc = docService.update(doc1);
-                map.put("code",1);
-                map.put("data",doc);
+        if (null != docId && docId.matches("[0-9]+")) {
+            doc = docService.findById(Long.parseLong(docId));
+            if (doc != null){
+                //更新属性
+                doc.setTitle(title);
+                doc.setDocMd(docMd);
+                doc.setTag(tag);
+
+                doc = docService.update(doc,true);
+                if (doc == null) {
+                    map.put("code", 0);
+                    map.put("msg", "保存失败");
+                    return map;
+                }
+            }
+        }else {
+            //封装成对象
+            doc = new Doc();
+            doc.setTitle(title);
+            doc.setDocMd(docMd);
+            doc.setTag(tag);
+
+            doc = docService.save(doc);
+
+            if (null == doc) {
+                map.put("code", 0);
+                map.put("msg", "保存失败");
                 return map;
             }
         }
-        doc = docService.save(doc);
-        map.put("code",1);
-        map.put("data",doc);
+
+        //添加关联
+        doc = docService.addClassifyNodesToDoc(doc.getDocId(),classifyNodeIdList);
+        if (null != doc){
+            map.put("code",1);
+            map.put("data",doc);
+            return map;
+        }
+        map.put("code",0);
+        map.put("msg","添加分类节点到文档失败");
         return map;
     }
 

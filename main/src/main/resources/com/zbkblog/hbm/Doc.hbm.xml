@@ -6,15 +6,18 @@
 
     <class name="com.zbkblog.entity.Doc" table="doc" schema="zbk_blog" lazy="false">
         <id name="docId" column="doc_id">
-            <generator class="com.zbkblog.utils.GeneratorNumberId">
-            </generator>
+            <generator class="com.zbkblog.utils.IDWorker"/>
         </id>
         <property name="title" column="title"/>
         <property name="docMd" column="doc_md"/>
         <property name="updateTime" column="update_time"/>
         <property name="favorNumber" column="favor_number"/>
         <property name="openNumber" column="open_number"/>
-        <many-to-one name="classify" class="com.zbkblog.entity.Classify" column="classify_id" />
+        <!--<many-to-one name="classify" class="com.zbkblog.entity.Classify" column="classify_id" />-->
         <many-to-one name="tag" class="com.zbkblog.entity.Tag" column="tag_id" />
+        <set name="classifyNodes" table="classify_node_doc_map" cascade="save-update" lazy="false">
+            <key column="doc_id"/>
+            <many-to-many column="id" class="com.zbkblog.entity.ClassifyNode"/>
+        </set>
     </class>
 </hibernate-mapping>

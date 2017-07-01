@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/5/4
@@ -9,6 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <meta charset="utf-8">
+<link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/jsTree/themes/default/style.min.css" />
 <style rel="stylesheet">
     #tagsList {
         position: relative;
@@ -36,18 +37,23 @@
     .panel-body li>div:hover{
         background-color: #f7f7f7;
     }
+    /*#classifyListPanel ul{*/
+        /*padding-left: 0;*/
+        /*list-style: none;*/
+    /*}*/
 </style>
 <!-- 分类列表、标签列表等列表 -->
 <div class="panel panel-default">
     <div class="panel-heading">分类列表</div>
     <div class="panel-body">
-        <ul class="list-unstyled">
-            <c:forEach var="classify" varStatus="status" items="${classifyList}">
-                <li>
-                    <a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}',{});">${classify.name}</a>
-                </li>
-            </c:forEach>
-        </ul>
+        <div id="classifyNodeListPanel"></div>
+        <%--<ul class="list-unstyled">--%>
+            <%--<c:forEach var="classify" varStatus="status" items="${classifyList}">--%>
+                <%--<li>--%>
+                    <%--<a href="#" onclick="loadBlogList('/findDocByClassifyId?accessType=classify&classifyId=${classify.classifyId}',{});">${classify.name}</a>--%>
+                <%--</li>--%>
+            <%--</c:forEach>--%>
+        <%--</ul>--%>
     </div>
 </div>
 <div class="panel panel-default">
@@ -88,7 +94,7 @@
                 <li>
                     <div class="row">
                         <div class="col-sm-9"><a href="/docPage?docId=${doc.docId}">${status.count}.${doc.title}</a></div>
-                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
+                        <div class="col-sm-3" style="text-align: right"><span class="badge glyphicon glyphicon-eye-open pull-right">&nbsp;${doc.openNumber==null?0:doc.openNumber}</span></div>
                     </div>
                 </li>
             </c:forEach>
@@ -110,4 +116,26 @@
         </ul>
     </div>
 </div>
-<script src="http://zhishi01-1253216462.costj.myqcloud.com/static/js/tagcloud.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/js/tagcloud.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jsTree/jstree.min.js"></script>
+<script>
+    $(function () {
+        $('#classifyNodeListPanel').jstree({
+            'core' : {
+                'data' : {
+                    "url" : "/findClassifyNodeByParentId",
+                    "dataType" : "json", // needed only if you do not supply JSON headers
+                    "data" : function (node) {
+//                        return { "id" : node.id };
+//                        console.log(node);
+                        return node;
+                    }
+                }
+            }
+        });
+        $('#classifyNodeListPanel').on("changed.jstree", function (e, data) {
+//            console.log(data.selected);
+            loadBlogList('/findDocByclassifyNodeId?accessType=classifyNode&classifyNodeId='+data.selected,{});
+        });
+    });
+</script>

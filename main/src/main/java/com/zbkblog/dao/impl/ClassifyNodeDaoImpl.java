@@ -59,7 +59,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
             sqlWhere = " parent_id=" + parentId;
         }
 
-        String sql = "SELECT id ,text,children_byte,parent_id,update_time FROM classify_node WHERE"+sqlWhere;
+        String sql = "SELECT * FROM classify_node WHERE"+sqlWhere;
         return hibernateTemplate.execute(new HibernateCallback<List<ClassifyNode>>() {
             @Override
             public List<ClassifyNode> doInHibernate(Session session) throws HibernateException {
@@ -190,7 +190,11 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
 
         //设置子节点
         //添加子节点的父节点ID
-        childrenNode.setParentId(parentNode.getId());
+        Long parentId = null;
+        if (null != parentNode) {
+            parentId = parentNode.getId();
+        }
+        childrenNode.setParentId(parentId);
         //保存
         hibernateTemplate.update(childrenNode);
     }

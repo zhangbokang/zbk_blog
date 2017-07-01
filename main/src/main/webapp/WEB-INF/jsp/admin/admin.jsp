@@ -44,7 +44,7 @@
     <div id="navDiv">
         <ul class="nav nav-tabs nav-justified">
             <li class="active"><a onclick="$('#loadDiv').load('/admin/docManage');">文章管理</a></li>
-            <li><a onclick="$('#loadDiv').load('/admin/classifyManage');">分类管理</a></li>
+            <%--<li><a onclick="$('#loadDiv').load('/admin/classifyManage');">分类管理</a></li>--%>
             <li><a onclick="$('#loadDiv').load('/admin/classifyNodeManage');">分类节点管理</a></li>
             <li><a onclick="$('#loadDiv').load('/admin/tagManage');">标签管理</a></li>
             <li><a onclick="$('#loadDiv').load('/admin/commentManage');">评论管理</a></li>

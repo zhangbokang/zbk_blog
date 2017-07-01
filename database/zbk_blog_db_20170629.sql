@@ -25,7 +25,6 @@ create table blog_user
    user_name            varchar(20) binary not null comment '用户名',
    password             varchar(20) binary comment '用户密码',
    status               varchar(1) not null comment '用户状态：0 禁用，1 启用',
-   Column_5             char(10),
    primary key (user_id)
 );
 
@@ -113,3 +112,8 @@ alter table comment add constraint FK_comment_doc foreign key (doc_id)
 alter table doc add constraint FK_doc_tag foreign key (tag_id)
       references tag (tag_id) on delete restrict on update restrict;
 
+/* 改变是否有子分类字段名称*/
+ALTER TABLE zbk_blog.classify_node CHANGE children children_byte TINYINT(1) COMMENT '子节点';
+
+/* 添加默认管理用户*/
+insert  into `blog_user`(`user_id`,`user_name`,`password`,`status`) values (10000000000001,'zbk','648727186f3dc12ac987605722e47d09','1');

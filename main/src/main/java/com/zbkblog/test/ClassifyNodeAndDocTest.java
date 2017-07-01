@@ -152,7 +152,7 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void test4() {
-        ClassifyNode classifyNode = classifyNodeService.addChildrenNode(92451909992449L, null, "testzijiedian");
+        ClassifyNode classifyNode = classifyNodeService.addChildrenNode(92452814848002L, 92452814848003L, null);
         System.out.println(JSON.toJSON(classifyNode));
     }
 

@@ -28,11 +28,15 @@
     <form method="post" id="docForm">
         <input type="hidden" name="docId" id="docId" value="${doc.docId}">
         <div class="row" id="blogTitleArea">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="title" class="control-label">标题：</label>
                     <input type="text" name="title" value="${doc.title}" id="title" class="form-control" placeholder="请输入标题">
                 </div>
+            </div>
+            <div class="col-sm-2">
+                <%--存放分类名称--%>
+                <div id="classifyNodeText"></div>
             </div>
             <div class="col-sm-3">
                 <div class="form-group">
@@ -45,7 +49,7 @@
                     <%--</select>--%>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label for="tag" class="control-label">标签：</label>
                     <input type="text" id="tag" autocomplete="off" class="form-control" placeholder="请输入标签">
@@ -76,10 +80,11 @@
     <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
     <script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>
     <%--<script src="/static/js/editblog.js"></script>--%>
+    <script src="<%=Web.staticLoadDomain%>/static/spell/py.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">
         //设置分类和标签为自动完成按钮
-        common.Fn.autoCompleteByDomId("classifyNode",common.URL.classifyNode.findAllclassifyNode);
+        common.Fn.autoCompleteByDomId("classifyNode",common.URL.classifyNode.findAllClassifyNode,"text");
         common.Fn.autoCompleteByDomId("tag",common.URL.tag.findAllTag);
         //点击保存按钮提交表单
         function submitForm(formId) {
@@ -135,16 +140,25 @@
             });
         }
 
+        //分类id保存的数组
+        var classifyNodeIds = [];
         //回显分类和标签
-        var currclassifyNodeId = "<c:forEach items="${doc.classifyNodes}" var="classifyNode">
-            ${classifyNode.id},
-        </c:forEach>";
+        <c:forEach items="${doc.classifyNodes}" var="classifyNode">
+            $("#classifyNodeText").append("${classifyNode.text}");
+            classifyNodeIds.push(${classifyNode.classifyNodeId});
+        </c:forEach>
+
+        <%--var currclassifyNodeId = "<c:forEach items="${doc.classifyNodes}" var="classifyNode">--%>
+            <%--${classifyNode.id},--%>
+        <%--</c:forEach>";--%>
+<%----%>
+//        if ($.trim(currclassifyNodeId)){
+//            common.Fn.searchData(function (data) {
+//                common.Fn.setAttr("classifyNode",data[0])
+//            },common.Data.cache["classifyNode"],currclassifyNodeId,"classifyNodeId");
+//        }
+
         var currTag = "${doc.tag.tagId}";
-        if ($.trim(currclassifyNodeId)){
-            common.Fn.searchData(function (data) {
-                common.Fn.setAttr("classifyNode",data[0])
-            },common.Data.cache["classifyNode"],currclassifyNodeId,"classifyNodeId");
-        }
         if ($.trim(currTag)){
             common.Fn.searchData(function (data) {
                 common.Fn.setAttr("tag",data[0])

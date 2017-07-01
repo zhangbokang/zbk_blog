@@ -1,7 +1,6 @@
 package com.zbkblog.service.impl;
 
 import com.zbkblog.dao.DocDao;
-import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.service.DocService;
 import com.zbkblog.utils.MyBeanUtils;
@@ -13,10 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by zhangbokang on 2017/5/13.
@@ -28,7 +24,7 @@ public class DocServiceImpl implements DocService {
     private DocDao docDao;
 
     @Override
-//    @CacheEvict(value = {"docCache"},allEntries = true)
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public Doc save(Doc doc) {
         try {
             docDao.save(doc);
@@ -46,7 +42,7 @@ public class DocServiceImpl implements DocService {
      * @param classifyNodeIdList
      */
     @Override
-//    @CacheEvict(value = {"docCache"},allEntries = true)
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public Doc addClassifyNodesToDoc(Long docId, List<Long> classifyNodeIdList) {
         try {
             Doc doc = docDao.findById(docId);
@@ -59,7 +55,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @CacheEvict(value = {"docCache"},allEntries = true)
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public Doc update(Doc doc,Boolean upTime) {
         try {
             if (upTime) {
@@ -77,7 +73,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @CacheEvict(value = {"docCache"},allEntries = true)
+    @CacheEvict(value = {"docCache"},allEntries = true)
     public Boolean delete(Doc doc) {
         try {
             docDao.delete(doc);
@@ -89,7 +85,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public Paging<Doc> findAllByPage(Integer pageSize,Integer currentPage) {
         try {
             return MyBeanUtils.copyPagingOfDocOrClassifyNode(docDao.findAllByPage(pageSize, currentPage));
@@ -112,7 +108,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public List<Doc> findAll() {
         try {
             return MyBeanUtils.copyDocList(docDao.findAll());
@@ -124,7 +120,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public Doc findById(Long id) {
         try {
             return MyBeanUtils.copyDoc(docDao.findById(id));
@@ -135,7 +131,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public List<Doc> findByUpdateOfTopX(Integer top) {
         try {
             return MyBeanUtils.copyDocList(docDao.findByUpdateOfTopX(top));
@@ -147,7 +143,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public List<Doc> findByOpenNumberOfTopX(Integer top) {
         try {
             return MyBeanUtils.copyDocList(docDao.findByOpenNumberOfTopX(top));
@@ -159,7 +155,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public List<Doc> findByFavorNumberOfTopX(Integer top) {
         try {
             return MyBeanUtils.copyDocList(docDao.findByFavorNumberOfTopX(top));
@@ -171,7 +167,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public List<Doc> findByClassifyNodeId(Long classifyNodeId) {
         try {
             return MyBeanUtils.copyDocList(docDao.findByClassifyNodeId(classifyNodeId));
@@ -182,7 +178,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId, Integer pageSize,Integer currentPage) {
         try {
             return MyBeanUtils.copyPagingOfDocOrClassifyNode(docDao.findByClassifyNodeIdOfPage(classifyNodeId,pageSize,currentPage));
@@ -193,7 +189,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public List<Doc> findByTagId(Long tagId) {
         try {
             return MyBeanUtils.copyDocList(docDao.findByTagId(tagId));
@@ -204,7 +200,7 @@ public class DocServiceImpl implements DocService {
     }
 
     @Override
-//    @Cacheable("docCache")
+    @Cacheable("docCache")
     public Paging<Doc> findByTagIdOfPage(Long tagId, Integer pageSize,Integer currentPage) {
         return MyBeanUtils.copyPagingOfDocOrClassifyNode(docDao.findByTagIdOfPage(tagId,pageSize,currentPage));
     }

@@ -6,6 +6,8 @@ import com.zbkblog.service.ClassifyNodeService;
 import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +28,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
+    @Cacheable("classifyNodeCache")
     public ClassifyNode findClassifyNodeById(Long id) {
         try {
             return MyBeanUtils.copyClassifyNode(classifyNodeDao.findClassifyNodeById(id));
@@ -42,6 +45,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
+    @Cacheable("classifyNodeCache")
     public List<ClassifyNode> findClassifyNodeByDocId(Long docId) {
         try {
             return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findClassifyNodeByDocId(docId));
@@ -58,6 +62,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
+    @Cacheable("classifyNodeCache")
     public List<ClassifyNode> findClassifyNodeListByParentId(Long parentId) {
         try {
             return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findClassifyNodeListByParentId(parentId));
@@ -73,6 +78,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
+    @Cacheable("classifyNodeCache")
     public List<ClassifyNode> findAllClassifyNode() {
         try {
             return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findAllClassifyNode());
@@ -90,6 +96,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @return
      */
     @Override
+    @Cacheable("classifyNodeCache")
     public Paging<ClassifyNode> findAllClassifyNodeByPage(Integer pageSize, Integer currentPage) {
         try {
             return MyBeanUtils.copyPagingOfDocOrClassifyNode(classifyNodeDao.findAllClassifyNodeByPage(pageSize, currentPage));
@@ -107,6 +114,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *  成功则返回节点ID，失败返回0
      */
     @Override
+    @CacheEvict(value = {"classifyNodeCache","docCache"},allEntries = true)
     public Long saveClassifyNode(ClassifyNode classifyNode) {
         try {
             return classifyNodeDao.saveClassifyNode(classifyNode);
@@ -123,6 +131,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * @param classifyNode
      */
     @Override
+    @CacheEvict(value = {"classifyNodeCache","docCache"},allEntries = true)
     public Boolean deleteClassifyNode(ClassifyNode classifyNode) {
         try{
             classifyNodeDao.deleteClassifyNode(classifyNode);
@@ -141,6 +150,7 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *  成功返回true,失败返回false
      */
     @Override
+    @CacheEvict(value = {"classifyNodeCache","docCache"},allEntries = true)
     public ClassifyNode updateClassifyNode(ClassifyNode classifyNode) {
         classifyNode.setUpdateTime(System.currentTimeMillis());
         try {
@@ -163,9 +173,13 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      *  成功返回true,失败返回false
      */
     @Override
+    @CacheEvict(value = {"classifyNodeCache","docCache"},allEntries = true)
     public ClassifyNode addChildrenNode(Long parentId, Long childrenId, String childrenText) {
         try {
-            ClassifyNode parentClassifyNode = classifyNodeDao.findClassifyNodeById(parentId);
+            ClassifyNode parentClassifyNode = null;
+            if (null != parentId && parentId != 0L) {
+                parentClassifyNode = classifyNodeDao.findClassifyNodeById(parentId);
+            }
             if (null != childrenId && childrenId != 0L) {
                 ClassifyNode childrenClassifyNode = classifyNodeDao.findClassifyNodeById(childrenId);
                 classifyNodeDao.addChildrenNode(parentClassifyNode, childrenClassifyNode);

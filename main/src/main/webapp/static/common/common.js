@@ -259,7 +259,7 @@ var common = {
          * 注意：domId不带#号
          * @param domId
          */
-        autoCompleteByDomId:function (domId,url) {
+        autoCompleteByDomId:function (domId,url,label) {
             var $dom = $("#"+domId);
 
             //如果数据没有则从服务器获取一下
@@ -277,7 +277,7 @@ var common = {
                     }
                     common.Fn.searchData(function (data) {
                         response(data);
-                    },cache,key);
+                    },cache,key,label);
                 },
                 create: function () {
                     $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
@@ -316,6 +316,7 @@ var common = {
          */
         addSpell:function(data,label) {
             $.each(data,function (n,value) {
+                console.log(value[label]);
                 value['spell']=pinyin.getCamelChars(value[label]);
                 value['fullSpelling']=pinyin.getFullChars(value[label]).toUpperCase();
             });

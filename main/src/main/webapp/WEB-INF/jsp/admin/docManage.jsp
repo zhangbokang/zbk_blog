@@ -24,10 +24,14 @@
             var rows = res.rows;
             for (var i in rows){
                 rows[i].classifyNodeName = "";
-                for(var x in rows[i].classifyNodes){
-                    rows[i].classifyNodeName = rows[i].classifyNodeName + x["text"] + "  ";
+                for(var x in rows[i]["classifyNodes"]){
+                    if (typeof rows[i]["classifyNodes"][x]["text"] != "undefined" && rows[i]["classifyNodes"][x]["text"] != null) {
+                        rows[i].classifyNodeName = rows[i].classifyNodeName + rows[i].classifyNodes[x]["text"] + "  ";
+                    }
                 }
-                rows[i].tagName = rows[i]["tag"]["name"];
+                if (typeof rows[i]["tag"] !="undefined" && rows[i]["tag"] != null){
+                    rows[i].tagName = rows[i]["tag"]["name"];
+                }
             }
             res.rows = rows;
             return res;

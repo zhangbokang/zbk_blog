@@ -24,7 +24,7 @@ public class TagDaoImpl implements TagDao {
     @Override
     public List<Tag> findAll() {
         String hql = "from Tag ";
-        return (List)hibernateTemplate.find(hql);
+        return (List<Tag>)hibernateTemplate.find(hql);
     }
 
     @Override
@@ -33,11 +33,11 @@ public class TagDaoImpl implements TagDao {
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
         String hql = "from Tag order by createTime desc";
-        return (Paging<Tag>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
+        return (Paging<Tag>) hibernateTemplate.execute(new HibernateCallback<Paging<Tag>>() {
             @Override
-            public Paging doInHibernate(Session session) throws HibernateException {
+            public Paging<Tag> doInHibernate(Session session) throws HibernateException {
                 //查询总记录数
-                Query queryCount = session.createQuery("select count(1) from Tag ");
+                Query queryCount = session.createQuery("select count(1) " + hql);
                 Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
                 paging.setTotalCounts(totalCounts);
                 Query query = session.createQuery(hql);

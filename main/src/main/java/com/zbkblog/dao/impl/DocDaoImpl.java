@@ -29,7 +29,13 @@ public class DocDaoImpl implements DocDao {
     @Override
     public List<Doc> findAll() {
         String hql = "from Doc ";
-        return (List)hibernateTemplate.find(hql);
+        return hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
+            @Override
+            public List<Doc> doInHibernate(Session session) throws HibernateException {
+                Query query = session.createQuery(hql);
+                return query.list();
+            }
+        });
     }
 
     @Override
@@ -38,11 +44,11 @@ public class DocDaoImpl implements DocDao {
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
         String hql = "from Doc order by updateTime desc";
-        return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging>() {
+        return (Paging<Doc>) hibernateTemplate.execute(new HibernateCallback<Paging<Doc>>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {
                 //查询总记录数
-                Query queryCount = session.createQuery("select count(1) from Doc");
+                Query queryCount = session.createQuery("select count(1) " + hql);
                 Integer totalCounts = ((Number)queryCount.uniqueResult()).intValue();
                 paging.setTotalCounts(totalCounts);
                 Query query = session.createQuery(hql);
@@ -104,51 +110,42 @@ public class DocDaoImpl implements DocDao {
     }
 
     @Override
-    public List<Doc> findByUpdateOfTopX(Integer top) {
-        String hql = "from Doc order by updateTime desc";
-        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+    public List<Doc> findTopByHql(String hql, Integer top) {
+        return hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
             @Override
-            public List doInHibernate(Session session) throws HibernateException {
+            public List<Doc> doInHibernate(Session session) throws HibernateException {
                 Query query = session.createQuery(hql);
                 query.setFirstResult(0);
                 query.setMaxResults(top);
                 return query.list();
             }
         });
+    }
+
+    @Override
+    public List<Doc> findByUpdateOfTopX(Integer top) {
+        String hql = "from Doc order by updateTime desc";
+        return findTopByHql(hql, top);
     }
 
     @Override
     public List<Doc> findByOpenNumberOfTopX(Integer top) {
         String hql = "from Doc order by openNumber desc";
-        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
-            @Override
-            public List doInHibernate(Session session) throws HibernateException {
-                Query query = session.createQuery(hql);
-                query.setFirstResult(0);
-                query.setMaxResults(top);
-                return query.list();
-            }
-        });
+        return findTopByHql(hql, top);
     }
 
     @Override
     public List<Doc> findByFavorNumberOfTopX(Integer top) {
         String hql = "from Doc order by favorNumber desc";
-        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
-            @Override
-            public List doInHibernate(Session session) throws HibernateException {
-                Query query = session.createQuery(hql);
-                query.setFirstResult(0);
-                query.setMaxResults(top);
-                return query.list();
-            }
-        });
+        return findTopByHql(hql, top);
     }
 
     @Override
     public List<Doc> findByClassifyNodeId(Long classifyNodeId) {
-        String sql = "select * from doc as d JOIN classify_node_doc_map as cmap ON d.doc_id=cmap.doc_id where cmap.id=:classifyNodeId  order by d.update_time desc";
-        return (List<Doc>)hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
+        String sql = "select * from " +
+                "doc as d JOIN classify_node_doc_map as cmap ON d.doc_id=cmap.doc_id " +
+                "where cmap.id=:classifyNodeId  order by d.update_time desc";
+        return hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
             @Override
             public List<Doc> doInHibernate(Session session) throws HibernateException {
                 Query query = session.createSQLQuery(sql).addEntity(Doc.class);
@@ -162,14 +159,21 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public Paging<Doc> findByClassifyNodeIdOfPage(Long classifyNodeId, Integer pageSize,Integer currentPage) {
-        Paging paging = new Paging();
+        Paging<Doc> paging = new Paging<>();
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
-        String sql = "select * from doc JOIN classify_node_doc_map ON classify_node_doc_map.doc_id=doc.doc_id WHERE classify_node_doc_map.id=:classifyNodeId order by doc.update_time desc";
-        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+        String find = "FROM doc JOIN classify_node_doc_map AS c1 " +
+                "ON doc.doc_id=c1.doc_id JOIN " +
+                "classify_node AS cn1 ON cn1.id=c1.id " +
+                "JOIN tag ON tag.tag_id=doc.tag_id " +
+                "WHERE cn1.id=:classifyNodeId " +
+                "OR cn1.parent_id=:classifyNodeId " +
+                "ORDER BY doc.update_time DESC";
+        String sql = "select * "+find;
+        return hibernateTemplate.execute(new HibernateCallback<Paging<Doc>>() {
             @Override
-            public Paging doInHibernate(Session session) throws HibernateException {
-                String sqlCount = "select COUNT(1) from doc JOIN classify_node_doc_map ON classify_node_doc_map.id=:classifyNodeId  order by doc.update_time desc";
+            public Paging<Doc> doInHibernate(Session session) throws HibernateException {
+                String sqlCount = "select COUNT(1) "+find;
                 Query queryCount = session.createSQLQuery(sqlCount);
                 queryCount.setParameter("classifyNodeId",classifyNodeId);
                 paging.setTotalCounts(((Number)queryCount.uniqueResult()).intValue());
@@ -185,14 +189,14 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public List<Doc> findByTagId(Long tagId) {
-        String hql = "from Doc where tag.tagId = ? order by updateTime desc";
-        return (List)hibernateTemplate.execute(new HibernateCallback<List>() {
+        String hql = "from Doc where tag.tagId = :tagId order by updateTime desc";
+        return hibernateTemplate.execute(new HibernateCallback<List<Doc>>() {
             @Override
-            public List doInHibernate(Session session) throws HibernateException {
+            public List<Doc> doInHibernate(Session session) throws HibernateException {
                 Query query = session.createQuery(hql);
 //              query.setFirstResult(0);
 //              query.setMaxResults(top);
-                query.setParameter(0,tagId);
+                query.setParameter("tagId",tagId);
                 return query.list();
             }
         }) ;
@@ -200,20 +204,20 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public Paging<Doc> findByTagIdOfPage(Long tagId, Integer pageSize,Integer currentPage) {
-        Paging paging = new Paging();
+        Paging<Doc> paging = new Paging<>();
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
-        String hql = "from Doc where tag.tagId = ? order by updateTime desc";
-        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+        String hql = "from Doc where tag.tagId = :tagId order by updateTime desc";
+        return hibernateTemplate.execute(new HibernateCallback<Paging<Doc>>() {
             @Override
-            public Paging doInHibernate(Session session) throws HibernateException {
-                Query q1 = session.createQuery("select count (1) from Doc where tag.tagId=:tagId");
+            public Paging<Doc> doInHibernate(Session session) throws HibernateException {
+                Query q1 = session.createQuery("select count (1) " + hql);
                 q1.setParameter("tagId",tagId);
                 paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());
                 Query query = session.createQuery(hql);
                 query.setFirstResult(Paging.firstResultCount(pageSize,currentPage));
                 query.setMaxResults(pageSize);
-                query.setParameter(0,tagId);
+                query.setParameter("tagId",tagId);
                 paging.setPageList(query.list());
                 return paging;
             }
@@ -222,13 +226,13 @@ public class DocDaoImpl implements DocDao {
 
     @Override
     public Paging<Doc> searchDocByKeywork(String keyword, Integer pageSize,Integer currentPage) {
-        Paging paging = new Paging();
+        Paging<Doc> paging = new Paging<>();
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
         String hql = "from Doc where UPPER(title) like UPPER(:keyword) or docMd like :keyword order by updateTime desc";
-        return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
+        return hibernateTemplate.execute(new HibernateCallback<Paging<Doc>>() {
             @Override
-            public Paging doInHibernate(Session session) throws HibernateException {
+            public Paging<Doc> doInHibernate(Session session) throws HibernateException {
                 Query q1 = session.createQuery("select count(1) "+hql);
                 q1.setParameter("keyword","%"+keyword+"%");
                 paging.setTotalCounts(((Number)q1.uniqueResult()).intValue());

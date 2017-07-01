@@ -180,7 +180,7 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void dtest1() {
-        for(int i=0;i<10;i++) {
+        for(int i=0;i<1000;i++) {
             Doc doc = new Doc();
             doc.setTitle("abc"+i);
             doc.setDocMd("md"+i);

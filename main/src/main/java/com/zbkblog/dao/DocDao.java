@@ -64,6 +64,14 @@ public interface DocDao {
     void update(Doc doc);
 
     /**
+     * 根据hql和top数查询排行列表
+     * @param hql
+     * @param top
+     * @return
+     */
+    List<Doc> findTopByHql(String hql, Integer top);
+
+    /**
      * 查询topX的文章
      * @param top
      * @return

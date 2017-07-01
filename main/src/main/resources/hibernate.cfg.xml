@@ -6,20 +6,17 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/zbk_blog</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-      <mapping resource="com/zbkblog/hbm/Classify.hbm.xml"/>
-      <mapping class="com.zbkblog.entity.Classify"/>
-      <mapping class="com.zbkblog.entity.Comment"/>
+    <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+      <mapping resource="com/zbkblog/hbm/BlogUser.hbm.xml"/>
+    <mapping class="com.zbkblog.entity.BlogUser"/>
       <mapping resource="com/zbkblog/hbm/Comment.hbm.xml"/>
+    <mapping class="com.zbkblog.entity.Comment"/>
       <mapping resource="com/zbkblog/hbm/Doc.hbm.xml"/>
-      <mapping class="com.zbkblog.entity.Doc"/>
+    <mapping class="com.zbkblog.entity.Doc"/>
       <mapping resource="com/zbkblog/hbm/Tag.hbm.xml"/>
-      <mapping class="com.zbkblog.entity.Tag"/>
-      <mapping resource="com/zbkblog/hbm/Classify.hbm.xml"/>
-      <mapping resource="com/zbkblog/hbm/Comment.hbm.xml"/>
-      <mapping resource="com/zbkblog/hbm/Doc.hbm.xml"/>
-      <mapping resource="com/zbkblog/hbm/Tag.hbm.xml"/>
+    <mapping class="com.zbkblog.entity.Tag"/>
       <mapping resource="com/zbkblog/hbm/ClassifyNode.hbm.xml"/>
-      <mapping resource="com/zbkblog/entity/ClassifyNode.hbm.xml"/>
+    <mapping class="com.zbkblog.entity.ClassifyNode"/>
       <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

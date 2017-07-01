@@ -35,7 +35,11 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
 
     @Override
     public List<ClassifyNode> findClassifyNodeByDocId(Long docId) {
-        String sql = "SELECT * FROM classify_node AS cn JOIN classify_node_doc_map AS cnmap ON cn.id = cnmap.id WHERE cnmap.doc_id = :docId  order by cn.update_time desc";
+        String sql = "SELECT * FROM " +
+                "classify_node AS cn JOIN classify_node_doc_map AS cnmap " +
+                "ON cn.id = cnmap.id " +
+                "WHERE cnmap.doc_id = :docId  " +
+                "order by cn.update_time desc";
         return hibernateTemplate.execute(new HibernateCallback<List<ClassifyNode>>() {
             @Override
             public List<ClassifyNode> doInHibernate(Session session) throws HibernateException {
@@ -102,7 +106,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
         List<ClassifyNode> classifyNodeList = hibernateTemplate.execute(new HibernateCallback<List<ClassifyNode>>() {
             @Override
             public List<ClassifyNode> doInHibernate(Session session) throws HibernateException {
-                String hqlCount = "select count(1) from ClassifyNode";
+                String hqlCount = "select count(1) " + hql;
                 Query query1 = session.createQuery(hqlCount);
                 Integer t = Integer.parseInt(query1.uniqueResult().toString());
                 classifyNodePaging.setTotalCounts(t);

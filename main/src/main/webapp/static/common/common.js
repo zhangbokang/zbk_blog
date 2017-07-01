@@ -255,11 +255,117 @@ var common = {
             // }
         },
         /**
+         * 根据输入去服务器请求数据
+         * @param url 请求数据的地址
+         * @param param 请求数据的附加参数
+         * @returns {*} 返回请求得到的数据
+         */
+        queryDataOfClassifyNode:function (url,param) {
+            if (param == undefined){
+                param ={}
+            }
+            // if (label == undefined){
+            //     label = "text";
+            // }
+            // if(cache == undefined) {
+                var cache;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: param,
+                    async: false, //同步请求，避免数据延迟产生错误
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.code == 1) {
+                            cache = $.map(result.data, function (item) {
+                                var obj = {};
+                                for (var i in item) {
+                                    var v = item[i];
+                                    if (i == "text") {
+                                        i = "label";
+                                    }
+                                    if (i != "id") {
+                                        obj[i] = v;
+                                        continue;
+                                    }
+                                    obj["classifyNodeId"] = v;
+                                }
+                                return obj;
+                            });
+                            common.Fn.addSpell(cache, "label");
+                            return;
+                        }
+                        alert(result.msg);
+                    },
+                    error: function () {
+                        alert("“" + url + "”请求出现问题！");
+                        return;
+                    }
+                });
+                return cache;
+            // }
+        },
+        /**
+         * 根据domId给分类输入框添加自动完成功能
+         * 注意：domId不带#号
+         * @param domId
+         */
+        autoCompleteOfClassifyNode:function (domId,url) {
+            var $dom = $("#"+domId);
+
+            //如果数据没有则从服务器获取一下
+            common.Data.cache[domId] = common.Fn.queryDataOfClassifyNode(url);
+            var cache = common.Data.cache[domId];
+
+            $dom.autocomplete({
+                minLength:0,//输入多少字后显示列表，0表示不输入也显示
+                source: function (request, response) {
+                    var key = request.term.trim().toUpperCase();
+                    //如果没有输入任何数据，则返回全部数据
+                    if (!$.trim(key)){
+                        response(cache);
+                        return;
+                    }
+                    common.Fn.searchData(function (data) {
+                        response(data);
+                    },cache,key);
+                },
+                create: function () {
+                    $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        return $("<li>")
+                            .append($("<div>").text(item.label))
+                            .appendTo(ul);
+                    };
+                },
+                select: function (event, ui) {
+                    var item = ui.item;
+                    var falg = true;
+                    for(var i=0;i<classifyNodeIds.length;i++) {
+                        if (classifyNodeIds[i] == item.classifyNodeId) {
+                            falg = false;
+                            break;
+                        }
+                    }
+                    if (falg) {
+                        classifyNodeIds.push(item.classifyNodeId);
+                        $("#classifyNodeText").append(item.label);
+                    }
+                    event.preventDefault();
+                    $(this).val("");
+                    $(this).blur();
+                }
+            }).focus(function (){
+                // $(this).val("");//清除属性
+                // Util.removeAttributes($(this));
+                $(this).autocomplete("search");
+            });
+        },
+        /**
          * 根据domId给输入框添加自动完成功能
          * 注意：domId不带#号
          * @param domId
          */
-        autoCompleteByDomId:function (domId,url,label) {
+        autoCompleteByDomId:function (domId,url) {
             var $dom = $("#"+domId);
 
             //如果数据没有则从服务器获取一下
@@ -277,7 +383,7 @@ var common = {
                     }
                     common.Fn.searchData(function (data) {
                         response(data);
-                    },cache,key,label);
+                    },cache,key);
                 },
                 create: function () {
                     $(this).data('ui-autocomplete')._renderItem = function (ul, item) {

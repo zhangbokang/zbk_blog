@@ -84,7 +84,7 @@
     <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">
         //设置分类和标签为自动完成按钮
-        common.Fn.autoCompleteByDomId("classifyNode",common.URL.classifyNode.findAllClassifyNode,"text");
+        common.Fn.autoCompleteOfClassifyNode("classifyNode",common.URL.classifyNode.findAllClassifyNode);
         common.Fn.autoCompleteByDomId("tag",common.URL.tag.findAllTag);
         //点击保存按钮提交表单
         function submitForm(formId) {
@@ -94,7 +94,7 @@
                 alert("请填写标题");
                 return ;
             }
-            formData.classifyNodeId = $(formId).find("#classifyNode").attr("classifyNodeId");
+            formData.classifyNodeId = classifyNodeIds.join(",");
             if (!$.trim(formData.classifyNodeId)){
                 $(formId).find("#classifyNode").focus();
                 alert("请填写分类");
@@ -147,16 +147,6 @@
             $("#classifyNodeText").append("${classifyNode.text}");
             classifyNodeIds.push(${classifyNode.classifyNodeId});
         </c:forEach>
-
-        <%--var currclassifyNodeId = "<c:forEach items="${doc.classifyNodes}" var="classifyNode">--%>
-            <%--${classifyNode.id},--%>
-        <%--</c:forEach>";--%>
-<%----%>
-//        if ($.trim(currclassifyNodeId)){
-//            common.Fn.searchData(function (data) {
-//                common.Fn.setAttr("classifyNode",data[0])
-//            },common.Data.cache["classifyNode"],currclassifyNodeId,"classifyNodeId");
-//        }
 
         var currTag = "${doc.tag.tagId}";
         if ($.trim(currTag)){

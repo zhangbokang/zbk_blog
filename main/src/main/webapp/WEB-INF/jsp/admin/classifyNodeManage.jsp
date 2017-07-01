@@ -87,33 +87,6 @@
         $("#refresh_classifyNode").on("click", function () {
             $('#classifyNodeList').jstree(true).refresh();
         });
-        //新增根节点
-//        $("#addRoot_classifyNode").on("click",function () {
-//            var $classifyNodeText = $("#classifyNodeText");
-//            var classifyNodeText = $classifyNodeText.val();
-//            if (!$.trim(classifyNodeText)){
-//                $classifyNodeText.focus();
-//                alert("请输入分类节点名称");
-//                return;
-//            }
-//            $.ajax({
-//                url: "/classifyNode/addClassifyNode",
-//                data: {classifyNodeText: classifyNodeText},
-//                type: "POST",
-//                dataType: "json",
-//                success: function (result) {
-//                    if (result.code == 1) {
-//                        $('#classifyNodeList').jstree(true).refresh();
-//                        $classifyNodeText.val("");
-//                        return;
-//                    }
-//                    if (result.code == 0) {
-//                        alert(result.msg);
-//                        return;
-//                    }
-//                }
-//            });
-//        });
 
         //移动节点
         $("#move_classifyNode").on("click", function () {
@@ -137,13 +110,10 @@
                     ref.refresh();
                     $mcinput.val("");
                 }
-//                alert("请选择自己以外的节点！");
-                return;
             }
         });
         //配合移动按钮移动节点
         $('#classifyNodeList').on("select_node.jstree", function (e, data) {
-            console.log(data.selected[0]);
             var parentId = data.selected[0];
             var $mcinput = $("#move_classifyNode_input");
             var nodeId = $mcinput.val();

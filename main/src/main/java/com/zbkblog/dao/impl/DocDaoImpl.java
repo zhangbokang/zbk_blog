@@ -165,7 +165,7 @@ public class DocDaoImpl implements DocDao {
         Paging paging = new Paging();
         paging.setPageSize(pageSize);
         paging.setCurrentPage(currentPage);
-        String sql = "select * from doc JOIN classify_node_doc_map ON classify_node_doc_map.id=:classifyNodeId  order by doc.update_time desc";
+        String sql = "select * from doc JOIN classify_node_doc_map ON classify_node_doc_map.doc_id=doc.doc_id WHERE classify_node_doc_map.id=:classifyNodeId order by doc.update_time desc";
         return (Paging<Doc>)hibernateTemplate.execute(new HibernateCallback<Paging>() {
             @Override
             public Paging doInHibernate(Session session) throws HibernateException {

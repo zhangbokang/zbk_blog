@@ -134,9 +134,10 @@ public class DocController {
             }
         }
 
+        Doc doc;
         //保存的逻辑
         if (null != docId && docId.matches("[0-9]+")) {
-            Doc doc = docService.findById(Long.parseLong(docId));
+            doc = docService.findById(Long.parseLong(docId));
             if (doc != null){
                 //更新属性
                 doc.setTitle(title);
@@ -144,13 +145,15 @@ public class DocController {
                 doc.setTag(tag);
 
                 doc = docService.update(doc,true);
-                map.put("code",1);
-                map.put("data",doc);
-                return map;
+                if (doc == null) {
+                    map.put("code", 0);
+                    map.put("msg", "保存失败");
+                    return map;
+                }
             }
         }else {
             //封装成对象
-            Doc doc = new Doc();
+            doc = new Doc();
             doc.setTitle(title);
             doc.setDocMd(docMd);
             doc.setTag(tag);
@@ -165,7 +168,7 @@ public class DocController {
         }
 
         //添加关联
-        Doc doc = docService.addClassifyNodesToDoc(Long.parseLong(docId),classifyNodeIdList);
+        doc = docService.addClassifyNodesToDoc(doc.getDocId(),classifyNodeIdList);
         if (null != doc){
             map.put("code",1);
             map.put("data",doc);

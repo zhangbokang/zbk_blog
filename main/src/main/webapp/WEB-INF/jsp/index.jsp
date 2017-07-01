@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>myblog主页</title>
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstraptable/bootstrap-table.min.css">
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/style.css">
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/common.css">
-    <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <!-- 头部 -->
@@ -33,8 +33,6 @@
 
 
 
-<%--<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>--%>
-<%--<script src="//cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table-locale-all.min.js"></script>--%>
 <script src="<%=Web.staticLoadDomain%>/static/jqPaginator/dist/jqPaginator.min.js"></script>
 <script>
     $("#bloglist").load("/findAllDoc?accessType=doc");

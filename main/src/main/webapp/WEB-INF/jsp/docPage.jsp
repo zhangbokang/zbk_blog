@@ -13,8 +13,7 @@
     <title>myblog - ${doc.title}</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/editormd/css/editormd.min.css"/>
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">--%>
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/blogpage.css">
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/common.css">
     <style>
@@ -89,9 +88,8 @@
 </div>
 <jsp:include page="footer.jsp"/>
 
-<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
-<%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
-<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
 <script src="<%=Web.staticLoadDomain%>/static/editormd/editormd.min.js"></script>
 <script src="<%=Web.staticLoadDomain%>/static/editormd/lib/marked.min.js"></script>
 <script src="<%=Web.staticLoadDomain%>/static/editormd/lib/prettify.min.js"></script>

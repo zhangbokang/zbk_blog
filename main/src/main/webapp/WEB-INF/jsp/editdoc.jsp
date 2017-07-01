@@ -11,9 +11,8 @@
 <head>
     <title>文章编辑</title>
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/editormd/css/editormd.min.css" />
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <%--<link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.css">--%>
-    <link rel="stylesheet" href="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/jqueryui/jquery-ui.min.css">
     <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/css/editblog.css">
     <meta charset="utf-8">
 </head>
@@ -72,14 +71,11 @@
 
 
 
-    <script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
-    <%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
+    <script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/editormd/editormd.min.js"></script>
-    <script src="//cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
-    <%--<script src="/static/js/jquery.serializejson.js"></script>--%>
-    <script src="//cdn.bootcss.com/jqueryui/1.12.0/jquery-ui.min.js"></script>
-    <%--<script src="/static/js/editblog.js"></script>--%>
+    <script src="/static/jqueryserializejson/jquery.serializejson.min.js"></script>
+    <script src="/static/jqueryui/jquery-ui.min.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/spell/py.js"></script>
     <script src="<%=Web.staticLoadDomain%>/static/common/common.js"></script>
     <script type="text/javascript">

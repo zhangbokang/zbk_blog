@@ -214,7 +214,7 @@ public class ClassifyNodeDaoImpl implements ClassifyNodeDao {
         return hibernateTemplate.execute(new HibernateCallback<Integer>() {
             @Override
             public Integer doInHibernate(Session session) throws HibernateException {
-                String sql = "SELECT COUNT(1) FROM `classify_node` WHERE parent_id=:parentId";
+                String sql = "SELECT COUNT(1) FROM classify_node WHERE parent_id=:parentId";
                 Query query = session.createSQLQuery(sql);
                 query.setParameter("parentId", parentId);
                 return ((Number)query.uniqueResult()).intValue();

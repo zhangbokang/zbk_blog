@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.zbkblog.utils.Web" %><%--
   Created by IntelliJ IDEA.
   User: zhangbokang
   Date: 2017/6/3
@@ -11,8 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <title>登陆</title>
-    <%--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css">--%>
-    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<%=Web.staticLoadDomain%>/static/bootstrap/css/bootstrap.min.css">
     <style rel="stylesheet">
         #logindiv {
             border: #8F938F 1px solid;
@@ -53,14 +52,11 @@
     </div>
     <div id="errorMsg"></div>
 </div>
-<%--<script src="/static/js/jquery-3.2.0.js"></script>--%>
-<script src="//cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<%--<script src="/static/bootstrap/js/bootstrap.min.js"></script>--%>
-<script src="/static/js-md5/md5.min.js"></script>
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<%--<script src="/static/jquery-cookie/jquery.cookie.js"></script>--%>
-<script src="/static/js/login.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jquery/jquery-3.2.1.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/js-md5/md5.min.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/jquery-cookie/jquery.cookie.js"></script>
+<script src="<%=Web.staticLoadDomain%>/static/js/login.js"></script>
 <script>
     //输入框的回车事件
     function EnteyKey(e) {

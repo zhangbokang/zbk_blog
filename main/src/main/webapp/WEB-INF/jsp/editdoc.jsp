@@ -141,7 +141,7 @@
         //回显分类和标签
         <c:forEach items="${doc.classifyNodes}" var="classifyNode">
             $("#classifyNodeText").append("${classifyNode.text}");
-            classifyNodeIds.push(${classifyNode.classifyNodeId});
+            classifyNodeIds.push(${classifyNode.id});
         </c:forEach>
 
         var currTag = "${doc.tag.tagId}";

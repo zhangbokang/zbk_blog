@@ -65,7 +65,11 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
     @Cacheable("classifyNodeCache")
     public List<ClassifyNode> findClassifyNodeListByParentId(Long parentId) {
         try {
-            return MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findClassifyNodeListByParentId(parentId));
+            List<ClassifyNode> classifyNodeList = MyBeanUtils.copyClassifyNodeList(classifyNodeDao.findClassifyNodeListByParentId(parentId));
+            for (ClassifyNode classifyNode : classifyNodeList) {
+                classifyNode.setDocs(null);
+            }
+            return classifyNodeList;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

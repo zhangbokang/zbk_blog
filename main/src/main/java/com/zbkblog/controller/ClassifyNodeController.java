@@ -93,51 +93,26 @@ public class ClassifyNodeController {
      * 删除分类节点
      *
      * @param request
-     *  deleteOk用来指定强制删除（对于有子节点的）
+     *  要删除的节点的id
      * @return
      * 失败 {code:0,msg:失败消息}
-     * 成功{code:1,data:保存成功后的classifyNode对象}
+     * 成功{code:1,data:删除的classifyNode对象}
      */
     @RequestMapping("/deleteClassifyNode")
     @ResponseBody
     public Map<String, Object> deleteClassifyNode(HttpServletRequest request) {
         String id = request.getParameter("classifyNodeId");
-        //是否强制删除（删除后如果有子节点，所有子节点成为root节点）
-        String deleteOk = request.getParameter("deleteOk");
         Map<String, Object> map = new HashMap<>();
         if (null == id || !id.matches("[0-9]+")) {
             map.put("code", 0);
             map.put("msg", "分类ID不能为空且必须是数字！");
             return map;
         }
-        ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(Long.parseLong(id));
-        if (null == classifyNode) {
-            map.put("code", 0);
-            map.put("msg", "未查询到该分类！");
-            return map;
-        }
-        //如果没有子节点就直接删除
-        if (null == classifyNode.getChildren() || !classifyNode.getChildren()) {
-            Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode);
-            if (falg) {
-                map.put("code", 1);
-                map.put("data", classifyNode);
-                return map;
-            }
-        }
-        //如果有子节点，但没有确认强制删除，则不执行删除
-        if (null == deleteOk || "".equals(deleteOk) || "false".equals(deleteOk)) {
+        ClassifyNode classifyNode = classifyNodeService.deleteClassifyNode(Long.parseLong(id));
+        if (null != classifyNode) {
             map.put("code", 1);
-            map.put("data", "no_deleteOk");
+            map.put("data", classifyNode);
             return map;
-        }
-        if (Boolean.parseBoolean(deleteOk)) {
-            Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode);
-            if (falg) {
-                map.put("code", 1);
-                map.put("data", classifyNode);
-                return map;
-            }
         }
         map.put("code", 0);
         map.put("msg", "未执行删除！");

@@ -145,9 +145,8 @@ public class ClassifyNodeAndDocTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void test3() {
-        ClassifyNode classifyNode = classifyNodeService.findClassifyNodeById(92451909992449L);
-        Boolean falg = classifyNodeService.deleteClassifyNode(classifyNode);
-        System.out.println(falg);
+        ClassifyNode classifyNode = classifyNodeService.deleteClassifyNode(92451909992449L);
+        System.out.println(classifyNode);
     }
 
     @Test

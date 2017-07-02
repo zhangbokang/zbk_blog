@@ -132,17 +132,19 @@ public class ClassifyNodeServiceImpl implements ClassifyNodeService {
      * 删除节点
      *   如果有子节点，将子节点设置为root节点（删除父节点），然后删除本节点
      *
-     * @param classifyNode
+     * @param classifyNodeId
+     * @return
      */
     @Override
     @CacheEvict(value = {"classifyNodeCache","docCache"},allEntries = true)
-    public Boolean deleteClassifyNode(ClassifyNode classifyNode) {
+    public ClassifyNode deleteClassifyNode(Long classifyNodeId) {
         try{
+            ClassifyNode classifyNode = classifyNodeDao.findClassifyNodeById(classifyNodeId);
             classifyNodeDao.deleteClassifyNode(classifyNode);
-            return true;
+            return classifyNode;
         }catch (Exception e){
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 

@@ -55,11 +55,11 @@ public interface ClassifyNodeService {
      * 删除节点
      *   如果有子节点，将子节点设置为root节点（删除父节点），然后删除本节点
      *
-     * @param classifyNode
+     * @param classifyNodeId
      * @return
-     *  成功返回true，失败返回false
+     *  成功返回删除了的对象，失败返回null
      */
-    Boolean deleteClassifyNode(ClassifyNode classifyNode);
+    ClassifyNode deleteClassifyNode(Long classifyNodeId);
 
     /**
      * 更新节点

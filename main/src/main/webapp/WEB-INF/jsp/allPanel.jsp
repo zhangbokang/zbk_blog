@@ -125,6 +125,7 @@
                 'data' : {
                     "url" : "/findClassifyNodeByParentId",
                     "dataType" : "json", // needed only if you do not supply JSON headers
+                    "type":"POST",
                     "data" : function (node) {
 //                        return { "id" : node.id };
 //                        console.log(node);

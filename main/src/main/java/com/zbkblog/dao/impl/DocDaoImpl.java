@@ -3,7 +3,6 @@ package com.zbkblog.dao.impl;
 import com.zbkblog.dao.DocDao;
 import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
-import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -13,8 +12,6 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 

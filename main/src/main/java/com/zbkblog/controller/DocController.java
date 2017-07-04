@@ -1,12 +1,10 @@
 package com.zbkblog.controller;
 
-import com.zbkblog.entity.ClassifyNode;
 import com.zbkblog.entity.Doc;
 import com.zbkblog.entity.Tag;
 import com.zbkblog.service.ClassifyNodeService;
 import com.zbkblog.service.DocService;
 import com.zbkblog.service.TagService;
-import com.zbkblog.utils.MyBeanUtils;
 import com.zbkblog.utils.Paging;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;

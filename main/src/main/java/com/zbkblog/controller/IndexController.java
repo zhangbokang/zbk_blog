@@ -3,14 +3,12 @@ package com.zbkblog.controller;
 import com.zbkblog.entity.*;
 import com.zbkblog.service.*;
 import com.zbkblog.utils.Paging;
-import org.apache.commons.collections.map.HashedMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
 .idea
 out
 build
-zbk_blog.iml
+*.iml

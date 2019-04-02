@@ -1,21 +1,14 @@
 # zbk_blog
 博客项目
 
-#简介
-我打算写一个简单的博客系统，当作记录笔记和分享笔记的简单系统，也当作一个练习。
-我知道博客系统很多很多。。。。但是自己写一个应该挺有意思的 哈哈
+# 简介
+最开始打算为了方便记笔记和整理工作经验，打算弄个博客，但又不想用CSDN、博客园什么的在线的那种，所以想着弄个自己搭建的那种，找了试了不少，有的也确实很好用，但是别人写的毕竟不如自己写的用的顺手，所以打算自己写一个简单的博客系统，当作记录笔记和分享笔记的简单系统，也当作一个练习。
 
-#使用技术
-##后台
-打算使用SSH（SpringMVC、Spring、Hibernate）来写，因为公司正好用的SSH，嘿嘿
-因为本人的主业是JAVA，所以前端比较弱，哈哈
+# 使用技术
+## 后台
+打算使用SSH（SpringMVC、Spring、Hibernate）来写，因为公司正好用的SSH。
 
-##前端
+因为本人的方向是JAVA，所以前端比较弱，写的效果一般般，以后有进步后再优化。
+
+## 前端
 前端使用Bootstrap、jQuery、Bootstrap-table等
-
-jsp中截取字符串
-    http://blog.csdn.net/jaybill/article/details/52157308
-    http://blog.csdn.net/u013456370/article/details/52815544
-
-mybatis惯用jdbcType数据类型
-    [http://www.baba.io/article/64199.html](http://www.baba.io/article/64199.html "mybatis惯用jdbcType数据类型")
